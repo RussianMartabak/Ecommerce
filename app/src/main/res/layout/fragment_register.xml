@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".prelogin.LoginFragment">
-
+    tools:context=".prelogin.RegisterFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/poppins"
-        android:text="Masuk"
+        android:text="Daftar"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -44,6 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/materialDivider">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -66,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputTextEmailReg">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
@@ -79,7 +80,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="16dp"
-        android:text="Masuk"
+        android:text="Daftar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputTextPasswordReg" />
@@ -91,7 +92,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
         android:gravity="center"
-        android:text="atau daftar dengan"
+        android:text="atau masuk dengan"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -126,7 +127,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        android:text="Daftar"
+        android:text="Masuk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
