@@ -7,13 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -41,9 +43,6 @@ class RegisterFragment : Fragment() {
         var validPass = false
         fun checkButton() {
             binding.registerButton.isEnabled = validEmail && validPass
-            Log.d("zaky", "ALL credential is ${validEmail && validPass}")
-            Log.d("zaky", "Email is ${validEmail}")
-            Log.d("zaky", "Password is ${validPass}")
         }
         binding.inputEmail.doOnTextChanged { text, start, before, count ->
             if (validateEmail(text.toString())) {
@@ -55,6 +54,7 @@ class RegisterFragment : Fragment() {
                 binding.inputEmail.error = "Invalid Email"
                 checkButton()
             }
+            viewModel.email = text.toString()
 
         }
         binding.inputPassword.doOnTextChanged { text, start, before, count ->
@@ -66,11 +66,26 @@ class RegisterFragment : Fragment() {
                 binding.inputPassword.error = "Password must be at least 8 characters"
                 checkButton()
             }
+            viewModel.password = text.toString()
         }
 
+        //observe if register successful
+        viewModel.validity.observe(viewLifecycleOwner) {
+            if (it) {
+                view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
+            } else {
+                Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+        binding.loginButton.setOnClickListener {
+            view.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
 
         binding.registerButton.setOnClickListener {
-            view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
+            viewModel.register()
+            //
         }
 
 
