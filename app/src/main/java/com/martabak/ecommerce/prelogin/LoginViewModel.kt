@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.prelogin
 
+import android.content.SharedPreferences
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
@@ -8,27 +9,36 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.backendApiService
 import com.martabak.ecommerce.network.data.loginBody
+import com.martabak.ecommerce.network.data.loginResponse
+import com.martabak.ecommerce.network.data.registerResponse
+import com.martabak.ecommerce.utils.SharedPrefKeys.login
+import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(val apiService : backendApiService) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    val apiService: backendApiService,
+    val userPref: SharedPreferences
+) : ViewModel() {
     var emailValidity = false
     var passwordValidity = false
-    var email : String? = null
-    var password : String? = null
+    var email: String? = null
+    var password: String? = null
     var errorMessage = ""
-    private var _serverValidity : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _serverValidity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
-    var serverValidity : LiveData<Boolean> = _serverValidity
+    var serverValidity: LiveData<Boolean> = _serverValidity
 
     fun Login() {
         val body = loginBody(email!!, "", password!!)
         viewModelScope.launch {
             try {
                 val response = apiService.postLogin(body)
+                storeTokens(response)
+                userPref.login()
                 _serverValidity.value = true
             } catch (e: Exception) {
                 if (e is HttpException) {
@@ -43,16 +53,24 @@ class LoginViewModel @Inject constructor(val apiService : backendApiService) : V
             }
         }
     }
-    fun validateEmail(emailInput : String) : Boolean {
+
+    fun validateEmail(emailInput: String): Boolean {
         emailValidity = Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()
         email = emailInput
         return emailValidity
     }
 
-    fun validatePassword(passInput : String) : Boolean {
+    fun validatePassword(passInput: String): Boolean {
         passwordValidity = passInput.length >= 8
         password = passInput
         return passwordValidity
     }
+
+    private fun storeTokens(responseBody: loginResponse) {
+        //put access token
+        userPref.putAccessToken(responseBody.data.accessToken)
+    }
+
+
 
 }
