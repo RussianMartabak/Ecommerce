@@ -42,7 +42,7 @@ android {
 
 dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
-
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
@@ -60,6 +60,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
 }
 
 kapt {

@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.prelogin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +41,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
-            view.findNavController().navigate(R.id.action_prelogin_to_postlogin)
+            viewModel.Login()
         }
 
         binding.inputTextEmail.doOnTextChanged { text, start, before, count ->
@@ -60,10 +61,12 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.serverValidity.observe(viewLifecycleOwner) {
+
             if (it) {
                 view.findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
+                    .show()
             }
         }
 

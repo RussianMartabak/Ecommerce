@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.prelogin
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,17 +38,20 @@ class LoginViewModel @Inject constructor(val apiService : backendApiService) : V
                 } else {
                     errorMessage = e.message.toString()
                 }
+                Log.d("zaky", "Api Hit but failed")
                 _serverValidity.value = false
             }
         }
     }
     fun validateEmail(emailInput : String) : Boolean {
         emailValidity = Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()
+        email = emailInput
         return emailValidity
     }
 
     fun validatePassword(passInput : String) : Boolean {
         passwordValidity = passInput.length >= 8
+        password = passInput
         return passwordValidity
     }
 
