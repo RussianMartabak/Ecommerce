@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".main.MainFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:navigationIcon="@drawable/account_icon" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainNavHost"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -24,11 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@android:color/transparent"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_bottomnav_menu"
-        app:labelVisibilityMode="labeled"/>
+        app:menu="@menu/main_bottomnav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

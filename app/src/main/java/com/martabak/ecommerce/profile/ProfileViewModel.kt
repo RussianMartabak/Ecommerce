@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.profile
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,6 +39,7 @@ class ProfileViewModel @Inject constructor(
                 userPref.setUsername(username)
                 _connectSuccess.value = true
             } catch (e: Exception) {
+                Log.d("zaky", "Upload Profile post exception: ${e.message}")
                 errorMessage = e.message!!
                 _connectSuccess.value = false
             }

@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.utils
 
 import android.content.SharedPreferences
+import android.util.Log
 
 object SharedPrefKeys {
 
@@ -33,9 +34,22 @@ object SharedPrefKeys {
     fun SharedPreferences.setUsername(name: String) {
         this.edit().apply {
             putString(USERNAME, name)
+            Log.d("zaky", "username is set to $name")
             apply()
         }
     }
+
+    fun SharedPreferences.logout() {
+        this.edit().apply{
+            putBoolean(LOGGED_IN, false)
+            apply()
+        }
+    }
+
+    fun SharedPreferences.getUsername() : String {
+        return this.getString(USERNAME, "")!!
+    }
+
     fun SharedPreferences.login() {
         this.edit().apply{
             putBoolean(LOGGED_IN, true)

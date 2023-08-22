@@ -41,9 +41,7 @@ class Onboarding : Fragment() {
         val view = binding.root
         // Inflate the layout for this fragment
         //content here
-        if (!viewModel.isFirst) {
-            findNavController().navigate(R.id.action_onboarding_to_loginFragment)
-        }
+
         var pagerIndex = 0
         var onboardAdapter = OnboardingAdapter()
         var onboardingPager = binding.onboardPager

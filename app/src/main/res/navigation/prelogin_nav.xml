@@ -5,6 +5,10 @@
     android:id="@+id/prelogin_nav"
     app:startDestination="@id/onboarding">
 
+    <action
+        android:id="@+id/skip_to_login"
+        app:destination="@+id/loginFragment"
+        />
     <fragment
         android:id="@+id/onboarding"
         android:name="com.martabak.ecommerce.prelogin.Onboarding"

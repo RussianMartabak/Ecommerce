@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class profileResponse(
     val code: Int,
-    val dataProfile: dataProfile,
+    val `data`: dataProfile,
     val message: String
 )

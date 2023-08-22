@@ -14,6 +14,7 @@ import com.martabak.ecommerce.network.data.registerResponse
 import com.martabak.ecommerce.utils.SharedPrefKeys.isLoggedIn
 import com.martabak.ecommerce.utils.SharedPrefKeys.login
 import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
+import com.martabak.ecommerce.utils.SharedPrefKeys.setUsername
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -43,6 +44,7 @@ class LoginViewModel @Inject constructor(
             try {
                 val response = apiService.postLogin(body)
                 storeTokens(response)
+                userPref.setUsername(response.data.userName)
                 userPref.login()
                 _serverValidity.value = true
             } catch (e: Exception) {

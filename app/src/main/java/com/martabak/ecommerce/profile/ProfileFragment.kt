@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.connectSuccess.observe(viewLifecycleOwner){
-            if(!it) {
+            if(it) {
                 view.findNavController().navigate(R.id.action_prelogin_to_postlogin)
             } else {
                 Toast.makeText(requireActivity(), viewModel.errorMessage, Toast.LENGTH_LONG)
