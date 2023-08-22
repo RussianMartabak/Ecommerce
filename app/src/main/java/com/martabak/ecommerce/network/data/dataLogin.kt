@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class dataLogin(
     val accessToken: String,
-    val expiresAt: Int,
     val refreshToken: String,
-    val userImage: String,
-    val userName: String
+    val expiresAt: Int,
+    val userName: String,
+    val userImage: String
 )

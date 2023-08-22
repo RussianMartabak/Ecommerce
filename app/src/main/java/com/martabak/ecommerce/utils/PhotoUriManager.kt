@@ -2,11 +2,9 @@ package com.martabak.ecommerce.utils
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.content.FileProvider
 import java.io.File
 
 class PhotoUriManager(private val appContext: Context) {
-
 
     fun buildNewUri(): Uri {
         val photosDir = File(appContext.cacheDir, PHOTOS_DIR)
@@ -17,7 +15,7 @@ class PhotoUriManager(private val appContext: Context) {
         return MyFileProvider.getUriForFile(appContext, authority, photoFile)
     }
 
-    fun uriToFile(uri : Uri) : File {
+    fun uriToFile(uri: Uri): File {
         val photosDir = File(appContext.cacheDir, PHOTOS_DIR)
         photosDir.mkdirs()
         val photoFile = File(photosDir, generateFilename())
@@ -26,7 +24,6 @@ class PhotoUriManager(private val appContext: Context) {
         photoFile.writeBytes(bytes)
         input.close()
         return photoFile
-
     }
 
     /**

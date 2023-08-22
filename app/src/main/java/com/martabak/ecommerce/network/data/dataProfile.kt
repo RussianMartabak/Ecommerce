@@ -4,6 +4,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class dataProfile(
-    val userImage: String,
-    val userName: String
+    val userName: String,
+    val userImage: String
 )

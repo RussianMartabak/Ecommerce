@@ -3,10 +3,10 @@ package com.martabak.ecommerce.main
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.martabak.ecommerce.R
@@ -14,7 +14,6 @@ import com.martabak.ecommerce.databinding.FragmentMainBinding
 import com.martabak.ecommerce.utils.SharedPrefKeys.getUsername
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -24,35 +23,32 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private var _binding : FragmentMainBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var userPref : SharedPreferences
+    lateinit var userPref: SharedPreferences
 
-
-    val navHostFragment by lazy {
+    private val navHostFragment by lazy {
         childFragmentManager.findFragmentById(R.id.mainNavHost) as NavHostFragment
     }
-    val navController by lazy {
+    private val navController by lazy {
         navHostFragment.navController
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val view = binding.root
-        //content here
-        //set bottom nav
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.bottomNav.setupWithNavController(navController)
         Log.d("zaky", "Current username = ${userPref.getUsername()}")
         binding.Toolbar.title = userPref.getUsername()
-
-        // Inflate the layout for this fragment
-        return view
     }
-
-
 }

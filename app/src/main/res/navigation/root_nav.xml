@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_nav"
     app:startDestination="@+id/prelogin_nav">
 
@@ -11,7 +10,6 @@
         android:id="@+id/action_prelogin_to_postlogin"
         app:destination="@+id/postlogin"
         app:popUpTo="@+id/root_nav"
-        app:popUpToInclusive="true"
-        />
+        app:popUpToInclusive="true" />
 
 </navigation>

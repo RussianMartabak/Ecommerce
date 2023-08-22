@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val userPref : SharedPreferences) : ViewModel() {
+class HomeViewModel @Inject constructor(val userPref: SharedPreferences) : ViewModel() {
 
     fun logout() {
         userPref.putAccessToken("")

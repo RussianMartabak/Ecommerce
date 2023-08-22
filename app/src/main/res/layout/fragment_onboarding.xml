@@ -5,7 +5,7 @@
     android:id="@+id/consLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".prelogin.Onboarding">
+    tools:context=".prelogin.onboarding.OnboardingFragment">
 
     <Button
         android:id="@+id/skipButton"
@@ -14,19 +14,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Lewati"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toRegisterButton" />
 
     <Button
         android:id="@+id/toRegisterButton"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Gabung Sekarang"
+        app:layout_constraintBottom_toTopOf="@id/indicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/onboardPager" />
@@ -34,10 +35,9 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboardPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="75dp"
-        android:layout_marginBottom="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="32dp"
+        app:layout_constraintBottom_toTopOf="@id/toRegisterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,23 +47,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toRegisterButton"
         app:tabBackground="@drawable/tab_selector"
-        android:background="@android:color/transparent"
         app:tabGravity="center"
         app:tabIndicatorHeight="0px" />
 
     <Button
         android:id="@+id/nextButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_marginBottom="16dp"
         android:text="Selanjutnya"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toRegisterButton" />
 

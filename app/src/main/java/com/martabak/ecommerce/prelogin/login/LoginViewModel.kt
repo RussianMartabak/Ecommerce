@@ -1,4 +1,4 @@
-package com.martabak.ecommerce.prelogin
+package com.martabak.ecommerce.prelogin.login
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -7,10 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.martabak.ecommerce.network.backendApiService
+import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.loginBody
 import com.martabak.ecommerce.network.data.loginResponse
-import com.martabak.ecommerce.network.data.registerResponse
 import com.martabak.ecommerce.utils.SharedPrefKeys.isLoggedIn
 import com.martabak.ecommerce.utils.SharedPrefKeys.login
 import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
@@ -22,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val apiService: backendApiService,
+    val apiService: ApiService,
     val userPref: SharedPreferences
 ) : ViewModel() {
     var emailValidity = false
@@ -35,9 +34,10 @@ class LoginViewModel @Inject constructor(
     var serverValidity: LiveData<Boolean> = _serverValidity
 
 
-    fun isLoggedIn() : Boolean {
+    fun isLoggedIn(): Boolean {
         return userPref.isLoggedIn()
     }
+
     fun Login() {
         val body = loginBody(email!!, "", password!!)
         viewModelScope.launch {
@@ -77,7 +77,6 @@ class LoginViewModel @Inject constructor(
         //put access token
         userPref.putAccessToken(responseBody.data.accessToken)
     }
-
 
 
 }

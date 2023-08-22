@@ -6,28 +6,29 @@ import android.util.Log
 object SharedPrefKeys {
 
     fun SharedPreferences.registerInstall() {
-        this.edit().apply{
+        this.edit().apply {
             putBoolean(FIRST_INSTALL, false)
             apply()
         }
     }
-    fun SharedPreferences.isFirstTime() : Boolean {
+
+    fun SharedPreferences.isFirstTime(): Boolean {
         return this.getBoolean(FIRST_INSTALL, true)
     }
 
-    fun SharedPreferences.putAccessToken(token : String) {
-        this.edit().apply{
+    fun SharedPreferences.putAccessToken(token: String) {
+        this.edit().apply {
             putString(ACCESS_TOKEN, token)
             apply()
         }
     }
 
-    fun SharedPreferences.getBearerToken() : String {
+    fun SharedPreferences.getBearerToken(): String {
         val accessToken = this.getString(ACCESS_TOKEN, "")
         return "Bearer $accessToken"
     }
 
-    fun SharedPreferences.isLoggedIn() : Boolean {
+    fun SharedPreferences.isLoggedIn(): Boolean {
         return this.getBoolean(LOGGED_IN, false)
     }
 
@@ -40,18 +41,18 @@ object SharedPrefKeys {
     }
 
     fun SharedPreferences.logout() {
-        this.edit().apply{
+        this.edit().apply {
             putBoolean(LOGGED_IN, false)
             apply()
         }
     }
 
-    fun SharedPreferences.getUsername() : String {
+    fun SharedPreferences.getUsername(): String {
         return this.getString(USERNAME, "")!!
     }
 
     fun SharedPreferences.login() {
-        this.edit().apply{
+        this.edit().apply {
             putBoolean(LOGGED_IN, true)
             apply()
         }
