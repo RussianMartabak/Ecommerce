@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
         //content here
+        if (viewModel.isLoggedIn()) findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
         binding.loginButton.isEnabled = false
         binding.registerButton.setOnClickListener {
             view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)

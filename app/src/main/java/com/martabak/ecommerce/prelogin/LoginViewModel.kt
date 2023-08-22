@@ -11,6 +11,7 @@ import com.martabak.ecommerce.network.backendApiService
 import com.martabak.ecommerce.network.data.loginBody
 import com.martabak.ecommerce.network.data.loginResponse
 import com.martabak.ecommerce.network.data.registerResponse
+import com.martabak.ecommerce.utils.SharedPrefKeys.isLoggedIn
 import com.martabak.ecommerce.utils.SharedPrefKeys.login
 import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +33,10 @@ class LoginViewModel @Inject constructor(
 
     var serverValidity: LiveData<Boolean> = _serverValidity
 
+
+    fun isLoggedIn() : Boolean {
+        return userPref.isLoggedIn()
+    }
     fun Login() {
         val body = loginBody(email!!, "", password!!)
         viewModelScope.launch {

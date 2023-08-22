@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.martabak.ecommerce.R
-
+import com.martabak.ecommerce.databinding.FragmentMainBinding
 
 
 /**
@@ -16,13 +18,28 @@ import com.martabak.ecommerce.R
  */
 class MainFragment : Fragment() {
 
+    private var _binding : FragmentMainBinding? = null
+    private val binding get() = _binding!!
+
+    val navHostFragment by lazy {
+        childFragmentManager.findFragmentById(R.id.mainNavHost) as NavHostFragment
+    }
+    val navController by lazy {
+        navHostFragment.navController
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        val view = binding.root
+        //content here
+        //set bottom nav
+        binding.bottomNav.setupWithNavController(navController)
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return view
     }
 
 

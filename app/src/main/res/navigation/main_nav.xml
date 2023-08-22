@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.martabak.ecommerce.main.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.martabak.ecommerce.main.wishlist.WishlistFragment"
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist" />
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="com.martabak.ecommerce.main.store.StoreFragment"
+        android:label="Store"
+        tools:layout="@layout/fragment_store" />
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.martabak.ecommerce.main.transaction.TransactionFragment"
+        android:label="Store"
+        tools:layout="@layout/fragment_transaction" />
+</navigation>
