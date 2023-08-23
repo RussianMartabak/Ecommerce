@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentOnboardingBinding
+import com.martabak.ecommerce.repository.UserRepository
+import com.martabak.ecommerce.utils.SharedPrefKeys.isFirstTime
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -19,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class OnboardingFragment : Fragment() {
+class OnboardingFragment (): Fragment() {
 
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +35,9 @@ class OnboardingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
+        if (!viewModel.isFirst) {
+            findNavController().navigate(R.id.skip_to_login)
+        }
         return binding.root
     }
 

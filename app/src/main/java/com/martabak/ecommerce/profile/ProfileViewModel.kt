@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
+import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.SharedPrefKeys.setUsername
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,31 +18,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    val apiService: ApiService,
-    val userPref: SharedPreferences
+
+
+    val UserRep: UserRepository
 ) : ViewModel() {
 
     private var _connectSuccess: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var connectSuccess: LiveData<Boolean> = _connectSuccess
 
+    private var _nowLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var nowLoading : LiveData<Boolean> = _nowLoading
+
     var selectedFile: File? = null
     var errorMessage = ""
 
+    fun hasUsername() : Boolean {
+        return UserRep.hasUsername
+    }
+
     fun uploadProfile(username: String) {
         viewModelScope.launch {
-            val userName = MultipartBody.Part
-                .createFormData("userName", username)
-            val userImage = MultipartBody.Part
-                .createFormData("userImage", selectedFile!!.name, selectedFile!!.asRequestBody())
-            try {
-                apiService.createProfile(userName, userImage)
-                userPref.setUsername(username)
-                _connectSuccess.value = true
-            } catch (e: Exception) {
-                Log.d("zaky", "Upload Profile post exception: ${e.message}")
-                errorMessage = e.message!!
-                _connectSuccess.value = false
-            }
+            _nowLoading.value = true
+            val result = UserRep.uploadProfile(username, selectedFile!!)
+            errorMessage = result.message
+            _connectSuccess.value = result.success
+            _nowLoading.value = false
         }
     }
 }

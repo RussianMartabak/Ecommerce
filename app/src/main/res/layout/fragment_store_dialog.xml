@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.store.StoreFragment">
+    >
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:hint="Search"
-        app:startIconDrawable="@drawable/search_icon">
+        app:startIconDrawable="@drawable/search_icon"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchEditText"

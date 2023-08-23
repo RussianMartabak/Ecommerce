@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
+
 
 /**
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -33,7 +36,7 @@ class HomeFragment : Fragment() {
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
-            (requireActivity() as MainActivity).logout()
+
         }
     }
 }

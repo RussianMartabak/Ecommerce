@@ -5,7 +5,7 @@ import android.util.Log
 
 object SharedPrefKeys {
 
-    fun SharedPreferences.registerInstall() {
+    fun SharedPreferences.registerEntry() {
         this.edit().apply {
             putBoolean(FIRST_INSTALL, false)
             apply()
@@ -49,6 +49,11 @@ object SharedPrefKeys {
 
     fun SharedPreferences.getUsername(): String {
         return this.getString(USERNAME, "")!!
+    }
+
+    fun SharedPreferences.hasUsername(): Boolean {
+        val result = this.getUsername()
+        return result != ""
     }
 
     fun SharedPreferences.login() {

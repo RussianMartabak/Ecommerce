@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
+import com.martabak.ecommerce.repository.UserRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -26,7 +27,7 @@ object HiltModule {
     @Provides
     fun provideApiService(moshi: Moshi, client: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.153.125:5000/")
+            .baseUrl("http://192.168.1.101:8000/")
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
@@ -58,5 +59,11 @@ object HiltModule {
     @Provides
     fun provideSP(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("localPrefData", Context.MODE_PRIVATE)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(userPref : SharedPreferences, api : ApiService) : UserRepository {
+        return UserRepository(userPref, api)
     }
 }

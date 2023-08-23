@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
+import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.SharedPrefKeys.login
 import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     val apiService: ApiService,
-    val userPref: SharedPreferences
+    val userPref: SharedPreferences,
+    val userRepository: UserRepository
 ) : ViewModel() {
+
 
     var email: String? = null
     var password: String? = null
@@ -37,7 +40,9 @@ class RegisterViewModel @Inject constructor(
                 val response = apiService.postRegister(body)
                 userPref.login()
                 storeTokens(response)
+                userRepository.registerEntry() // should be moved to repository but thats later
                 _validity.value = true
+
             } catch (e: Exception) {
                 if (e is HttpException) {
                     if (e.code() == 400) {

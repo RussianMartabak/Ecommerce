@@ -74,6 +74,7 @@ class RegisterFragment : Fragment() {
         //observe if register successful
         viewModel.validity.observe(viewLifecycleOwner) {
             if (it) {
+                viewModel
                 view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
