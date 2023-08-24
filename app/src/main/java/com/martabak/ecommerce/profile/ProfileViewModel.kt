@@ -39,7 +39,7 @@ class ProfileViewModel @Inject constructor(
     fun uploadProfile(username: String) {
         viewModelScope.launch {
             _nowLoading.value = true
-            val result = UserRep.uploadProfile(username, selectedFile!!)
+            val result = UserRep.uploadProfile(username, selectedFile)
             errorMessage = result.message
             _connectSuccess.value = result.success
             _nowLoading.value = false

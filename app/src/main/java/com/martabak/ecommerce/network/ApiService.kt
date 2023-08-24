@@ -5,12 +5,14 @@ import com.martabak.ecommerce.network.data.loginResponse
 import com.martabak.ecommerce.network.data.profileResponse
 import com.martabak.ecommerce.network.data.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
+import com.martabak.ecommerce.network.data.SearchResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -26,6 +28,21 @@ interface ApiService {
     @Multipart
     suspend fun createProfile(
         @Part userName: MultipartBody.Part,
-        @Part userImage: MultipartBody.Part
+        @Part userImage: MultipartBody.Part?
     ): profileResponse
+
+    @POST("search")
+    suspend fun postSearch(@Query("query") query: String): SearchResponse
+
+    @POST("products")
+    suspend fun postProducts(
+        @Query("search") search: String,
+        @Query("brand") brand: String?,
+        @Query("lowest") lowest: Int?,
+        @Query("highest") highest: Int?,
+        @Query("sort") sort: String?,
+        @Query("limit") limit : Int?,
+        @Query("page") page : Int?
+    )
+
 }

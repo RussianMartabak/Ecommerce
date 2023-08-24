@@ -63,6 +63,15 @@ object SharedPrefKeys {
         }
     }
 
+    fun SharedPreferences.clearUserData() {
+        this.edit().apply{
+            remove(LOGGED_IN)
+            remove(ACCESS_TOKEN)
+            remove(USERNAME)
+            apply()
+        }
+    }
+
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"

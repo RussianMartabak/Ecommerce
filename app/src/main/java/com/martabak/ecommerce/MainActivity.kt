@@ -12,8 +12,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-
+    private val navHostFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.rootNavHost) as NavHostFragment
+    }
+    private val navController by lazy {navHostFragment.navController}
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -24,5 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun logout() {
+        navController.navigate(R.id.action_to_postlogin_prelogin)
+    }
 
 }

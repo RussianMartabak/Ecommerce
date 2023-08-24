@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
+import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -65,5 +66,11 @@ object HiltModule {
     @Provides
     fun provideUserRepository(userPref : SharedPreferences, api : ApiService) : UserRepository {
         return UserRepository(userPref, api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStoreRepository(apiService : ApiService) : StoreRepository {
+        return StoreRepository(apiService)
     }
 }

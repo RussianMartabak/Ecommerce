@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStoreBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -37,16 +33,25 @@ class StoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.searchEditText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
-                showDialog()
+                showSearchDialog()
                 v.clearFocus()
 
             }
+        }
+
+        binding.filterChip.setOnClickListener {
+            showBottomSheet()
         }
         //content here boys
 
     }
 
-    private fun showDialog() {
+    private fun showBottomSheet() {
+        val modalBottomSheet = FilterDialogFragment()
+        modalBottomSheet.show(childFragmentManager, FilterDialogFragment.TAG)
+    }
+
+    private fun showSearchDialog() {
         val fragmentManager = childFragmentManager
         val newFragment = SearchDialogFragment()
         val transaction = fragmentManager.beginTransaction()

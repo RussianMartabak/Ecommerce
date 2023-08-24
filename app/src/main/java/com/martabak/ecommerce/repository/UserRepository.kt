@@ -25,19 +25,24 @@ class UserRepository @Inject constructor(
         userPref.registerEntry()
     }
 
-    suspend fun uploadProfile(username: String, selectedFile: File) : ResultData {
+    suspend fun uploadProfile(username: String, selectedFile: File?) : ResultData<Int> {
+        val filename = selectedFile?.name
+        val fileBody = selectedFile?.asRequestBody()
         val userName = MultipartBody.Part
             .createFormData("userName", username)
-        val userImage = MultipartBody.Part
-            .createFormData("userImage", selectedFile.name, selectedFile.asRequestBody())
+        val userImage = if (filename == null || fileBody == null) {
+            MultipartBody.Part.createFormData("userImage", "")
+        } else {
+            MultipartBody.Part.createFormData("userImage", filename, fileBody)
+        }
         try {
             apiService.createProfile(userName, userImage)
             userPref.setUsername(username)
-            return ResultData("", true)
+            return ResultData<Int>("", true)
         } catch (e: Exception) {
             Log.d("zaky", "Upload Profile post exception: ${e.message}")
             val errorMessage = e.message!!
-            return ResultData(errorMessage, false)
+            return ResultData<Int>(errorMessage, false)
         }
     }
 

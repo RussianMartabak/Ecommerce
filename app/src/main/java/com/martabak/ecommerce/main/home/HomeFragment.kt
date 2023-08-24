@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
-
+            (requireActivity() as MainActivity).logout()
         }
     }
 }

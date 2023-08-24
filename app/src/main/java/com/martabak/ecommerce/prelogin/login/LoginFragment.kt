@@ -64,6 +64,7 @@ class LoginFragment : Fragment() {
         viewModel.serverValidity.observe(viewLifecycleOwner) {
 
             if (it) {
+
                 view.findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
