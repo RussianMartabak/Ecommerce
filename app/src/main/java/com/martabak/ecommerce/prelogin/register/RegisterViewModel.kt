@@ -1,17 +1,14 @@
 package com.martabak.ecommerce.prelogin.register
 
 import android.content.SharedPreferences
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
 import com.martabak.ecommerce.repository.UserRepository
-import com.martabak.ecommerce.utils.SharedPrefKeys.login
-import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
+import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -34,15 +31,9 @@ class RegisterViewModel @Inject constructor(
     var validity: LiveData<Boolean> = _validity
 
     fun register() {
-        val body = registerBody(email!!, "", password!!)
         viewModelScope.launch {
             try {
-                val response = apiService.postRegister(body)
-                userPref.login()
-                storeTokens(response)
-                userRepository.registerEntry() // should be moved to repository but thats later
-                _validity.value = true
-
+                val response = userRepository.register(email!!, password!!)
             } catch (e: Exception) {
                 if (e is HttpException) {
                     if (e.code() == 400) {

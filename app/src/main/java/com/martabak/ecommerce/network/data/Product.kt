@@ -1,6 +1,6 @@
 package com.martabak.ecommerce.network.data
 
-data class Item(
+data class Product(
     val productId: String,
     val productName: String,
     val productPrice: Int,

@@ -3,7 +3,7 @@ package com.martabak.ecommerce.utils
 import android.content.SharedPreferences
 import android.util.Log
 
-object SharedPrefKeys {
+object GlobalUtils {
 
     fun SharedPreferences.registerEntry() {
         this.edit().apply {
@@ -72,9 +72,21 @@ object SharedPrefKeys {
         }
     }
 
+    fun SharedPreferences.setRefreshToken(rToken : String) {
+        this.edit().apply{
+            putString(REFRESH_TOKEN, rToken)
+            apply()
+        }
+    }
+
+    fun SharedPreferences.getRefreshToken() : String {
+        return this.getString(REFRESH_TOKEN, "")!!
+    }
+
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
+    val BASE_URL = "http://192.168.1.10:8000"
 }

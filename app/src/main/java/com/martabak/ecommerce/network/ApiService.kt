@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.network
 
+import com.martabak.ecommerce.network.data.ProductsResponse
 import com.martabak.ecommerce.network.data.loginBody
 import com.martabak.ecommerce.network.data.loginResponse
 import com.martabak.ecommerce.network.data.profileResponse
@@ -43,6 +44,6 @@ interface ApiService {
         @Query("sort") sort: String?,
         @Query("limit") limit : Int?,
         @Query("page") page : Int?
-    )
+    ) : ProductsResponse
 
 }

@@ -66,6 +66,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+
+    implementation("androidx.paging:paging-runtime:3.1.1")
 }
 
 kapt {

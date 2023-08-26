@@ -12,10 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentOnboardingBinding
-import com.martabak.ecommerce.repository.UserRepository
-import com.martabak.ecommerce.utils.SharedPrefKeys.isFirstTime
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.

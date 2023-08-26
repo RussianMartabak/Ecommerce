@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentMainBinding
-import com.martabak.ecommerce.utils.SharedPrefKeys.getUsername
+import com.martabak.ecommerce.utils.GlobalUtils.getUsername
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

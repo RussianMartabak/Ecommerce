@@ -1,6 +1,5 @@
 package com.martabak.ecommerce.profile
 
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,10 +19,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentProfileBinding
 import com.martabak.ecommerce.utils.PhotoUriManager
-import com.martabak.ecommerce.utils.SharedPrefKeys.hasUsername
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -43,6 +39,7 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         if(viewModel.hasUsername()) {
+            Log.d("zaky", "username exist: ${viewModel.hasUsername()}")
             findNavController().navigate(R.id.action_prelogin_to_postlogin)
         }
         return binding.root

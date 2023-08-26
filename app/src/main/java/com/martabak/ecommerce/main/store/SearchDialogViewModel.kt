@@ -18,6 +18,14 @@ class SearchDialogViewModel @Inject constructor(val storeRepository: StoreReposi
     private var _items: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
     var items: LiveData<List<String>> = _items
 
+    var searchQuery = storeRepository.liveSearchKey
+    fun sendQuery(q : String) {
+        storeRepository.setSearchQuery(q)
+        viewModelScope.launch {
+            storeRepository.getProducts()
+        }
+    }
+
     fun getSearchItems(query : String) {
         viewModelScope.launch {
             _nowLoading.value = true

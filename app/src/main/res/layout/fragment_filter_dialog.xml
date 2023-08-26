@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/sortGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -44,6 +44,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/review"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/sales"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/lowest"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +68,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/highest"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,10 +86,10 @@
         android:text="Kategori"
         android:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/sortGroup" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup2"
+        android:id="@+id/catGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -136,7 +140,7 @@
         android:text="Harga"
         android:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup2" />
+        app:layout_constraintTop_toBottomOf="@+id/catGroup" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutLowest"
@@ -181,7 +185,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/sendButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

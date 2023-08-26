@@ -4,16 +4,17 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStoreDialogBinding
+import com.martabak.ecommerce.main.store.adapter.SearchListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,11 +44,26 @@ class SearchDialogFragment : DialogFragment() {
         setStyle(STYLE_NO_TITLE, R.style.FullScreenDialogStyle)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         var query = ""
-        val searchItemListAdapter = SearchListAdapter {
-            Log.d("zaky", "clicked on $it")
+        viewModel.searchQuery.observe(viewLifecycleOwner) {
+            binding.searchEditText.setText(it)
+            binding.searchEditText.requestFocus()
         }
+        val searchItemListAdapter = SearchListAdapter {
+            viewModel.sendQuery(it)
+            dismiss()
+        }
+
+        binding.searchEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                viewModel.sendQuery(binding.searchEditText.text.toString())
+                dismiss()
+                return@OnKeyListener true
+            }
+            false
+        })
+
         binding.searchEditText.requestFocus()
         binding.loadingIndicator.visibility = View.GONE
         val bounceManager = object : CountDownTimer(1000, 100) {
@@ -60,6 +76,7 @@ class SearchDialogFragment : DialogFragment() {
             }
 
         }
+
 
         binding.searchRecyclerView.adapter = searchItemListAdapter
         binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireActivity())

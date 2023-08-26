@@ -10,10 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.loginBody
 import com.martabak.ecommerce.network.data.loginResponse
-import com.martabak.ecommerce.utils.SharedPrefKeys.isLoggedIn
-import com.martabak.ecommerce.utils.SharedPrefKeys.login
-import com.martabak.ecommerce.utils.SharedPrefKeys.putAccessToken
-import com.martabak.ecommerce.utils.SharedPrefKeys.setUsername
+import com.martabak.ecommerce.utils.GlobalUtils.isLoggedIn
+import com.martabak.ecommerce.utils.GlobalUtils.login
+import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
+import com.martabak.ecommerce.utils.GlobalUtils.setUsername
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

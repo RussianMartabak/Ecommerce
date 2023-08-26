@@ -7,6 +7,7 @@ import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
+import com.martabak.ecommerce.utils.GlobalUtils
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -23,16 +24,23 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HiltModule {
 
-    //what matters is the return type, everything else doesn't matter
     @Singleton
     @Provides
-    fun provideApiService(moshi: Moshi, client: OkHttpClient): ApiService {
-        return Retrofit.Builder()
-            .baseUrl("http://192.168.1.101:8000/")
-            .client(client)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(ApiService::class.java)
+    fun provideChucker(@ApplicationContext context : Context) : ChuckerInterceptor {
+        return ChuckerInterceptor(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHttpClient(
+        tokenInterceptor: TokenInterceptor,
+        chucker : ChuckerInterceptor
+    ): OkHttpClient {
+        val client = OkHttpClient.Builder().apply {
+            addInterceptor(chucker)
+            addInterceptor(tokenInterceptor)
+        }.build()
+        return client
     }
 
     @Singleton
@@ -42,19 +50,18 @@ object HiltModule {
             .add(KotlinJsonAdapterFactory())
             .build()
     }
-
+    //what matters is the return type, everything else doesn't matter
     @Singleton
     @Provides
-    fun provideHttpClient(
-        @ApplicationContext context: Context,
-        tokenInterceptor: TokenInterceptor
-    ): OkHttpClient {
-        val client = OkHttpClient.Builder().apply {
-            addInterceptor(ChuckerInterceptor(context))
-            addInterceptor(tokenInterceptor)
-        }.build()
-        return client
+    fun provideApiService(moshi: Moshi, client: OkHttpClient): ApiService {
+        return Retrofit.Builder()
+            .baseUrl(GlobalUtils.BASE_URL)
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(ApiService::class.java)
     }
+
 
     @Singleton
     @Provides

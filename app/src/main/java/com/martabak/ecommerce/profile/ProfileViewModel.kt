@@ -1,18 +1,12 @@
 package com.martabak.ecommerce.profile
 
-import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.repository.UserRepository
-import com.martabak.ecommerce.utils.SharedPrefKeys.setUsername
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
