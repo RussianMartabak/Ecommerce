@@ -3,9 +3,18 @@ package com.martabak.ecommerce.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.liveData
+import com.martabak.ecommerce.main.store.ProductsPagingSource
+import com.martabak.ecommerce.main.store.data.ProductQuery
 import com.martabak.ecommerce.network.ApiService
+import com.martabak.ecommerce.network.data.Product
 import com.martabak.ecommerce.network.data.ProductsResponse
 import com.martabak.ecommerce.network.data.ResultData
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 class StoreRepository @Inject constructor(val apiService: ApiService) {
@@ -41,7 +50,8 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
         updateChipsList()
     }
 
-    suspend fun getProducts(page : Int = 1) : ProductsResponse {
+    //must be demolished in the near future
+    suspend fun getProducts(page: Int = 1): ProductsResponse {
         try {
             val response =
                 apiService.postProducts(searchKey, brand, lowest, highest, sort, LIMIT, page)
@@ -54,9 +64,23 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
 
     }
 
+    //function that return transformed livedata as pagingdata
+    fun getProductsPagingData(
+        query: ProductQuery,
+        scope: CoroutineScope
+    ): LiveData<PagingData<Product>> {
+        val pagingData = Pager(
+            PagingConfig(pageSize = 6, initialLoadSize = 6, prefetchDistance = 1)
+        ) {
+            ProductsPagingSource(apiService, query)
+        }.liveData.cachedIn(scope)
+        return pagingData
+    }
+
+
     // use this to notify viewmodels
-    private var _productsPagingUpdateCycle : MutableLiveData<Int> = MutableLiveData<Int>()
-    var productsPagingUpdateCycle : LiveData<Int> = _productsPagingUpdateCycle
+    private var _productsPagingUpdateCycle: MutableLiveData<Int> = MutableLiveData<Int>()
+    var productsPagingUpdateCycle: LiveData<Int> = _productsPagingUpdateCycle
 
     //function to construct array
     private fun updateChipsList() {

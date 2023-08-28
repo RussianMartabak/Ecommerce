@@ -34,6 +34,7 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = userRepository.register(email!!, password!!)
+                _validity.value = true
             } catch (e: Exception) {
                 if (e is HttpException) {
                     if (e.code() == 400) {

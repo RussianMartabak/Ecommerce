@@ -44,7 +44,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/review"
+            android:id="@+id/rating"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sales"
+            android:id="@+id/sale"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sortGroup" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/catGroup"
+        android:id="@+id/brandGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -101,6 +101,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/apple"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,6 +109,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/asus"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,6 +117,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/dell"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,6 +125,7 @@
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/lenovo"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -140,7 +144,7 @@
         android:text="Harga"
         android:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/catGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/brandGroup" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutLowest"
@@ -208,4 +212,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTitle"
         android:visibility="invisible"/>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/poppins"
+        android:text="Reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

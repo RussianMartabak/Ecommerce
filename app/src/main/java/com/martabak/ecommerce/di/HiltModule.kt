@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.network.ApiService
+import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
@@ -34,11 +35,13 @@ object HiltModule {
     @Provides
     fun provideHttpClient(
         tokenInterceptor: TokenInterceptor,
-        chucker : ChuckerInterceptor
+        chucker : ChuckerInterceptor,
+        authenticator : TokenAuthenticator
     ): OkHttpClient {
         val client = OkHttpClient.Builder().apply {
             addInterceptor(chucker)
             addInterceptor(tokenInterceptor)
+            authenticator(authenticator)
         }.build()
         return client
     }

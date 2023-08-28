@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -15,9 +18,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FilterDialogFragment : BottomSheetDialogFragment() {
 
-    private val viewModel: FilterDialogViewModel by viewModels()
+    private val viewModel : StoreViewModel by activityViewModels()
     private var _binding: FragmentFilterDialogBinding? = null
     private val binding get() = _binding!!
+    //filter vars
+    private var brand : String? = null
+    private var lowest : Int? = null
+    private var highest : Int? = null
+    private var sort : String? = null
+
+    //for display
+    private var sortText : String = ""
+    private var brandText : String = ""
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,28 +48,79 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var brand : String? = null
-        var lowest : Int? = null
-        var highest : Int? = null
-        var sort : String? = null
+        //pre filling
+        viewModel.selectedSort?.let{
+            binding.sortGroup.check(it)
+        }
+        viewModel.selectedBrand?.let{
+            binding.brandGroup.check(it)
+        }
+        //reset everything
+        binding.resetButton.setOnClickListener {
+            brand = null
+            highest = null
+            lowest = null
+            sort = null
+            viewModel.resetFilters()
+            binding.brandGroup.clearCheck()
+            binding.sortGroup.clearCheck()
+        }
 
 
         binding.sortGroup.setOnCheckedStateChangeListener { group, checkedId ->
-            var value = group.findViewById<Chip>(checkedId[0]).text.toString()
-            when(value) {
-                "Ulasan" -> sort = "rating"
-                "Penjualan" -> sort = "sale"
-                "Harga Terendah" -> sort = "lowest"
-                "Harga Tertinggi" -> sort = "highest"
+            if (!(checkedId.size == 0)) {
+                //send id to viewmodel
+                //send sort http key to fragment
+                //send sort string to viewmodel for making a string list
+                var selectedChip = group.findViewById<Chip>(checkedId[0])
+                viewModel.selectedSort = selectedChip.id
+                //text thats on view already, send to filterchips livedata
+                sortText = selectedChip.text.toString()
+                //value thats needed for http ops nad send back to fragment
+                sort = convertSorttoKey(sortText)
             }
+
+        }
+        binding.brandGroup.setOnCheckedStateChangeListener {group, checkedId ->
+            if (!(checkedId.size == 0)) {
+                var selectedChip = group.findViewById<Chip>(checkedId[0])
+                viewModel.selectedBrand = selectedChip.id
+                brandText = selectedChip.text.toString()
+                brand = brandText.lowercase()
+            }
+
         }
 
         binding.sendButton.setOnClickListener {
-            viewModel.sendProductQuery(brand, lowest, highest, sort)
+            //make the list
+            viewModel.updateFilterChipList(makeFilterList())
+            setFragmentResult("filters",
+                bundleOf(
+                    "sortKey" to sort,
+                    "brandKey" to brand
+                    )
+                )
             dismiss()
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun convertSorttoKey(text : String) : String {
+        return when(text) {
+            "Ulasan" -> "rating"
+            "Penjualan" -> "sale"
+            "Harga Terendah" -> "lowest"
+            "Harga Tertinggi" -> "highest"
+            else -> ""
+        }
+    }
+
+    private fun makeFilterList() : List<String> {
+        val list = mutableListOf<String>()
+        sort?.let{list.add(sortText)}
+        brand?.let{list.add(brandText)}
+        return list
     }
 
     companion object {

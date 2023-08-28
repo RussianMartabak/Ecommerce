@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputTextEmailReg"
+        android:id="@+id/inputTextEmailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputTextPasswordReg"
+        android:id="@+id/inputTextPasswordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -64,7 +64,7 @@
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputTextEmailReg">
+        app:layout_constraintTop_toBottomOf="@+id/inputTextEmailLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTextPassword"
@@ -84,7 +84,7 @@
         android:text="Masuk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputTextPasswordReg" />
+        app:layout_constraintTop_toBottomOf="@+id/inputTextPasswordLayout" />
 
     <TextView
         android:id="@+id/textView2"

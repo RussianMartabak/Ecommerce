@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.loginBody
+import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.loginResponse
 import com.martabak.ecommerce.utils.GlobalUtils.isLoggedIn
 import com.martabak.ecommerce.utils.GlobalUtils.login
@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun Login() {
-        val body = loginBody(email!!, "", password!!)
+        val body = LoginBody(email!!, password!!, "")
         viewModelScope.launch {
             try {
                 val response = apiService.postLogin(body)

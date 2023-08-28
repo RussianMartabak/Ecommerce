@@ -56,6 +56,11 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:$2.6.0")
 
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+
+    // Coil
+    implementation("io.coil-kt:coil:1.1.1")
+
     // Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 

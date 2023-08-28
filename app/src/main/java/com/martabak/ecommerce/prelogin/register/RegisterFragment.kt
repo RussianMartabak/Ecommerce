@@ -49,11 +49,11 @@ class RegisterFragment : Fragment() {
         binding.inputEmail.doOnTextChanged { text, _, _, _ ->
             if (!validateEmail(text.toString())) {
                 validEmail = true
-                binding.inputTextEmailReg.isErrorEnabled = false
+                binding.inputTextEmailLayout.isErrorEnabled = false
             } else {
                 validEmail = false
-                binding.inputTextEmailReg.error = "Invalid Email"
-                binding.inputTextEmailReg.isErrorEnabled = true
+                binding.inputTextEmailLayout.error = "Invalid Email"
+                binding.inputTextEmailLayout.isErrorEnabled = true
             }
             viewModel.email = text.toString()
             checkButton()
@@ -61,11 +61,11 @@ class RegisterFragment : Fragment() {
         binding.inputPassword.doOnTextChanged { text, _, _, _ ->
             if (!validatePassword(text.toString())) {
                 validPass = true
-                binding.inputTextPasswordReg.isErrorEnabled = false
+                binding.inputTextPasswordLayout.isErrorEnabled = false
             } else {
                 validPass = false
-                binding.inputTextPasswordReg.error = "Password must be at least 8 characters"
-                binding.inputTextPasswordReg.isErrorEnabled = true
+                binding.inputTextPasswordLayout.error = "Password must be at least 8 characters"
+                binding.inputTextPasswordLayout.isErrorEnabled = true
             }
             viewModel.password = text.toString()
             checkButton()
@@ -74,7 +74,6 @@ class RegisterFragment : Fragment() {
         //observe if register successful
         viewModel.validity.observe(viewLifecycleOwner) {
             if (it) {
-                viewModel
                 view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)

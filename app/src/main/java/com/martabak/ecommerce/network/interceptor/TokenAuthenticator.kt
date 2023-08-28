@@ -4,9 +4,14 @@ package com.martabak.ecommerce.network.interceptor
 import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.network.ApiService
+import com.martabak.ecommerce.network.data.prelogin.RefreshBody
 import com.martabak.ecommerce.utils.GlobalUtils
 import com.martabak.ecommerce.utils.GlobalUtils.getRefreshToken
+import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
+import com.martabak.ecommerce.utils.GlobalUtils.setRefreshToken
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.internal.synchronized
+import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -23,8 +28,7 @@ class TokenAuthenticator @Inject constructor(
     private val chucker : ChuckerInterceptor
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        var refreshToken = userPref.getRefreshToken()
-
+        var currentRefreshToken = userPref.getRefreshToken()
         //first build a okhttp client
         val client = OkHttpClient.Builder().apply {
             addInterceptor(tokenInterceptor)
@@ -40,7 +44,27 @@ class TokenAuthenticator @Inject constructor(
             .create(ApiService::class.java)
         // send refresh request and get the new accesstoken and refreshtoken into SP
 
-        TODO("Not yet implemented")
-        // will re return original request with the correct access token
+        val refreshResponse =
+            runBlocking {
+            //wtf to do when error
+            try {
+                return@runBlocking retrofit.postRefresh(RefreshBody(currentRefreshToken))
+            } catch (e: Throwable) {
+                return@runBlocking null
+            }
+        }
+
+        if (refreshResponse == null) {
+            return null
+        } else {
+            userPref.putAccessToken(refreshResponse.data.accessToken)
+            userPref.setRefreshToken(refreshResponse.data.refreshToken)
+            //after all set re send the old request with new bearer token
+            return response.request.newBuilder()
+                .header("Authorization", "Bearer ${refreshResponse.data.accessToken}")
+                .build()
+        }
+
+
     }
 }

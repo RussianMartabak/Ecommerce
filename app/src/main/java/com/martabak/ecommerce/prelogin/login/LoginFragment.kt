@@ -46,19 +46,25 @@ class LoginFragment : Fragment() {
         }
 
         binding.inputTextEmail.doOnTextChanged { text, start, before, count ->
-            var validInput = viewModel.validateEmail(text.toString())
-            if (validInput == false) {
-                binding.inputTextEmail.error = "Invalid Email"
+            var invalidInput = !viewModel.validateEmail(text.toString())  && text.toString().isNotEmpty()
+            if (invalidInput) {
+                binding.inputTextEmailLayout.isErrorEnabled = true
+                binding.inputTextEmailLayout.error = "Invalid Email"
+            } else {
+                binding.inputTextEmailLayout.isErrorEnabled = false
             }
-            binding.loginButton.isEnabled = validInput && viewModel.passwordValidity
+            binding.loginButton.isEnabled = !invalidInput && viewModel.passwordValidity
         }
 
         binding.inputTextPassword.doOnTextChanged { text, start, before, count ->
-            var validInput = viewModel.validatePassword(text.toString())
-            if (validInput == false) {
-                binding.inputTextPassword.error = "Invalid Password"
+            var invalidInput = !viewModel.validatePassword(text.toString()) && text.toString().isNotEmpty()
+            if (invalidInput) {
+                binding.inputTextPasswordLayout.isErrorEnabled = true
+                binding.inputTextPasswordLayout.error = "Invalid Password"
+            } else {
+                binding.inputTextPasswordLayout.isErrorEnabled = false
             }
-            binding.loginButton.isEnabled = validInput && viewModel.emailValidity
+            binding.loginButton.isEnabled = !invalidInput && viewModel.emailValidity
         }
 
         viewModel.serverValidity.observe(viewLifecycleOwner) {
