@@ -15,8 +15,16 @@ import java.text.NumberFormat
 class ProductsPagingAdapter() :
     PagingDataAdapter<Product, ProductsPagingAdapter.ProductViewHolder>(ProductDiffCallback) {
 
+    private var gridMode = false
+    fun setGridMode(b : Boolean) {
+        gridMode = b
+        notifyDataSetChanged()
+    }
+
+
     class ProductViewHolder(private var binding: ProductLinearItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(product: Product) {
             binding.productTitle.text = product.productName

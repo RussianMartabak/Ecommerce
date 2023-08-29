@@ -18,18 +18,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FilterDialogFragment : BottomSheetDialogFragment() {
 
-    private val viewModel : StoreViewModel by activityViewModels()
+    private val viewModel: StoreViewModel by activityViewModels()
     private var _binding: FragmentFilterDialogBinding? = null
     private val binding get() = _binding!!
+
     //filter vars
-    private var brand : String? = null
-    private var lowest : Int? = null
-    private var highest : Int? = null
-    private var sort : String? = null
+    private var brand: String? = null
+    private var lowest: Int? = null
+    private var highest: Int? = null
+    private var sort: String? = null
 
     //for display
-    private var sortText : String = ""
-    private var brandText : String = ""
+    private var sortText: String = ""
+    private var brandText: String = ""
 
 
     override fun onCreateView(
@@ -49,11 +50,17 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //pre filling
-        viewModel.selectedSort?.let{
+        viewModel.selectedSort?.let {
             binding.sortGroup.check(it)
         }
-        viewModel.selectedBrand?.let{
+        viewModel.selectedBrand?.let {
             binding.brandGroup.check(it)
+        }
+        viewModel.lowest?.let {
+            binding.editTextLowest.setText(it.toString())
+        }
+        viewModel.highest?.let {
+            binding.editTextHighest.setText(it.toString())
         }
         //reset everything
         binding.resetButton.setOnClickListener {
@@ -64,9 +71,11 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             viewModel.resetFilters()
             binding.brandGroup.clearCheck()
             binding.sortGroup.clearCheck()
+            binding.editTextHighest.setText("")
+            binding.editTextLowest.setText("")
         }
 
-
+        //listeners for data input
         binding.sortGroup.setOnCheckedStateChangeListener { group, checkedId ->
             if (!(checkedId.size == 0)) {
                 //send id to viewmodel
@@ -81,7 +90,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             }
 
         }
-        binding.brandGroup.setOnCheckedStateChangeListener {group, checkedId ->
+        binding.brandGroup.setOnCheckedStateChangeListener { group, checkedId ->
             if (!(checkedId.size == 0)) {
                 var selectedChip = group.findViewById<Chip>(checkedId[0])
                 viewModel.selectedBrand = selectedChip.id
@@ -93,21 +102,28 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
         binding.sendButton.setOnClickListener {
             //make the list
+            if (binding.editTextLowest.text.toString().isNotEmpty()) lowest =
+                binding.editTextLowest.text.toString().toInt()
+            if (binding.editTextHighest.text.toString().isNotEmpty()) highest =
+                binding.editTextHighest.text.toString().toInt()
             viewModel.updateFilterChipList(makeFilterList())
-            setFragmentResult("filters",
+            setFragmentResult(
+                "filters",
                 bundleOf(
                     "sortKey" to sort,
-                    "brandKey" to brand
-                    )
+                    "brandKey" to brand,
+                    "lowestKet" to lowest,
+                    "highestKey" to highest
                 )
+            )
             dismiss()
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun convertSorttoKey(text : String) : String {
-        return when(text) {
+    fun convertSorttoKey(text: String): String {
+        return when (text) {
             "Ulasan" -> "rating"
             "Penjualan" -> "sale"
             "Harga Terendah" -> "lowest"
@@ -116,10 +132,12 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun makeFilterList() : List<String> {
+    private fun makeFilterList(): List<String> {
         val list = mutableListOf<String>()
-        sort?.let{list.add(sortText)}
-        brand?.let{list.add(brandText)}
+        sort?.let { list.add(sortText) }
+        brand?.let { list.add(brandText) }
+        lowest?.let { list.add("< $it") }
+        highest?.let { list.add("> $it") }
         return list
     }
 

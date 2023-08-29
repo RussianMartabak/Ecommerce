@@ -66,14 +66,13 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
 
     //function that return transformed livedata as pagingdata
     fun getProductsPagingData(
-        query: ProductQuery,
-        scope: CoroutineScope
+        query: ProductQuery
     ): LiveData<PagingData<Product>> {
         val pagingData = Pager(
-            PagingConfig(pageSize = 6, initialLoadSize = 6, prefetchDistance = 1)
+            PagingConfig(pageSize = 10, initialLoadSize = 10, prefetchDistance = 1)
         ) {
             ProductsPagingSource(apiService, query)
-        }.liveData.cachedIn(scope)
+        }.liveData
         return pagingData
     }
 

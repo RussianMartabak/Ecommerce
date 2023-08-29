@@ -28,7 +28,7 @@ class ProductsPagingSource (
                 search = query.search,
                 brand = query.brand,
                 highest = query.highest,
-                limit = 6,
+                limit = 10,
                 page = nextPageNumber,
                 lowest = query.lowest,
                 sort = query.sort
@@ -36,7 +36,7 @@ class ProductsPagingSource (
             return LoadResult.Page(
                 data = response.data.items,
                 prevKey = null,
-                nextKey = if (response.data.pageIndex == response.data.totalPages) null else response.data.pageIndex + 1
+                nextKey = if (nextPageNumber == response.data.totalPages) null else nextPageNumber + 1
             )
         } catch (e: Throwable) {
             Log.d("zaky", "PagingSource is throwing ${e.message!!}")

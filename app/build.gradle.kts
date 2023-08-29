@@ -73,6 +73,7 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
 
     implementation("androidx.paging:paging-runtime:3.1.1")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }
 
 kapt {

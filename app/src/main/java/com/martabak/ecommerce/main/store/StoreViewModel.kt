@@ -23,8 +23,8 @@ class StoreViewModel @Inject constructor(
 ) : ViewModel() {
     var query = ""
     private var brand: String? = null
-    private var lowest: Int? = null
-    private var highest: Int? = null
+    var lowest: Int? = null
+    var highest: Int? = null
     private var sort: String? = null
 
     //storing selected chip IDs
@@ -39,10 +39,10 @@ class StoreViewModel @Inject constructor(
         _queryObject.value = ProductQuery()
     }
 
-    var updatedPagingSource = queryObject.switchMap { productQuery ->
-        storeRepository.getProductsPagingData(productQuery, viewModelScope)
+    val updatedPagingSource = queryObject.switchMap { productQuery ->
+        storeRepository.getProductsPagingData(productQuery)
 
-    }// .cachedin here not repo
+    }.cachedIn(viewModelScope)
 
     //observe/transform the query object
 
@@ -99,6 +99,16 @@ class StoreViewModel @Inject constructor(
                 highest = highest,
                 sort = sort
             )
+        _queryObject.value = newQuery
+    }
+    fun callRefresh() {
+        val newQuery = ProductQuery(
+            search = query,
+            brand = brand,
+            lowest = lowest,
+            highest = highest,
+            sort = sort
+        )
         _queryObject.value = newQuery
     }
 
