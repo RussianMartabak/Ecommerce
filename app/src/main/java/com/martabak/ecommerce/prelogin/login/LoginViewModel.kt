@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.loginResponse
+import com.martabak.ecommerce.network.data.prelogin.loginResponse
 import com.martabak.ecommerce.utils.GlobalUtils.isLoggedIn
 import com.martabak.ecommerce.utils.GlobalUtils.login
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken

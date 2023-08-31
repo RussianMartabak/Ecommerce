@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.main.store
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +54,14 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         viewModel.selectedSort?.let {
             binding.sortGroup.check(it)
         }
+        sort = viewModel.sort
+        viewModel.sort?.let{sortText = convertKeytoSort(it) }
         viewModel.selectedBrand?.let {
             binding.brandGroup.check(it)
+        }
+        brand = viewModel.brand
+        viewModel.brand?.let{
+            brandText = it.replaceFirstChar { it.uppercase() }
         }
         viewModel.lowest?.let {
             binding.editTextLowest.setText(it.toString())
@@ -107,6 +114,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             if (binding.editTextHighest.text.toString().isNotEmpty()) highest =
                 binding.editTextHighest.text.toString().toInt()
             viewModel.updateFilterChipList(makeFilterList())
+            Log.d("zaky", "on dialog fragment Highest: $highest , Lowest: $lowest")
             setFragmentResult(
                 "filters",
                 bundleOf(
@@ -128,6 +136,15 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             "Penjualan" -> "sale"
             "Harga Terendah" -> "lowest"
             "Harga Tertinggi" -> "highest"
+            else -> ""
+        }
+    }
+    fun convertKeytoSort(text: String): String {
+        return when (text) {
+            "rating" -> "Ulasan"
+            "sale" -> "Penjualan"
+            "lowest" -> "Harga Terendah"
+            "highest" -> "Harga Tertinggi"
             else -> ""
         }
     }

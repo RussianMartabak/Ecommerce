@@ -1,4 +1,4 @@
-package com.martabak.ecommerce.network.data
+package com.martabak.ecommerce.network.data.prelogin
 
 import com.squareup.moshi.JsonClass
 

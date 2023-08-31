@@ -8,47 +8,42 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.martabak.ecommerce.R
+import com.martabak.ecommerce.databinding.ProductGridItemBinding
 import com.martabak.ecommerce.databinding.ProductLinearItemBinding
 import com.martabak.ecommerce.network.data.Product
 import java.text.NumberFormat
 
-class ProductsPagingAdapter() :
-    PagingDataAdapter<Product, ProductsPagingAdapter.ProductViewHolder>(ProductDiffCallback) {
+class ProductsPagingAdapter(val onClick : (String) -> Unit) :
+    PagingDataAdapter<Product, RecyclerView.ViewHolder>(ProductDiffCallback) {
 
     private var gridMode = false
-    fun setGridMode(b : Boolean) {
+    fun setGridMode(b: Boolean) {
         gridMode = b
         notifyDataSetChanged()
     }
 
 
-    class ProductViewHolder(private var binding: ProductLinearItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-        fun bind(product: Product) {
-            binding.productTitle.text = product.productName
-            val formattedPrice = NumberFormat.getInstance().format(product.productPrice).replace(",", ".")
-            binding.productPrice.text = "Rp$formattedPrice"
-            binding.productSeller.text = product.store
-            val formattedRating = String.format("%.1f", product.productRating)
-            binding.productInfo.text = "$formattedRating | Terjual ${product.sale}"
-            val imgUri = product.image.toUri().buildUpon().scheme("http").build()
-            binding.productImage.load(imgUri) {
-                placeholder(R.drawable.thumbnail)
-                error(R.drawable.thumbnail)
-            }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = getItem(position)
+        if (holder is LinearViewHolder) {
+            holder.bind(item!!)
+        } else {
+            (holder as GridViewHolder).bind(item!!)
         }
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item!!)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = ProductLinearItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding)
+        if (gridMode) {
+            val binding =
+                ProductGridItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return GridViewHolder(binding, onClick)
+        } else {
+            val binding =
+                ProductLinearItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return LinearViewHolder(binding, onClick)
+        }
+
     }
 }
 

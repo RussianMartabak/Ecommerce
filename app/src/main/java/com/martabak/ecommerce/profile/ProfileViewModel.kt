@@ -27,7 +27,7 @@ class ProfileViewModel @Inject constructor(
     var errorMessage = ""
 
     fun hasUsername() : Boolean {
-        return UserRep.hasUsername
+        return UserRep.hasUsername()
     }
 
     fun uploadProfile(username: String) {

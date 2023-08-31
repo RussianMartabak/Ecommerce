@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".product_detail.ProductDetailFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topBarDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:navigationIcon="@drawable/arrow_nav_16"
+            app:title="Detail Produk" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/materialDivider7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider7"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        android:id="@+id/scrollLayout"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollConstraint">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imagePager"
+                android:layout_width="match_parent"
+                android:layout_height="309dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/imageIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/imagePager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0px" />
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp9999"
+                app:layout_constraintTop_toBottomOf="@+id/imagePager"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@+id/scrollConstraint"
+                android:layout_marginStart="16dp"
+                android:textSize="20dp"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="600"
+                />
+
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="ASUS ROG"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productPrice" />
+
+            <TextView
+                android:id="@+id/productSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins"
+                android:text="Terjual "
+                android:textFontWeight="400"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productTitle" />
+
+            <ImageView
+                android:id="@+id/reviewBox"
+                android:layout_width="90dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/review_box"
+                app:layout_constraintStart_toEndOf="@+id/productSale"
+                app:layout_constraintTop_toBottomOf="@+id/productTitle"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/smallStar"
+                app:layout_constraintTop_toTopOf="@+id/reviewBox"
+                android:layout_marginTop="3dp"
+                app:layout_constraintStart_toStartOf="@+id/reviewBox"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/star"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 (1)"
+                android:id="@+id/upperReviewText"
+                app:layout_constraintTop_toTopOf="@+id/reviewBox"
+                android:layout_marginTop="2dp"
+                app:layout_constraintEnd_toEndOf="@+id/reviewBox"
+                android:layout_marginEnd="8dp"
+                android:textSize="12dp"
+                android:fontFamily="@font/poppins"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/reviewBox"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/variantText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pilihan varian"
+                app:layout_constraintTop_toBottomOf="@+id/divider1"
+                android:layout_marginTop="12dp"
+                android:textSize="16dp"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="500"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/variantChipGroup"
+                app:singleSelection="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/variantText" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/divider3"
+                app:layout_constraintTop_toBottomOf="@+id/variantText"
+                android:layout_marginTop="52dp"
+                />
+
+            <TextView
+                android:id="@+id/deskripsiProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Deskripsi Produk"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="500"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/deskripsiProduk"
+                android:layout_marginTop="8dp"
+                android:id="@+id/productDescription"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="text"
+                android:fontFamily="@font/poppins"
+                android:textSize="14dp"
+                />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/productDescription"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ulasanBuyer"
+                app:layout_constraintTop_toBottomOf="@+id/divider4"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="500"
+                android:text="Ulasan pembeli"
+                />
+
+            <Button
+                android:id="@+id/allReviewButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/poppins"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:text="Lihat Semua"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/star"
+                android:id="@+id/bigStar"
+                app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"
+                android:layout_marginTop="13dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:id="@+id/reviewBigText"
+                app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"
+                android:layout_marginTop="11dp"
+                android:textSize="20dp"
+                android:textFontWeight="600"
+                android:text="4.5"
+                app:layout_constraintStart_toEndOf="@+id/bigStar"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/superSmallRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"
+                android:layout_marginTop="21dp"
+                android:textSize="10dp"
+                android:textFontWeight="400"
+                android:fontFamily="@font/poppins"
+                android:text="/5.0"
+                app:layout_constraintStart_toEndOf="@+id/reviewBigText"/>
+
+            <TextView
+                android:id="@+id/productPopularity"
+                android:text="100 orang menyukai ini"
+                android:textSize="12dp"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="600"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toEndOf="@+id/superSmallRating"
+                android:layout_marginStart="32dp"
+                />
+
+            <TextView
+                android:id="@+id/ratingOverview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/productPopularity"
+                android:layout_marginTop="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toEndOf="@+id/superSmallRating"
+                android:layout_marginStart="32dp"
+                android:text="2 rating - 2 Ulasan"
+                android:fontFamily="@font/poppins"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="18dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="+ Keranjang"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

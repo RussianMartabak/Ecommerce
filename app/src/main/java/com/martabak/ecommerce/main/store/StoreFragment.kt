@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -13,12 +14,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStoreBinding
+import com.martabak.ecommerce.main.MainFragment
 import com.martabak.ecommerce.main.store.adapter.ProductsLoadStateAdapter
 import com.martabak.ecommerce.main.store.adapter.ProductsPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,11 +41,12 @@ class StoreFragment : Fragment() {
     private var _binding: FragmentStoreBinding? = null
     private val binding get() = _binding!!
     private val viewModel: StoreViewModel by activityViewModels()
+
     //params for bottomsheet
-    private var brand : String? = null
-    private var lowest : Int? = null
-    private var highest : Int? = null
-    private var sort : String? = null
+    private var brand: String? = null
+    private var lowest: Int? = null
+    private var highest: Int? = null
+    private var sort: String? = null
     private var gridMode = false
 
 
@@ -50,12 +55,16 @@ class StoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel.cancelProductViewing()
         _binding = FragmentStoreBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val grandParentFrag =
+            (this.requireParentFragment() as NavHostFragment).requireParentFragment()
+        binding.gridShimmerLayout.isVisible = false
         binding.linearShimmerLayout.isVisible = false
         binding.errorLayout.isVisible = false
         val fragmentManager = childFragmentManager
@@ -74,11 +83,12 @@ class StoreFragment : Fragment() {
         fragmentManager.setFragmentResultListener(
             "filters",
             viewLifecycleOwner
-        ) {_, bundle ->
+        ) { _, bundle ->
             sort = bundle.getString("sortKey")
             brand = bundle.getString("brandKey")
-            lowest = bundle.getInt("lowestKey")
-            highest = bundle.getInt("highestKey")
+            lowest = if (bundle.getInt("lowestKey") == 0) null else bundle.getInt("lowestKey")
+            highest = if (bundle.getInt("highestKey") == 0) null else bundle.getInt("highestKey")
+            Log.d("zaky", "on StoreFragment Highest: $highest, Lowest: $lowest")
             viewModel.setFilters(_brand = brand, _sort = sort, _lowest = lowest, _highest = highest)
         }
 
@@ -90,18 +100,16 @@ class StoreFragment : Fragment() {
             }
         }
 
-        binding.gridSelector.setOnClickListener {
-            gridMode = !gridMode
-            Log.d("zaky", "switching to gridMode ${gridMode}")
-            if (gridMode) {
-                binding.gridSelector.setImageResource(R.drawable.grid_view)
-            } else {
-                binding.gridSelector.setImageResource(R.drawable.format_list_bulleted)
-            }
-        }
 
-        val pagingAdapter = ProductsPagingAdapter()
-        binding.productRecycler.adapter = pagingAdapter.withLoadStateFooter(ProductsLoadStateAdapter())
+        val pagingAdapter = ProductsPagingAdapter { id ->
+            //store product ID on repo then move away from this scheisse
+            Log.d("zaky", "selected ID: $id")
+            viewModel.selectProductID(id)
+            (grandParentFrag as MainFragment).findNavController()
+                .navigate(R.id.action_mainFragment_to_productDetailFragment)
+        }
+        binding.productRecycler.adapter =
+            pagingAdapter.withLoadStateFooter(ProductsLoadStateAdapter())
         binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
         //listen to recycler load state
         viewLifecycleOwner.lifecycleScope.launch {
@@ -116,11 +124,38 @@ class StoreFragment : Fragment() {
                     binding.productRecycler.isVisible = true
                     binding.errorLayout.isVisible = false
                     binding.linearShimmerLayout.isVisible = false
+                    binding.gridShimmerLayout.isVisible = false
                 }
-
-
-
-
+            }
+        }
+        binding.gridSelector.setOnClickListener {
+            gridMode = !gridMode
+            Log.d("zaky", "switching to gridMode ${gridMode}")
+            if (gridMode) {
+                binding.gridSelector.setImageResource(R.drawable.grid_view)
+                val gridManager = GridLayoutManager(requireActivity(), 2)
+                val footerAdapter = ProductsLoadStateAdapter()
+                //change recycler to grid
+                pagingAdapter.setGridMode(true)
+                binding.productRecycler.layoutManager = gridManager
+                binding.productRecycler.adapter =
+                    pagingAdapter.withLoadStateFooter(footerAdapter)
+                gridManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if (position == pagingAdapter.itemCount && footerAdapter.itemCount > 0) {
+                            2
+                        } else {
+                            1
+                        }
+                    }
+                }
+            } else {
+                binding.gridSelector.setImageResource(R.drawable.format_list_bulleted)
+                //change to linear
+                pagingAdapter.setGridMode(false)
+                binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
+                binding.productRecycler.adapter =
+                    pagingAdapter.withLoadStateFooter(ProductsLoadStateAdapter())
             }
         }
 
@@ -145,12 +180,11 @@ class StoreFragment : Fragment() {
         }
 
 
-
         //listen to list then add all to chips in schip group
         viewModel.filterChips.observe(viewLifecycleOwner) { filterList ->
             binding.filterChipGroup.removeAllViews()
             filterList.forEach {
-                val newChip = Chip(requireActivity())
+                val newChip = Chip(requireActivity(), null, com.google.android.material.R.attr.chipStandaloneStyle)
                 val title = it
                 newChip.text = title
                 binding.filterChipGroup.addView(newChip)
@@ -165,6 +199,10 @@ class StoreFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
     private fun showBottomSheet() {
         val modalBottomSheet = FilterDialogFragment()
         modalBottomSheet.show(childFragmentManager, FilterDialogFragment.TAG)
@@ -181,19 +219,25 @@ class StoreFragment : Fragment() {
     }
 
     private fun showLoading() {
-        binding.linearShimmerLayout.isVisible = true
+        if (gridMode) {
+            binding.gridShimmerLayout.isVisible = true
+        } else {
+            binding.linearShimmerLayout.isVisible = true
+        }
+
         binding.productRecycler.isVisible = false
         binding.errorLayout.isVisible = false
     }
 
-    private fun showError(errorState : LoadState.Error) {
+    private fun showError(errorState: LoadState.Error) {
         binding.errorLayout.isVisible = true
         binding.productRecycler.isVisible = false
         binding.linearShimmerLayout.isVisible = false
+        binding.gridShimmerLayout.isVisible = false
 
-        if(errorState.error is HttpException) {
+        if (errorState.error is HttpException) {
             val httpError = errorState.error as HttpException
-            if(httpError.code() == 404) {
+            if (httpError.code() == 404) {
                 binding.errorTitle.text = "Empty"
                 binding.errorDetail.text = "Your requested data is unavailable"
             } else {

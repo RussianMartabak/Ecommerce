@@ -2,6 +2,7 @@ package com.martabak.ecommerce.network.interceptor
 
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
@@ -10,6 +11,7 @@ import com.martabak.ecommerce.utils.GlobalUtils.getRefreshToken
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
 import com.martabak.ecommerce.utils.GlobalUtils.setRefreshToken
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -27,7 +29,9 @@ class TokenAuthenticator @Inject constructor(
     private val tokenInterceptor: TokenInterceptor,
     private val chucker : ChuckerInterceptor
 ) : Authenticator {
+
     override fun authenticate(route: Route?, response: Response): Request? {
+
         var currentRefreshToken = userPref.getRefreshToken()
         //first build a okhttp client
         val client = OkHttpClient.Builder().apply {
@@ -45,14 +49,16 @@ class TokenAuthenticator @Inject constructor(
         // send refresh request and get the new accesstoken and refreshtoken into SP
 
         val refreshResponse =
-            runBlocking {
-            //wtf to do when error
-            try {
-                return@runBlocking retrofit.postRefresh(RefreshBody(currentRefreshToken))
-            } catch (e: Throwable) {
-                return@runBlocking null
+                runBlocking {
+                    //wtf to do when error
+                    try {
+                        return@runBlocking retrofit.postRefresh(RefreshBody(currentRefreshToken))
+                    } catch (e: Throwable) {
+                        Log.d("zaky", "Authenticator error: ${e.message!!}")
+                        return@runBlocking null
+                    }
             }
-        }
+
 
         if (refreshResponse == null) {
             return null

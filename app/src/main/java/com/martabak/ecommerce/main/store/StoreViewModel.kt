@@ -9,8 +9,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
+import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.main.store.data.ProductQuery
 import com.martabak.ecommerce.network.ApiService
+import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.StoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,13 +21,15 @@ import javax.inject.Inject
 @HiltViewModel
 class StoreViewModel @Inject constructor(
     val storeRepository: StoreRepository,
-    val apiService: ApiService
+    val apiService: ApiService,
+    val productRepository: ProductRepository,
+    val globalState : GlobalState
 ) : ViewModel() {
     var query = ""
-    private var brand: String? = null
+    var brand: String? = null
     var lowest: Int? = null
     var highest: Int? = null
-    private var sort: String? = null
+    var sort: String? = null
 
     //storing selected chip IDs
     var selectedBrand: Int? = null
@@ -33,6 +37,10 @@ class StoreViewModel @Inject constructor(
 
     private var _queryObject: MutableLiveData<ProductQuery> = MutableLiveData<ProductQuery>()
     var queryObject: LiveData<ProductQuery> = _queryObject
+
+    fun cancelProductViewing() {
+        globalState.inProductDetail = false
+    }
 
     // need an empty query object
     init {
@@ -119,6 +127,10 @@ class StoreViewModel @Inject constructor(
         selectedSort = null
         lowest = null
         highest = null
+    }
+
+    fun selectProductID(id : String) {
+        productRepository.selectedProductID = id
     }
 
 

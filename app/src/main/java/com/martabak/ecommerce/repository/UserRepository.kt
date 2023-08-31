@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.ResultData
-import com.martabak.ecommerce.network.data.registerBody
+import com.martabak.ecommerce.network.data.prelogin.registerBody
 import com.martabak.ecommerce.utils.GlobalUtils.hasUsername
 import com.martabak.ecommerce.utils.GlobalUtils.isFirstTime
 import com.martabak.ecommerce.utils.GlobalUtils.login
@@ -23,7 +23,9 @@ class UserRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     //marked for change
-    var hasUsername = userPref.hasUsername()
+    fun hasUsername() : Boolean {
+        return userPref.hasUsername()
+    }
 
     var firstEntry = userPref.isFirstTime()
     fun registerEntry() {

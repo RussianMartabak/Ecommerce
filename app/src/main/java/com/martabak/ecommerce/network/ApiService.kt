@@ -2,19 +2,23 @@ package com.martabak.ecommerce.network
 
 import com.martabak.ecommerce.network.data.ProductsResponse
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.loginResponse
+import com.martabak.ecommerce.network.data.prelogin.loginResponse
 import com.martabak.ecommerce.network.data.profileResponse
-import com.martabak.ecommerce.network.data.registerBody
+import com.martabak.ecommerce.network.data.prelogin.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
 import com.martabak.ecommerce.network.data.SearchResponse
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshResponse
+import com.martabak.ecommerce.network.data.product_detail.ProductDetailResponse
+import com.martabak.ecommerce.network.data.product_detail.ReviewResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -41,6 +45,12 @@ interface ApiService {
     @POST("search")
     suspend fun postSearch(@Query("query") query: String): SearchResponse
 
+    @GET("products/{id}")
+    suspend fun getProductDetail(@Path("id") productID : String) : ProductDetailResponse
+
+    @GET("review/{id}")
+    suspend fun getProductReviews(@Path("id") productID: String) : ReviewResponse
+
     @POST("products")
     suspend fun postProducts(
         @Query("search") search: String,
@@ -51,5 +61,6 @@ interface ApiService {
         @Query("limit") limit : Int?,
         @Query("page") page : Int?
     ) : ProductsResponse
+
 
 }

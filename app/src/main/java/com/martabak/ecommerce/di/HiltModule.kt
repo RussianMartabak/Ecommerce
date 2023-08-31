@@ -3,9 +3,11 @@ package com.martabak.ecommerce.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
+import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.GlobalUtils
@@ -83,4 +85,18 @@ object HiltModule {
     fun provideStoreRepository(apiService : ApiService) : StoreRepository {
         return StoreRepository(apiService)
     }
+
+    @Singleton
+    @Provides
+    fun provideProductRepository(apiService: ApiService) : ProductRepository {
+        return ProductRepository(apiService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGlobalStateClass() : GlobalState {
+        return GlobalState()
+    }
+
+
 }
