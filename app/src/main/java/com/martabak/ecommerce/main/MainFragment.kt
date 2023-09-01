@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentMainBinding
@@ -47,6 +48,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.Toolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.cart -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_cartFragment)
+                    true
+                }
+                else -> false
+            }
+        }
         binding.bottomNav.setupWithNavController(navController)
         Log.d("zaky", "Current username = ${userPref.getUsername()}")
         binding.Toolbar.title = userPref.getUsername()

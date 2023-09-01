@@ -74,6 +74,11 @@ dependencies {
 
     implementation("androidx.paging:paging-runtime:3.1.1")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
+    implementation("androidx.room:room-ktx:2.5.0")
 }
 
 kapt {

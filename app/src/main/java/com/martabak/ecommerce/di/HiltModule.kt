@@ -2,8 +2,11 @@ package com.martabak.ecommerce.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.GlobalState
+import com.martabak.ecommerce.database.AppDatabase
+import com.martabak.ecommerce.database.CartDao
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
@@ -11,6 +14,7 @@ import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.GlobalUtils
+import com.martabak.ecommerce.utils.GlobalUtils.DATABASE_NAME
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -29,7 +33,7 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideChucker(@ApplicationContext context : Context) : ChuckerInterceptor {
+    fun provideChucker(@ApplicationContext context: Context): ChuckerInterceptor {
         return ChuckerInterceptor(context)
     }
 
@@ -37,8 +41,8 @@ object HiltModule {
     @Provides
     fun provideHttpClient(
         tokenInterceptor: TokenInterceptor,
-        chucker : ChuckerInterceptor,
-        authenticator : TokenAuthenticator
+        chucker: ChuckerInterceptor,
+        authenticator: TokenAuthenticator
     ): OkHttpClient {
         val client = OkHttpClient.Builder().apply {
             addInterceptor(chucker)
@@ -55,6 +59,7 @@ object HiltModule {
             .add(KotlinJsonAdapterFactory())
             .build()
     }
+
     //what matters is the return type, everything else doesn't matter
     @Singleton
     @Provides
@@ -76,26 +81,39 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(userPref : SharedPreferences, api : ApiService) : UserRepository {
+    fun provideUserRepository(userPref: SharedPreferences, api: ApiService): UserRepository {
         return UserRepository(userPref, api)
     }
 
     @Singleton
     @Provides
-    fun provideStoreRepository(apiService : ApiService) : StoreRepository {
+    fun provideStoreRepository(apiService: ApiService): StoreRepository {
         return StoreRepository(apiService)
     }
 
     @Singleton
     @Provides
-    fun provideProductRepository(apiService: ApiService) : ProductRepository {
+    fun provideProductRepository(apiService: ApiService): ProductRepository {
         return ProductRepository(apiService)
     }
 
     @Singleton
     @Provides
-    fun provideGlobalStateClass() : GlobalState {
+    fun provideGlobalStateClass(): GlobalState {
         return GlobalState()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDb(@ApplicationContext context: Context): AppDatabase {
+        val db = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
+        return db
+    }
+
+    @Singleton
+    @Provides
+    fun provideCartDao(db : AppDatabase) : CartDao {
+        return db.cartDao()
     }
 
 

@@ -6,12 +6,16 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/white</item>
-        <item name="chipStyle">@style/Widget.Material3.Chip.Filter</item>
+        <item name="chipStandaloneStyle">@style/Widget.Material3.Chip.Filter</item>
 
     </style>
     <style name="FullScreenDialogStyle">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="ProductDetail.theme" parent="Base.Theme.Ecommerce">
+
     </style>
 
 

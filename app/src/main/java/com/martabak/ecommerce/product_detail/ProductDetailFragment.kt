@@ -1,26 +1,26 @@
 package com.martabak.ecommerce.product_detail
 
 import android.os.Bundle
-import android.view.KeyEvent
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentProductDetailBinding
 import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductDetailResponse
 import com.martabak.ecommerce.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.product_detail.adapters.ProductDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 
 
@@ -37,8 +37,8 @@ class ProductDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ProductDetailViewModel by viewModels()
     private var connectionOK = false
-    private var productData : Data? = null
-    private var variants : List<ProductVariant>? = null
+    private var productData: Data? = null
+    private var variants: List<ProductVariant>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,10 +79,21 @@ class ProductDetailFragment : Fragment() {
         binding.variantChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             val selectedChip = group.findViewById<Chip>(checkedIds[0])
             val variantName = selectedChip.text.toString()
-            val variantPrice = variants!!.first{it.variantName == variantName}.variantPrice
-            viewModel.updateProductPrice(variantPrice)
+            val variantObject = variants!!.first { it.variantName == variantName }
+            viewModel.updateProductPrice(variantObject.variantPrice)
             //get the price!!!
 
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            Log.d("zaky", "snackbar should appear right about now")
+            viewModel.eventFlow.collectLatest {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        binding.addCartButton.setOnClickListener {
+            viewModel.addToCart()
         }
 
         viewModel.currentPrice.observe(viewLifecycleOwner) {
@@ -120,22 +131,24 @@ class ProductDetailFragment : Fragment() {
 
     }
 
-    fun integerToRupiah(value : Int) : String {
+    fun integerToRupiah(value: Int): String {
         var price = NumberFormat.getInstance().format(value).replace(",", ".")
         return "Rp$price"
     }
 
-    fun doubleToRating(value : Double) : String {
+    fun doubleToRating(value: Double): String {
         return String.format("%.1f", value)
     }
 
 
-
-
     fun makeChips() {
         var chipIndex = 0
-        variants!!.forEach{
-            val newChip = Chip(requireActivity())
+        variants!!.forEach {
+            val newChip = Chip(
+                requireActivity(),
+                null,
+                com.google.android.material.R.attr.chipStandaloneStyle
+            )
             if (chipIndex == 0) {
                 newChip.isChecked = true
             }

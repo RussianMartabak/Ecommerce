@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentReviewBinding
+import com.martabak.ecommerce.product_detail.adapters.ReviewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -28,7 +30,7 @@ class ReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.getReviews()
+
         _binding = FragmentReviewBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
@@ -36,8 +38,14 @@ class ReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getReviews()
         binding.topBarDetail.setNavigationOnClickListener {
             findNavController().navigateUp()
+        }
+        viewModel.reviewData.observe(viewLifecycleOwner) {reviewList ->
+            val reviewAdapter = ReviewAdapter(reviewList)
+            binding.recyclerReview.adapter = reviewAdapter
+            binding.recyclerReview.layoutManager = LinearLayoutManager(requireActivity())
         }
     }
 

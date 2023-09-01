@@ -83,6 +83,7 @@ object GlobalUtils {
         return this.getString(REFRESH_TOKEN, "")!!
     }
 
+    val DATABASE_NAME = "app_db"
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"
