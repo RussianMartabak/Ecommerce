@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,8 +44,12 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.loadingCircle.isVisible = false
         binding.registerButton.isEnabled = false
+
+        viewModel.nowLoading.observe(viewLifecycleOwner) {
+            binding.loadingCircle.isVisible = it
+        }
 
         binding.inputEmail.doOnTextChanged { text, _, _, _ ->
             if (!validateEmail(text.toString())) {
@@ -72,7 +77,7 @@ class RegisterFragment : Fragment() {
         }
 
         //observe if register successful
-        viewModel.validity.observe(viewLifecycleOwner) {
+        viewModel.connectionStatus.observe(viewLifecycleOwner) {
             if (it) {
                 view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
             } else {

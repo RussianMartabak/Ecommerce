@@ -34,6 +34,15 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
+        if(viewModel.firstEntry) {
+            findNavController().navigate(R.id.action_loginFragment_to_onboarding)
+        }
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         //content here
         if (viewModel.isLoggedIn()) findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
         binding.loginButton.isEnabled = false
@@ -77,8 +86,6 @@ class LoginFragment : Fragment() {
                     .show()
             }
         }
-
-        return view
     }
 
 

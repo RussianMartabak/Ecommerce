@@ -28,13 +28,18 @@ class RegisterViewModel @Inject constructor(
     var errorMessage: String = ""
 
     private var _validity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    var validity: LiveData<Boolean> = _validity
+    var connectionStatus: LiveData<Boolean> = _validity
+
+    private var _nowLoading : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var nowLoading : LiveData<Boolean> = _nowLoading
 
     fun register() {
         viewModelScope.launch {
             try {
+                _nowLoading.value = true
                 val response = userRepository.register(email!!, password!!)
                 _validity.value = true
+                _nowLoading.value = false
             } catch (e: Exception) {
                 if (e is HttpException) {
                     if (e.code() == 400) {
@@ -43,6 +48,7 @@ class RegisterViewModel @Inject constructor(
                 } else {
                     errorMessage = "${e.message}"
                 }
+                _nowLoading.value = false
                 _validity.value = false
             }
         }

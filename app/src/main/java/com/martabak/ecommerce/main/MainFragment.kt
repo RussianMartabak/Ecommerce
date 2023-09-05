@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentMainBinding
 import com.martabak.ecommerce.utils.GlobalUtils.getUsername
@@ -26,6 +29,7 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+    private val viewModel : MainViewModel by viewModels()
 
     @Inject
     lateinit var userPref: SharedPreferences
@@ -44,8 +48,8 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
+    override fun  onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.Toolbar.setOnMenuItemClickListener {
@@ -57,7 +61,20 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
+
         binding.bottomNav.setupWithNavController(navController)
+        var badge = BadgeDrawable.create(requireActivity())
+        badge.isVisible = false
+        viewModel.cartItemCount.observe(viewLifecycleOwner) {
+            if (it > 0) {
+                badge.isVisible = true
+                badge.number = it
+            } else {
+                badge.isVisible = false
+            }
+        }
+
+        BadgeUtils.attachBadgeDrawable(badge, binding.Toolbar, R.id.cart)
         Log.d("zaky", "Current username = ${userPref.getUsername()}")
         binding.Toolbar.title = userPref.getUsername()
     }

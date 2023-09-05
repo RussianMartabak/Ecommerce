@@ -47,6 +47,7 @@ class StoreViewModel @Inject constructor(
         _queryObject.value = ProductQuery()
     }
 
+
     val updatedPagingSource = queryObject.switchMap { productQuery ->
         storeRepository.getProductsPagingData(productQuery)
 

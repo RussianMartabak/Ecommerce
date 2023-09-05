@@ -81,6 +81,7 @@ class ProductDetailFragment : Fragment() {
             val variantName = selectedChip.text.toString()
             val variantObject = variants!!.first { it.variantName == variantName }
             viewModel.updateProductPrice(variantObject.variantPrice)
+            viewModel.selectedVariantIndex = variants!!.indexOf(variantObject)
             //get the price!!!
 
         }

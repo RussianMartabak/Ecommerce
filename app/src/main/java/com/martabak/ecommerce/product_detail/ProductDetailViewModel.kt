@@ -65,28 +65,28 @@ class ProductDetailViewModel @Inject constructor(
             }
         }
     }
-    fun triggerSnackbar() {
+    fun triggerSnackbar(s : String) {
         viewModelScope.launch {
-            eventChannel.send("Item added to cart")
+            eventChannel.send(s)
         }
     }
     fun addToCart() {
         val newEntity = CartEntity(
             productName = _productData.value!!.productName,
-            productVariant = _productData.value!!.productVariant[0].variantName,
+            productVariant = _productData.value!!.productVariant[selectedVariantIndex].variantName,
             productStock = _productData.value!!.stock,
             isSelected = false,
             productImage = _productData.value!!.image[0],
-            productPrice = basePrice,
+            productPrice = productData.value!!.productPrice,
             productQuantity = 1,
             item_id = _productData.value!!.productId
         )
         viewModelScope.launch {
             try {
                 cartRepository.insertProductData(newEntity)
-                triggerSnackbar()
+                triggerSnackbar("Item added to cart")
             } catch(e: Throwable){
-                Log.d("zaky", "$e")
+                triggerSnackbar(e.message!!)
             }
 
         }

@@ -32,9 +32,7 @@ class OnboardingFragment (): Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
-        if (!viewModel.isFirst) {
-            findNavController().navigate(R.id.skip_to_login)
-        }
+
         return binding.root
     }
 

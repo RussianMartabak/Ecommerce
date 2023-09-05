@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.loginResponse
+import com.martabak.ecommerce.utils.GlobalUtils.isFirstTime
 import com.martabak.ecommerce.utils.GlobalUtils.isLoggedIn
 import com.martabak.ecommerce.utils.GlobalUtils.login
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
@@ -32,7 +33,7 @@ class LoginViewModel @Inject constructor(
     private var _serverValidity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     var serverValidity: LiveData<Boolean> = _serverValidity
-
+    var firstEntry = userPref.isFirstTime()
 
     fun isLoggedIn(): Boolean {
         return userPref.isLoggedIn()
