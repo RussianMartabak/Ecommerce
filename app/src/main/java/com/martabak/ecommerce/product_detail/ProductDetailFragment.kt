@@ -86,6 +86,18 @@ class ProductDetailFragment : Fragment() {
 
         }
 
+        binding.favButton.setOnClickListener {
+            viewModel.processWishlist()
+        }
+
+        viewModel.productOnWishlist.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.favButton.setImageResource(R.drawable.fav_24)
+            } else {
+                binding.favButton.setImageResource(R.drawable.fav_border_24)
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             Log.d("zaky", "snackbar should appear right about now")
             viewModel.eventFlow.collectLatest {

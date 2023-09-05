@@ -7,6 +7,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.database.AppDatabase
 import com.martabak.ecommerce.database.CartDao
+import com.martabak.ecommerce.database.WishlistDao
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
 import com.martabak.ecommerce.network.interceptor.TokenInterceptor
@@ -106,7 +107,9 @@ object HiltModule {
     @Singleton
     @Provides
     fun provideDb(@ApplicationContext context: Context): AppDatabase {
-        val db = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
+        val db = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
         return db
     }
 
@@ -114,6 +117,12 @@ object HiltModule {
     @Provides
     fun provideCartDao(db : AppDatabase) : CartDao {
         return db.cartDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideWishlistDao(db : AppDatabase) : WishlistDao {
+        return db.wishlistDao()
     }
 
 

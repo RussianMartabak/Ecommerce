@@ -65,6 +65,7 @@ class MainFragment : Fragment() {
         binding.bottomNav.setupWithNavController(navController)
         var badge = BadgeDrawable.create(requireActivity())
         badge.isVisible = false
+        BadgeUtils.attachBadgeDrawable(badge, binding.Toolbar, R.id.cart)
         viewModel.cartItemCount.observe(viewLifecycleOwner) {
             if (it > 0) {
                 badge.isVisible = true
@@ -74,7 +75,20 @@ class MainFragment : Fragment() {
             }
         }
 
-        BadgeUtils.attachBadgeDrawable(badge, binding.Toolbar, R.id.cart)
+        var bottomBadge = binding.bottomNav.getOrCreateBadge(R.id.wishlistFragment)
+        bottomBadge.isVisible = false
+        viewModel.wishItemCount.observe(viewLifecycleOwner) {
+            Log.d("zaky", "current wishlisted item is $it")
+            if (it > 0) {
+                bottomBadge.isVisible = true
+                bottomBadge.number = it
+            } else {
+                bottomBadge.isVisible = false
+            }
+        }
+
+
+
         Log.d("zaky", "Current username = ${userPref.getUsername()}")
         binding.Toolbar.title = userPref.getUsername()
     }

@@ -53,7 +53,7 @@ class UserRepository @Inject constructor(
         val userName = MultipartBody.Part
             .createFormData("userName", username)
         val userImage = if (filename == null || fileBody == null) {
-            MultipartBody.Part.createFormData("userImage", "")
+            null
         } else {
             MultipartBody.Part.createFormData("userImage", filename, fileBody)
         }
