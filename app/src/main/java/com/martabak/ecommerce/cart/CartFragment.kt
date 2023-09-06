@@ -79,6 +79,10 @@ class CartFragment : Fragment() {
             }
         }
 
+        binding.buyButton.setOnClickListener {
+            findNavController().navigate(R.id.action_cartFragment_to_checkoutFragment)
+        }
+
         binding.deleteSelectedButton.setOnClickListener {
             viewModel.deleteSelected()
         }
