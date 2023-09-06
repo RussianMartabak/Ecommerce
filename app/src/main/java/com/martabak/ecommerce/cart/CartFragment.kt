@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.cart
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -80,7 +81,10 @@ class CartFragment : Fragment() {
         }
 
         binding.buyButton.setOnClickListener {
-            findNavController().navigate(R.id.action_cartFragment_to_checkoutFragment)
+            val parcel = viewModel.parcelizeCartList()
+            val action = CartFragmentDirections.startCheckoutFromCart(parcel)
+            Log.d("zaky", "parcel content: $parcel")
+            findNavController().navigate(action)
         }
 
         binding.deleteSelectedButton.setOnClickListener {

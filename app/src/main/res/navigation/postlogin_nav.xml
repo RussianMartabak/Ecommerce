@@ -45,12 +45,19 @@
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action
-            android:id="@+id/action_cartFragment_to_checkoutFragment"
-            app:destination="@id/checkoutFragment" />
+            android:id="@+id/startCheckoutFromCart"
+            app:destination="@id/checkoutFragment">
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
         android:name="com.martabak.ecommerce.checkout.CheckoutFragment"
         android:label="fragment_checkout"
-        tools:layout="@layout/fragment_checkout" />
+        tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="checkoutData"
+            app:argType="com.martabak.ecommerce.network.data.checkout.CheckoutList"
+            />
+    </fragment>
 </navigation>

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/orderProductImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintCircleRadius="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,4 +60,53 @@
         android:textSize="10dp"
         app:layout_constraintStart_toEndOf="@+id/orderProductImage"
         app:layout_constraintTop_toBottomOf="@+id/orderProductVariant" />
+
+    <LinearLayout
+        android:id="@+id/segmentedButton"
+        android:orientation="horizontal"
+        android:background="@drawable/segmented_button"
+        android:layout_width="72dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/minusButton"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:fontFamily="@font/poppins"
+            android:text="-"
+            android:gravity="center"/>
+        <TextView
+            android:text="1"
+            android:id="@+id/orderQtyText"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:fontFamily="@font/poppins"
+            />
+        <TextView
+            android:id="@+id/plusButton"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="+"
+            android:fontFamily="@font/poppins"
+            android:textSize="12dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/orderProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Rp0"
+        android:fontFamily="@font/poppins"
+        android:textFontWeight="500"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/orderProductImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

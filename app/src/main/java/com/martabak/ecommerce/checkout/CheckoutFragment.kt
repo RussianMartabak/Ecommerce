@@ -1,16 +1,21 @@
 package com.martabak.ecommerce.checkout
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
+import com.martabak.ecommerce.checkout.adapters.CheckoutAdapter
+import com.martabak.ecommerce.databinding.FragmentCheckoutBinding
+import com.martabak.ecommerce.network.data.checkout.CheckoutData
+import com.martabak.ecommerce.network.data.checkout.CheckoutList
+import java.text.NumberFormat
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,16 +23,16 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CheckoutFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentCheckoutBinding? = null
+    private val binding get() = _binding!!
+    val args: CheckoutFragmentArgs by navArgs()
+    private val viewModel: CheckoutViewModel by viewModels()
+    private var adapter: CheckoutAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        viewModel.submitItemList(args.checkoutData.itemList)
+
     }
 
     override fun onCreateView(
@@ -35,26 +40,36 @@ class CheckoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkout, container, false)
+        _binding = FragmentCheckoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckoutFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheckoutFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecycler()
+        viewModel.itemList.observe(viewLifecycleOwner) {
+            adapter!!.submitList(it)
+            Log.d("zaky", it.toString())
+            //change price accordingly
+            binding.totalPriceText.text = sumPrice(it)
+        }
     }
+
+    private fun initRecycler() {
+        adapter = CheckoutAdapter(viewModel)
+        binding.checkoutRecycler.adapter = adapter
+        binding.checkoutRecycler.layoutManager = LinearLayoutManager(requireActivity())
+
+    }
+
+    private fun sumPrice(list: List<CheckoutData>): String {
+        var totalPrice = 0
+        list.forEach { data ->
+            totalPrice += data.productPrice * data.productQuantity
+        }
+        val formattedPrice = NumberFormat.getInstance().format(totalPrice).replace(",", ".")
+        return "Rp$formattedPrice"
+    }
+
+
 }
