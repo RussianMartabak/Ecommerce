@@ -7,6 +7,8 @@ import com.martabak.ecommerce.network.data.profileResponse
 import com.martabak.ecommerce.network.data.prelogin.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
 import com.martabak.ecommerce.network.data.SearchResponse
+import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
+import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.network.data.payment.PaymentResponse
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshResponse
@@ -65,6 +67,9 @@ interface ApiService {
 
     @GET("payment")
     suspend fun getPaymentMethods() : PaymentResponse
+
+    @POST("fulfillment")
+    suspend fun sendForFulfillment(@Body fulfillBody : FulfillmentBody) : FulfillmentResponse
 
 
 }

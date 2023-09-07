@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.ecommerce.network.data.checkout.CheckoutData
+import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import com.martabak.ecommerce.network.data.product_detail.Data
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.repository.ProductRepository
@@ -86,7 +88,7 @@ class ProductDetailViewModel @Inject constructor(
         //check whether on wishlist or not
         val onWishlist = _productOnWishlist.value!!
         viewModelScope.launch {
-            try{
+            try {
                 if (onWishlist) {
                     //remove
                     wishlistRepository.deleteItemById(_productData.value!!.productId)
@@ -120,7 +122,6 @@ class ProductDetailViewModel @Inject constructor(
     }
 
 
-
     fun addToCart() {
         val newEntity = CartEntity(
             productName = _productData.value!!.productName,
@@ -145,6 +146,20 @@ class ProductDetailViewModel @Inject constructor(
 
     fun getProductID(): String {
         return productRepository.selectedProductID!!
+    }
+
+    fun parcelizeProduct(): CheckoutList {
+        val data = _productData.value!!
+        val newCheckoutData = CheckoutData(
+            productPrice = data.productPrice,
+            productImage = data.image[0],
+            productQuantity = 1,
+            productName = data.productName,
+            productStock = data.stock,
+            productVariant = data.productVariant[selectedVariantIndex].variantName,
+            item_id = data.productId
+        )
+        return CheckoutList(listOf(newCheckoutData))
     }
 
 }

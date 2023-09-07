@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_productDetailFragment_to_reviewFragment"
             app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/startCheckoutFromProduct"
+            app:destination="@id/checkoutFragment" />
 
     </fragment>
     <fragment
@@ -59,5 +62,13 @@
             android:name="checkoutData"
             app:argType="com.martabak.ecommerce.network.data.checkout.CheckoutList"
             />
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.martabak.ecommerce.checkout.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
 </navigation>

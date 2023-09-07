@@ -104,8 +104,8 @@
 
                     <ImageView
                         android:id="@+id/payCardImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="48dp"
+                        android:layout_height="32dp"
 
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
@@ -192,7 +192,6 @@
 
     <Button
         android:fontFamily="@font/poppins"
-        android:enabled="false"
         android:id="@+id/confirmBuyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -201,6 +200,17 @@
         android:text="Bayar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:visibility="invisible"
+        android:id="@+id/checkoutLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider11"
+        android:indeterminate="true"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

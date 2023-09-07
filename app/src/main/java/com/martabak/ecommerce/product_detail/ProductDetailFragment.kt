@@ -99,7 +99,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            Log.d("zaky", "snackbar should appear right about now")
+
             viewModel.eventFlow.collectLatest {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
             }
@@ -111,6 +111,12 @@ class ProductDetailFragment : Fragment() {
 
         viewModel.currentPrice.observe(viewLifecycleOwner) {
             binding.productPrice.text = integerToRupiah(it)
+        }
+
+        binding.directBuyButton.setOnClickListener {
+            val paket = viewModel.parcelizeProduct()
+            val aktion = ProductDetailFragmentDirections.startCheckoutFromProduct(paket)
+            findNavController().navigate(aktion)
         }
 
         viewModel.productData.observe(viewLifecycleOwner) {
