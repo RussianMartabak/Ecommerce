@@ -7,6 +7,7 @@ import com.martabak.ecommerce.network.data.profileResponse
 import com.martabak.ecommerce.network.data.prelogin.registerBody
 import com.martabak.ecommerce.network.data.RegisterResponse
 import com.martabak.ecommerce.network.data.SearchResponse
+import com.martabak.ecommerce.network.data.payment.PaymentResponse
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshResponse
 import com.martabak.ecommerce.network.data.product_detail.ProductDetailResponse
@@ -61,6 +62,9 @@ interface ApiService {
         @Query("limit") limit : Int?,
         @Query("page") page : Int?
     ) : ProductsResponse
+
+    @GET("payment")
+    suspend fun getPaymentMethods() : PaymentResponse
 
 
 }

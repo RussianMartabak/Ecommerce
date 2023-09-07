@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.checkout.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -29,6 +30,7 @@ object CheckoutComparator : DiffUtil.ItemCallback<CheckoutData>() {
     }
 
     override fun areContentsTheSame(oldItem: CheckoutData, newItem: CheckoutData): Boolean {
-        return oldItem == newItem
+        Log.d("zaky", "Adapter arecontents the same: Old: $oldItem New: $newItem")
+        return oldItem.productQuantity == newItem.productQuantity
     }
 }

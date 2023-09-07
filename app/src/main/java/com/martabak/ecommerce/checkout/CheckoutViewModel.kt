@@ -20,7 +20,7 @@ class CheckoutViewModel : ViewModel() {
         //get the object
         val target = _itemList.value!!.first{it.item_id == id}
         val targetIndex = _itemList.value!!.indexOf(target)
-        val listCopy = _itemList.value!!.toMutableList()
+        val listCopy : List<CheckoutData> = deepCopyList(_itemList.value!!)
         if (listCopy[targetIndex].productStock != 0) {
             listCopy[targetIndex].productQuantity += 1
             listCopy[targetIndex].productStock -= 1
@@ -32,12 +32,21 @@ class CheckoutViewModel : ViewModel() {
     fun decreaseItemCount(id : String) {
         val target = _itemList.value!!.first{it.item_id == id}
         val targetIndex = _itemList.value!!.indexOf(target)
-        val listCopy = _itemList.value!!.toMutableList()
+        val listCopy : List<CheckoutData> = deepCopyList(_itemList.value!!)
         if (listCopy[targetIndex].productQuantity > 1) {
             listCopy[targetIndex].productStock += 1
             listCopy[targetIndex].productQuantity -= 1
             _itemList.value = listCopy
         }
     }
+
+    private fun deepCopyList(list : List<CheckoutData>) : List<CheckoutData> {
+        val newList = mutableListOf<CheckoutData>()
+        list.forEach { it ->
+            newList.add(it.copy())
+        }
+        return newList
+    }
+
 
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
@@ -27,7 +28,6 @@ class CheckoutFragment : Fragment() {
     private val binding get() = _binding!!
     val args: CheckoutFragmentArgs by navArgs()
     private val viewModel: CheckoutViewModel by viewModels()
-    private var adapter: CheckoutAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,19 +46,24 @@ class CheckoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        var adapter = CheckoutAdapter(viewModel)
         viewModel.itemList.observe(viewLifecycleOwner) {
             adapter!!.submitList(it)
             Log.d("zaky", it.toString())
             //change price accordingly
             binding.totalPriceText.text = sumPrice(it)
         }
+
+        binding.checkoutRecycler.adapter = adapter
+        binding.checkoutRecycler.layoutManager = LinearLayoutManager(requireActivity())
+        binding.checkOutToolbar.setNavigationOnClickListener {
+            findNavController()
+        }
+
     }
 
     private fun initRecycler() {
-        adapter = CheckoutAdapter(viewModel)
-        binding.checkoutRecycler.adapter = adapter
-        binding.checkoutRecycler.layoutManager = LinearLayoutManager(requireActivity())
+
 
     }
 
