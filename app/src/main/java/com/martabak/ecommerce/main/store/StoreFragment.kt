@@ -92,12 +92,8 @@ class StoreFragment : Fragment() {
             viewModel.setFilters(_brand = brand, _sort = sort, _lowest = lowest, _highest = highest)
         }
 
-        binding.searchEditText.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                showSearchDialog(viewModel.query)
-                v.clearFocus()
-
-            }
+        binding.searchEditText.setOnClickListener {
+            showSearchDialog(viewModel.query)
         }
 
 

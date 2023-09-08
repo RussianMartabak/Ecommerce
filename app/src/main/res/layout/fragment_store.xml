@@ -24,7 +24,9 @@
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins" />
+            android:fontFamily="@font/poppins"
+            android:focusable="false"
+            android:cursorVisible="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.chip.Chip
