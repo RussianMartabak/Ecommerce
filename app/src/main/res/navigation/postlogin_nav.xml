@@ -65,10 +65,24 @@
         <action
             android:id="@+id/action_checkoutFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/startStatusFromCheckout"
+            app:popUpTo="@+id/mainFragment"
+            app:destination="@id/statusFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.martabak.ecommerce.checkout.PaymentFragment"
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="com.martabak.ecommerce.status.StatusFragment"
+        android:label="fragment_status"
+        tools:layout="@layout/fragment_status">
+        <argument
+            android:name="statusData"
+            app:argType="com.martabak.ecommerce.status.StatusParcel"
+            />
+    </fragment>
 </navigation>

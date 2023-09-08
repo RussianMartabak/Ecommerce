@@ -51,6 +51,7 @@ class CheckoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.checkoutLoading.isVisible = false
         var adapter = CheckoutAdapter(viewModel)
         binding.confirmBuyButton.isEnabled = false
         viewModel.itemList.observe(viewLifecycleOwner) {
@@ -77,6 +78,12 @@ class CheckoutFragment : Fragment() {
                 binding.checkoutLoading.isVisible = false
                 binding.confirmBuyButton.isVisible = true
             }
+        }
+
+        //send parcel
+        viewModel.statusParcel.observe(viewLifecycleOwner) {
+            val aktion = CheckoutFragmentDirections.startStatusFromCheckout(it)
+            findNavController().navigate(aktion)
         }
 
         binding.confirmBuyButton.setOnClickListener {

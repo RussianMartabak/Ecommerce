@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
+import com.martabak.ecommerce.network.data.fulfillment.FulfillmentData
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentItem
+import com.martabak.ecommerce.status.StatusParcel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +26,10 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
     val nowLoading: LiveData<Boolean> = _nowLoading
 
     private var _errorMessage = MutableLiveData<String>()
-    val errorMessage : LiveData<String> = _errorMessage
+    val errorMessage: LiveData<String> = _errorMessage
+
+    private var _statusParcel = MutableLiveData<StatusParcel>()
+    val statusParcel : LiveData<StatusParcel> = _statusParcel
 
     //ask for fulfillment response then parcel and send it to status
     fun sendFulfillment() {
@@ -34,9 +39,10 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
             try {
                 _nowLoading.value = true
                 val response = apiService.sendForFulfillment(body)
+                _statusParcel.value = convertToStatusParcel(response.data)
                 _nowLoading.value = false
 
-            } catch (e : Throwable) {
+            } catch (e: Throwable) {
                 _errorMessage.value = e.toString()
                 _nowLoading.value = false
             }
@@ -86,7 +92,10 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
         return newList
     }
 
-    private fun convertListToFullfillment(payment : String, items : List<CheckoutData>) : FulfillmentBody {
+    private fun convertListToFullfillment(
+        payment: String,
+        items: List<CheckoutData>
+    ): FulfillmentBody {
         val neueList = items.map {
             convertToFulfillmentItem(it)
         }
@@ -98,6 +107,16 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
             productId = obj.item_id,
             quantity = obj.productQuantity,
             variantName = obj.productVariant
+        )
+    }
+
+    private fun convertToStatusParcel(response: FulfillmentData): StatusParcel {
+        return StatusParcel(
+            invoiceId = response.invoiceId,
+            date = response.date,
+            invoiceSum = response.total,
+            payment = response.payment,
+            time = response.time
         )
     }
 }

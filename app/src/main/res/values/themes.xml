@@ -3,10 +3,12 @@
     <style name="Base.Theme.Ecommerce" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:includeFontPadding">false</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="chipStandaloneStyle">@style/Widget.Material3.Chip.Filter</item>
+        <item name="android:fontFamily">@font/poppins</item>
 
     </style>
     <style name="FullScreenDialogStyle">

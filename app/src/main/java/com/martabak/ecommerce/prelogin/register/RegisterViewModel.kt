@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.RegisterResponse
+import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
 import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel
