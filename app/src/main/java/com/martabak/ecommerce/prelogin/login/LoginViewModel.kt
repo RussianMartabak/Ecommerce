@@ -32,6 +32,9 @@ class LoginViewModel @Inject constructor(
     var errorMessage = ""
     private var _serverValidity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
+    private var _nowLoading = MutableLiveData<Boolean>()
+    var nowLoading : LiveData<Boolean> = _nowLoading
+
     var serverValidity: LiveData<Boolean> = _serverValidity
     var firstEntry = userPref.isFirstTime()
 
@@ -43,12 +46,15 @@ class LoginViewModel @Inject constructor(
         val body = LoginBody(email!!, password!!, "")
         viewModelScope.launch {
             try {
+                _nowLoading.value = true
                 val response = apiService.postLogin(body)
                 storeTokens(response)
                 userPref.setUsername(response.data.userName)
                 userPref.login()
+                _nowLoading.value = false
                 _serverValidity.value = true
             } catch (e: Exception) {
+                _nowLoading.value = false
                 if (e is HttpException) {
                     if (e.code() == 400) {
                         errorMessage = "Wrong Email or Password"

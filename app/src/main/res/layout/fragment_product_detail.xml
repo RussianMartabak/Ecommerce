@@ -89,8 +89,7 @@
                 app:layout_constraintStart_toStartOf="@+id/scrollConstraint"
                 android:layout_marginStart="16dp"
                 android:textSize="20dp"
-                android:fontFamily="@font/poppins"
-                android:textFontWeight="600"
+                android:fontFamily="@font/poppins_semibold"
                 />
 
             <TextView
@@ -167,8 +166,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider1"
                 android:layout_marginTop="12dp"
                 android:textSize="16dp"
-                android:fontFamily="@font/poppins"
-                android:textFontWeight="500"
+                android:fontFamily="@font/poppins_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -203,8 +201,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="Deskripsi Produk"
-                android:fontFamily="@font/poppins"
-                android:textFontWeight="500"
+                android:fontFamily="@font/poppins_medium"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -236,8 +233,7 @@
                 android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/poppins"
-                android:textFontWeight="500"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Ulasan pembeli"
                 />
 
@@ -267,12 +263,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_semibold"
                 android:id="@+id/reviewBigText"
                 app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"
                 android:layout_marginTop="11dp"
                 android:textSize="20dp"
-                android:textFontWeight="600"
                 android:text="4.5"
                 app:layout_constraintStart_toEndOf="@+id/bigStar"
                 android:layout_marginStart="4dp"/>
@@ -293,8 +288,7 @@
                 android:id="@+id/productPopularity"
                 android:text="100 orang menyukai ini"
                 android:textSize="12dp"
-                android:fontFamily="@font/poppins"
-                android:textFontWeight="600"
+                android:fontFamily="@font/poppins_semibold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/ulasanBuyer"

@@ -96,9 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_medium"
             android:text="Pilih Semua"
-            android:textFontWeight="500"
             android:textSize="14dp"
             app:layout_constraintStart_toEndOf="@+id/checkAllButton"
             app:layout_constraintTop_toTopOf="parent" />
@@ -128,9 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Rp0"
-            android:textFontWeight="600"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/totalHarga" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -161,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/poppins_medium"
             android:text="Empty"
             android:textSize="32dp"
             app:layout_constraintEnd_toEndOf="parent"
