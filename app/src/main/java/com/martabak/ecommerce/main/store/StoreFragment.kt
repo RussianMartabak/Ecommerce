@@ -48,6 +48,7 @@ class StoreFragment : Fragment() {
     private var highest: Int? = null
     private var sort: String? = null
     private var gridMode = false
+    private var pagingAdapter : ProductsPagingAdapter? = null
 
 
     override fun onCreateView(
@@ -97,7 +98,7 @@ class StoreFragment : Fragment() {
         }
 
 
-        val pagingAdapter = ProductsPagingAdapter { id ->
+        pagingAdapter = ProductsPagingAdapter { id ->
             //store product ID on repo then move away from this scheisse
             Log.d("zaky", "selected ID: $id")
             viewModel.selectProductID(id)
@@ -105,11 +106,11 @@ class StoreFragment : Fragment() {
                 .navigate(R.id.action_mainFragment_to_productDetailFragment)
         }
         binding.productRecycler.adapter =
-            pagingAdapter.withLoadStateFooter(ProductsLoadStateAdapter())
+            pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())
         binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
         //listen to recycler load state
         viewLifecycleOwner.lifecycleScope.launch {
-            pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+            pagingAdapter!!.loadStateFlow.collectLatest { loadStates ->
 
                 if (loadStates.refresh is LoadState.Loading) {
                     showLoading()
@@ -127,37 +128,12 @@ class StoreFragment : Fragment() {
         binding.gridSelector.setOnClickListener {
             gridMode = !gridMode
             Log.d("zaky", "switching to gridMode ${gridMode}")
-            if (gridMode) {
-                binding.gridSelector.setImageResource(R.drawable.grid_view)
-                val gridManager = GridLayoutManager(requireActivity(), 2)
-                val footerAdapter = ProductsLoadStateAdapter()
-                //change recycler to grid
-                pagingAdapter.setGridMode(true)
-                binding.productRecycler.layoutManager = gridManager
-                binding.productRecycler.adapter =
-                    pagingAdapter.withLoadStateFooter(footerAdapter)
-                gridManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return if (position == pagingAdapter.itemCount && footerAdapter.itemCount > 0) {
-                            2
-                        } else {
-                            1
-                        }
-                    }
-                }
-            } else {
-                binding.gridSelector.setImageResource(R.drawable.format_list_bulleted)
-                //change to linear
-                pagingAdapter.setGridMode(false)
-                binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
-                binding.productRecycler.adapter =
-                    pagingAdapter.withLoadStateFooter(ProductsLoadStateAdapter())
-            }
+            switchLayout()
         }
 
         viewModel.updatedPagingSource.observe(viewLifecycleOwner) { pagingData ->
             viewLifecycleOwner.lifecycleScope.launch {
-                pagingAdapter.submitData(pagingData)
+                pagingAdapter!!.submitData(pagingData)
 
             }
         }
@@ -167,12 +143,12 @@ class StoreFragment : Fragment() {
 
         binding.swiper.setOnRefreshListener {
 
-            pagingAdapter.refresh()
+            pagingAdapter!!.refresh()
             binding.swiper.isRefreshing = false
         }
 
         binding.refreshButton.setOnClickListener {
-            pagingAdapter.refresh()
+            pagingAdapter!!.refresh()
         }
 
 
@@ -197,8 +173,39 @@ class StoreFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        switchLayout()
 
     }
+
+    private fun switchLayout() {
+        if (gridMode) {
+            binding.gridSelector.setImageResource(R.drawable.grid_view)
+            val gridManager = GridLayoutManager(requireActivity(), 2)
+            val footerAdapter = ProductsLoadStateAdapter()
+            //change recycler to grid
+            pagingAdapter!!.setGridMode(true)
+            binding.productRecycler.layoutManager = gridManager
+            binding.productRecycler.adapter =
+                pagingAdapter!!.withLoadStateFooter(footerAdapter)
+            gridManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (position == pagingAdapter!!.itemCount && footerAdapter.itemCount > 0) {
+                        2
+                    } else {
+                        1
+                    }
+                }
+            }
+        } else {
+            binding.gridSelector.setImageResource(R.drawable.format_list_bulleted)
+            //change to linear
+            pagingAdapter!!.setGridMode(false)
+            binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
+            binding.productRecycler.adapter =
+                pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())
+        }
+    }
+
     private fun showBottomSheet() {
         val modalBottomSheet = FilterDialogFragment()
         modalBottomSheet.show(childFragmentManager, FilterDialogFragment.TAG)

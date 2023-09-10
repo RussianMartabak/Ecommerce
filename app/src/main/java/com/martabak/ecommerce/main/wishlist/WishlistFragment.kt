@@ -29,7 +29,8 @@ class WishlistFragment : Fragment() {
     private var _binding: FragmentWishlistBinding? = null
     private val binding get() = _binding!!
     private val viewModel: WishlistViewModel by viewModels()
-    private val gridMode = false
+    private var gridMode = false
+    private var adapter : WishlistAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class WishlistFragment : Fragment() {
         }
 
         val grandFrag =  (this.requireParentFragment() as NavHostFragment).requireParentFragment()
-        val adapter = WishlistAdapter(viewModel) {
+        adapter = WishlistAdapter(viewModel) {
             viewModel.setSelectedId(it)
             grandFrag.findNavController().navigate(R.id.action_mainFragment_to_productDetailFragment)
         }
@@ -62,7 +63,7 @@ class WishlistFragment : Fragment() {
 
 
         viewModel.wishItems.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            adapter!!.submitList(it)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -71,6 +72,32 @@ class WishlistFragment : Fragment() {
             }
         }
 
+        binding.layoutSelector.setOnClickListener {
+            gridMode = !gridMode
+            switchLayout()
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        switchLayout()
+
+    }
+
+    private fun switchLayout() {
+        if (gridMode) {
+            binding.layoutSelector.setImageResource(R.drawable.grid_view)
+            val gridManager = GridLayoutManager(requireActivity(), 2)
+            adapter!!.setGridMode(true)
+            binding.wishRecycler.layoutManager = gridManager
+            binding.wishRecycler.adapter = adapter
+        } else {
+            binding.layoutSelector.setImageResource(R.drawable.format_list_bulleted)
+            adapter!!.setGridMode(false)
+            binding.wishRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
+            binding.wishRecycler.adapter = adapter
+        }
     }
 
 

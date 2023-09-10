@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentTransactionBinding
+import com.martabak.ecommerce.main.MainFragment
+import com.martabak.ecommerce.main.MainFragmentDirections
 import com.martabak.ecommerce.main.transaction.adapters.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +47,9 @@ class TransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = TransactionAdapter {
             val parcel = viewModel.getStatusParcel(it)
+            val aktion = MainFragmentDirections.startStatusFromTransaction(parcel)
+            val mainFragment = requireParentFragment().parentFragment as MainFragment
+            mainFragment.findNavController().navigate(aktion)
         }
         binding.transactionRecycler.adapter = adapter
         binding.transactionRecycler.layoutManager = LinearLayoutManager(requireActivity())

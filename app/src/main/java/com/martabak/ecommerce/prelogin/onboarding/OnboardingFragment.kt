@@ -51,6 +51,7 @@ class OnboardingFragment (): Fragment() {
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                pagerIndex = position
                 if (position == 2) {
                     binding.nextButton.visibility = View.INVISIBLE
                 } else {
@@ -75,7 +76,7 @@ class OnboardingFragment (): Fragment() {
 
         binding.nextButton.setOnClickListener {
             pagerIndex += 1
-            if (pagerIndex < 2) {
+            if (pagerIndex < 3) {
                 onboardingPager.currentItem = pagerIndex
             }
         }

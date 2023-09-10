@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StatusViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
-    var rating = 0
-    var review = ""
+    var rating : Int? = null
+    var review : String? = null
     var parcel: StatusParcel? = null
 
     private val _success = MutableLiveData<Boolean>()

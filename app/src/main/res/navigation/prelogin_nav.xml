@@ -41,7 +41,10 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_onboarding"
-            app:destination="@id/onboarding" />
+            app:destination="@id/onboarding"
+            app:popUpTo="@+id/prelogin_nav"
+            app:popUpToInclusive="true"/>
+
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

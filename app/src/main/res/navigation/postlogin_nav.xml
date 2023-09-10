@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_mainFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />
+        <action
+            android:id="@+id/startStatusFromTransaction"
+            app:destination="@id/statusFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -85,4 +88,5 @@
             app:argType="com.martabak.ecommerce.status.StatusParcel"
             />
     </fragment>
+
 </navigation>

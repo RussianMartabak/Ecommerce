@@ -14,8 +14,8 @@ data class TransactionData(
     val payment: String,
     val total: Int,
     val items: List<TransactionItem>,
-    val rating: Int,
-    val review: String,
+    val rating: Int?,
+    val review: String?,
     val image: String,
     val name: String
 )
