@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun logout() {
+        viewModel.logout()
         navController.navigate(R.id.action_to_postlogin_prelogin)
     }
 

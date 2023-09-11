@@ -45,7 +45,6 @@ class TokenAuthenticator @Inject constructor(
                 val client = OkHttpClient.Builder().apply {
                     addInterceptor(tokenInterceptor)
                     addInterceptor(chucker)
-                    authenticator(this@TokenAuthenticator)
                 }.build()
                 //build own retrofit
                 val retrofit = Retrofit.Builder()
