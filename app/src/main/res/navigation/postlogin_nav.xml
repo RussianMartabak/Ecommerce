@@ -22,12 +22,24 @@
         <action
             android:id="@+id/startStatusFromTransaction"
             app:destination="@id/statusFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.martabak.ecommerce.product_detail.ProductDetailFragment"
         android:label="fragment_product_detail"
         tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="productID"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+        <deepLink
+            app:uri="http://scheissekomputer/{productID}"
+            />
         <action
             android:id="@+id/action_productDetailFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -88,5 +100,10 @@
             app:argType="com.martabak.ecommerce.status.StatusParcel"
             />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.martabak.ecommerce.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

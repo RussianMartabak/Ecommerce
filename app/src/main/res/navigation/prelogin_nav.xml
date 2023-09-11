@@ -34,11 +34,7 @@
             app:destination="@id/registerFragment"
             app:popUpTo="@+id/prelogin_nav"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@+id/prelogin_nav"
-            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_loginFragment_to_onboarding"
             app:destination="@id/onboarding"
@@ -56,15 +52,7 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/prelogin_nav"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_registerFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@+id/prelogin_nav"
-            app:popUpToInclusive="true" />
+
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.martabak.ecommerce.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+
 </navigation>

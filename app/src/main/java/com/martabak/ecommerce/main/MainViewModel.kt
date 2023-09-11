@@ -12,10 +12,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val wishlistRepository: WishlistRepository,
-    private val userPref: SharedPreferences
+    val userPref: SharedPreferences
 ) : ViewModel() {
 
     val wishItemCount = wishlistRepository.itemCount
     val cartItemCount = cartRepository.updatedItemCount
+
 
 }

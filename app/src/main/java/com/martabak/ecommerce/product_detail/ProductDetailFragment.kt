@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.product_detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -39,10 +41,14 @@ class ProductDetailFragment : Fragment() {
     private var connectionOK = false
     private var productData: Data? = null
     private var variants: List<ProductVariant>? = null
+    private val args : ProductDetailFragmentArgs by navArgs()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        args.productID?.let {
+            viewModel.setProductID(it)
+        }
         viewModel.getProductData()
     }
 
@@ -52,12 +58,14 @@ class ProductDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        binding.scrollLayout.isVisible = false
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loadingIndicator.isVisible = false
+        binding.errorLayout.isVisible = false
+        binding.normalLayout.isVisible = false
 
         binding.allReviewButton.setOnClickListener {
             findNavController().navigate(R.id.action_productDetailFragment_to_reviewFragment)
@@ -69,11 +77,23 @@ class ProductDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.refreshButton.setOnClickListener {
+            viewModel.getProductData()
+        }
+
         viewModel.connectionSuccess.observe(viewLifecycleOwner) {
             if (it) {
                 connectionOK = it
-
+                binding.normalLayout.isVisible = true
+                binding.errorLayout.isVisible = false
+            } else {
+                binding.normalLayout.isVisible = false
+                binding.errorLayout.isVisible = true
             }
+        }
+
+        viewModel.nowLoading.observe(viewLifecycleOwner) {
+            binding.loadingIndicator.isVisible = it
         }
 
         binding.variantChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -98,6 +118,17 @@ class ProductDetailFragment : Fragment() {
             }
         }
 
+        binding.shareButton.setOnClickListener {
+            val id = viewModel.getProductID()
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "http://scheissekomputer/$id")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
 
             viewModel.eventFlow.collectLatest {
@@ -120,34 +151,36 @@ class ProductDetailFragment : Fragment() {
         }
 
         viewModel.productData.observe(viewLifecycleOwner) {
-            productData = it
-            //set displays
-            val priceSum = it.productPrice + it.productVariant[0].variantPrice
-            binding.productPrice.text = integerToRupiah(priceSum)
-            binding.productTitle.text = it.productName
-            binding.productSale.text = "Terjual ${it.sale}"
-            binding.upperReviewText.text = "${doubleToRating(it.productRating)} (${it.totalRating})"
-            binding.productDescription.text = it.description
-            binding.reviewBigText.text = "${doubleToRating(it.productRating)}"
-            binding.productPopularity.text = "${it.totalSatisfaction}% pembeli merasa puas"
-            binding.ratingOverview.text = "${it.totalRating} rating· ${it.totalReview} ulasan"
-            variants = it.productVariant
-            makeChips()
-            val imageList = it.image
-            val pagerAdapter = ProductDetailAdapter(imageList)
-            binding.imagePager.adapter = pagerAdapter
-            if (imageList.size > 1) {
-                binding.imageIndicator.isVisible = true
-                TabLayoutMediator(
-                    binding.imageIndicator,
-                    binding.imagePager
-                ) { _, _ -> }.attach()
-            }
-            binding.scrollLayout.isVisible = true
-
-
+            displayData(it)
         }
 
+    }
+
+    private fun displayData(it : Data) {
+        productData = it
+        //set displays
+        val priceSum = it.productPrice + it.productVariant[0].variantPrice
+        binding.productPrice.text = integerToRupiah(priceSum)
+        binding.productTitle.text = it.productName
+        binding.productSale.text = "Terjual ${it.sale}"
+        binding.upperReviewText.text = "${doubleToRating(it.productRating)} (${it.totalRating})"
+        binding.productDescription.text = it.description
+        binding.reviewBigText.text = "${doubleToRating(it.productRating)}"
+        binding.productPopularity.text = "${it.totalSatisfaction}% pembeli merasa puas"
+        binding.ratingOverview.text = "${it.totalRating} rating· ${it.totalReview} ulasan"
+        variants = it.productVariant
+        makeChips()
+        val imageList = it.image
+        val pagerAdapter = ProductDetailAdapter(imageList)
+        binding.imagePager.adapter = pagerAdapter
+        if (imageList.size > 1) {
+            binding.imageIndicator.isVisible = true
+            TabLayoutMediator(
+                binding.imageIndicator,
+                binding.imagePager
+            ) { _, _ -> }.attach()
+        }
+        binding.normalLayout.isVisible = true
     }
 
     fun integerToRupiah(value: Int): String {

@@ -79,7 +79,7 @@ class RegisterFragment : Fragment() {
         //observe if register successful
         viewModel.connectionStatus.observe(viewLifecycleOwner) {
             if (it) {
-                view.findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
+                view.findNavController().navigate(R.id.action_prelogin_to_postlogin)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
                     .show()

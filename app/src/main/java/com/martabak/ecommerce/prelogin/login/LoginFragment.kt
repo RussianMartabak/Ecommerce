@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loadingBarBar.isVisible = false
         //content here
-        if (viewModel.isLoggedIn()) findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+        if (viewModel.isLoggedIn()) findNavController().navigate(R.id.action_prelogin_to_postlogin)
         binding.loginButton.isEnabled = false
         binding.registerButton.setOnClickListener {
             view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -86,7 +86,7 @@ class LoginFragment : Fragment() {
 
             if (it) {
 
-                view.findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+                view.findNavController().navigate(R.id.action_prelogin_to_postlogin)
             } else {
                 Toast.makeText(activity, viewModel.errorMessage, Toast.LENGTH_LONG)
                     .show()

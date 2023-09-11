@@ -16,6 +16,7 @@ import com.google.android.material.badge.BadgeUtils
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentMainBinding
 import com.martabak.ecommerce.utils.GlobalUtils.getUsername
+import com.martabak.ecommerce.utils.GlobalUtils.hasUsername
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,6 +46,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //kick to profile if not has username yet
+        if (!viewModel.userPref.hasUsername()) {
+            findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
+        }
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }

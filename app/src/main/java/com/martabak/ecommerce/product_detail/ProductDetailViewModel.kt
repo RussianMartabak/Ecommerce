@@ -57,15 +57,24 @@ class ProductDetailViewModel @Inject constructor(
     private var _productData: MutableLiveData<Data> = MutableLiveData<Data>()
     var productData: LiveData<Data> = _productData
 
+    private var _nowLoading = MutableLiveData<Boolean>()
+    val nowLoading : LiveData<Boolean> = _nowLoading
+
 
     var errorMessage = ""
+
+    fun setProductID(id : String) {
+        productRepository.selectedProductID = id
+    }
 
     fun getProductData() {
         viewModelScope.launch {
             try {
+                _nowLoading.value = true
                 val response = productRepository.getProductDetail()
                 Log.d("zaky", "response in viewmodel $response")
                 _connectionSuccess.value = true
+                _nowLoading.value = false
                 _productData.value = response
                 _productOnWishlist.value =
                     wishlistRepository.itemExistOnWishlist(_productData.value!!.productId)
@@ -73,7 +82,7 @@ class ProductDetailViewModel @Inject constructor(
             } catch (e: Throwable) {
                 Log.d("zaky", "product detail error $e")
                 _connectionSuccess.value = false
-
+                _nowLoading.value = false
             }
         }
     }
