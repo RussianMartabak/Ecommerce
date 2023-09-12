@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_mainFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_productDetailComposeFragment"
+            app:destination="@id/productDetailComposeFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -50,7 +53,6 @@
         <action
             android:id="@+id/startCheckoutFromProduct"
             app:destination="@id/checkoutFragment" />
-
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
@@ -105,5 +107,9 @@
         android:name="com.martabak.ecommerce.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/productDetailComposeFragment"
+        android:name="com.martabak.ecommerce.product_detail.compose.ProductDetailComposeFragment"
+        android:label="ProductDetailComposeFragment" />
 
 </navigation>
