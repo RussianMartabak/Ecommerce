@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -50,17 +52,20 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //reset shit
+        binding.resetButton.isVisible = isFilterSelected()
+
         //pre filling
         viewModel.selectedSort?.let {
             binding.sortGroup.check(it)
         }
         sort = viewModel.sort
-        viewModel.sort?.let{sortText = convertKeytoSort(it) }
+        viewModel.sort?.let { sortText = convertKeytoSort(it) }
         viewModel.selectedBrand?.let {
             binding.brandGroup.check(it)
         }
         brand = viewModel.brand
-        viewModel.brand?.let{
+        viewModel.brand?.let {
             brandText = it.replaceFirstChar { it.uppercase() }
         }
         viewModel.lowest?.let {
@@ -80,11 +85,20 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             binding.sortGroup.clearCheck()
             binding.editTextHighest.setText("")
             binding.editTextLowest.setText("")
+            binding.resetButton.isVisible = false
         }
 
         //listeners for data input
+        binding.editTextLowest.doOnTextChanged { text, _, _, _ ->
+            binding.resetButton.isVisible = text != ""
+         }
+
+        binding.editTextHighest.doOnTextChanged { text, _, _, _ ->
+            binding.resetButton.isVisible = text != ""
+        }
+
         binding.sortGroup.setOnCheckedStateChangeListener { group, checkedId ->
-            if (!(checkedId.size == 0)) {
+            if (checkedId.size != 0) {
                 //send id to viewmodel
                 //send sort http key to fragment
                 //send sort string to viewmodel for making a string list
@@ -94,6 +108,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
                 sortText = selectedChip.text.toString()
                 //value thats needed for http ops nad send back to fragment
                 sort = convertSorttoKey(sortText)
+                binding.resetButton.isVisible = true
             }
 
         }
@@ -103,6 +118,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
                 viewModel.selectedBrand = selectedChip.id
                 brandText = selectedChip.text.toString()
                 brand = brandText.lowercase()
+                binding.resetButton.isVisible = true
             }
 
         }
@@ -139,6 +155,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             else -> ""
         }
     }
+
     fun convertKeytoSort(text: String): String {
         return when (text) {
             "rating" -> "Ulasan"
@@ -156,6 +173,10 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         lowest?.let { list.add("< $it") }
         highest?.let { list.add("> $it") }
         return list
+    }
+
+    private fun isFilterSelected(): Boolean {
+        return (viewModel.brand != null || viewModel.sort != null || viewModel.highest != null || viewModel.lowest != null)
     }
 
     companion object {

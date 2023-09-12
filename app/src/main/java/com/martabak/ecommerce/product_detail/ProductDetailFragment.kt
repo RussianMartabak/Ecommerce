@@ -97,12 +97,15 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.variantChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            val selectedChip = group.findViewById<Chip>(checkedIds[0])
-            val variantName = selectedChip.text.toString()
-            val variantObject = variants!!.first { it.variantName == variantName }
-            viewModel.updateProductPrice(variantObject.variantPrice)
-            viewModel.selectedVariantIndex = variants!!.indexOf(variantObject)
-            //get the price!!!
+            if (checkedIds.size > 0) {
+                val selectedChip = group.findViewById<Chip>(checkedIds[0])
+                val variantName = selectedChip.text.toString()
+                val variantObject = variants!!.first { it.variantName == variantName }
+                viewModel.updateProductPrice(variantObject.variantPrice)
+                viewModel.selectedVariantIndex = variants!!.indexOf(variantObject)
+                //get the price!!!
+            }
+
 
         }
 
