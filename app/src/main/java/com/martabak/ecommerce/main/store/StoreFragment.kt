@@ -103,7 +103,7 @@ class StoreFragment : Fragment() {
             Log.d("zaky", "selected ID: $id")
             viewModel.selectProductID(id)
             (grandParentFrag as MainFragment).findNavController()
-                .navigate(R.id.action_mainFragment_to_productDetailFragment)
+                .navigate(R.id.action_mainFragment_to_productDetailComposeFragment)
         }
         binding.productRecycler.adapter =
             pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())

@@ -42,10 +42,13 @@ class WishlistViewModel @Inject constructor(
            productVariant = item.productVariant
        )
        viewModelScope.launch {
-           cartRepository.insertProductData(newCartEntity)
-           sendSnackbar("Item added to cart")
+           try {
+               cartRepository.insertProductData(newCartEntity)
+               sendSnackbar("Item added to cart")
+           } catch (e : Throwable) {
+               sendSnackbar(e.message!!)
+           }
        }
-
    }
 
     fun deleteItem(id: String) {

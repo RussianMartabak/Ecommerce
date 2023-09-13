@@ -11,7 +11,7 @@ class CartRepository @Inject constructor(private val cartDao: CartDao) {
         if (entity == null) {
             //then just insert
             cartDao.insertItem(data)
-        } else if (entity.productStock == 0) {
+        } else if (entity.productStock == entity.productQuantity) {
             throw Exception("Out of Stock")
 
         } else {
@@ -21,7 +21,7 @@ class CartRepository @Inject constructor(private val cartDao: CartDao) {
     }
     suspend fun addItem(id : String) {
         val entity = cartDao.findItembyId(id)
-        if (entity!!.productStock > 0) {
+        if (entity!!.productStock > entity.productQuantity) {
             cartDao.addItemCount(id)
         }
     }

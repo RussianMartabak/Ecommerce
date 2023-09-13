@@ -65,9 +65,9 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
         val target = _itemList.value!!.first { it.item_id == id }
         val targetIndex = _itemList.value!!.indexOf(target)
         val listCopy: List<CheckoutData> = deepCopyList(_itemList.value!!)
-        if (listCopy[targetIndex].productStock != 0) {
+        //precondition for adding item
+        if (listCopy[targetIndex].productStock > listCopy[targetIndex].productQuantity) {
             listCopy[targetIndex].productQuantity += 1
-            listCopy[targetIndex].productStock -= 1
             _itemList.value = listCopy
         }
 
@@ -78,7 +78,6 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
         val targetIndex = _itemList.value!!.indexOf(target)
         val listCopy: List<CheckoutData> = deepCopyList(_itemList.value!!)
         if (listCopy[targetIndex].productQuantity > 1) {
-            listCopy[targetIndex].productStock += 1
             listCopy[targetIndex].productQuantity -= 1
             _itemList.value = listCopy
         }
