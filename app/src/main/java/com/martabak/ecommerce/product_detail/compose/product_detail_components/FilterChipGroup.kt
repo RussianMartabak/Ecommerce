@@ -1,4 +1,4 @@
-package com.martabak.ecommerce.product_detail.compose
+package com.martabak.ecommerce.product_detail.compose.product_detail_components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api

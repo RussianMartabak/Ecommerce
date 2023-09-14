@@ -1,8 +1,9 @@
-package com.martabak.ecommerce.product_detail.compose
+package com.martabak.ecommerce.product_detail.compose.product_detail_components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -39,7 +39,9 @@ fun NormalLayout(
     processWish: () -> Unit,
     shareLink: () -> Unit,
     updatePrice: (ProductVariant) -> Unit,
-    updatedPrice: Int?
+    updatedPrice: Int?,
+    toReview : () -> Unit,
+
 ) {
     val imageList = productDetail!!.image
     ImagePager(imageList = imageList)
@@ -131,10 +133,31 @@ fun NormalLayout(
             text = "Ulasan Pembeli",
             fontFamily = FontFamily(Font(R.font.poppins_medium)),
             fontSize = 16.sp,
-            modifier = Modifier.weight(1f).padding(horizontal = 16.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp)
         )
-        TextButton(onClick = { /*TODO*/ }, modifier = Modifier.padding(horizontal = 16.dp)) {
+        TextButton(onClick = toReview, modifier = Modifier.padding(horizontal = 16.dp)) {
             Text("Lihat Semua")
+        }
+    }
+    Row(
+        modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 18.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        BigStarBox(productDetail = productDetail)
+        Column {
+            Text(
+                text = "${productDetail.totalSatisfaction}% pembeli merasa puas",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.poppins_semibold))
+            )
+            Text(
+                text = "${productDetail.totalRating} rating · ${productDetail.totalReview} ulasan",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.poppins))
+            )
+
         }
     }
 
@@ -144,3 +167,4 @@ fun integerToRupiah(value: Int): String {
     val price = NumberFormat.getInstance().format(value).replace(",", ".")
     return "Rp$price"
 }
+

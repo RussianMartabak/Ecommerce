@@ -110,6 +110,13 @@
     <fragment
         android:id="@+id/productDetailComposeFragment"
         android:name="com.martabak.ecommerce.product_detail.compose.ProductDetailComposeFragment"
-        android:label="ProductDetailComposeFragment" />
+        android:label="ProductDetailComposeFragment" >
+        <action
+            android:id="@+id/action_productDetailComposeFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/StartCheckoutFromDetailCompose"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
 
 </navigation>
