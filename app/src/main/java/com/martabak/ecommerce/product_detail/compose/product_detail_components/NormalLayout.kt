@@ -2,6 +2,7 @@ package com.martabak.ecommerce.product_detail.compose.product_detail_components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -43,6 +45,7 @@ fun NormalLayout(
     toReview : () -> Unit,
 
 ) {
+
     val imageList = productDetail!!.image
     ImagePager(imageList = imageList)
     Spacer(Modifier.height(12.dp))
@@ -93,7 +96,7 @@ fun NormalLayout(
     Divider(Modifier.fillMaxWidth())
     Spacer(Modifier.height(12.dp))
     Text(
-        text = "Pilih Varian",
+        text = stringResource(id = R.string.product_variant),
         fontFamily = FontFamily(Font(R.font.poppins_medium)),
         fontSize = 16.sp,
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -116,7 +119,7 @@ fun NormalLayout(
     Spacer(Modifier.height(12.dp))
     Text(
         modifier = Modifier.padding(horizontal = 16.dp),
-        text = "Deskripsi Produk",
+        text = stringResource(id = R.string.product_description),
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.poppins_medium))
     )
@@ -130,7 +133,7 @@ fun NormalLayout(
     Divider(Modifier.fillMaxWidth())
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = "Ulasan Pembeli",
+            text = stringResource(id = R.string.product_review),
             fontFamily = FontFamily(Font(R.font.poppins_medium)),
             fontSize = 16.sp,
             modifier = Modifier
@@ -138,11 +141,13 @@ fun NormalLayout(
                 .padding(horizontal = 16.dp)
         )
         TextButton(onClick = toReview, modifier = Modifier.padding(horizontal = 16.dp)) {
-            Text("Lihat Semua")
+            Text(stringResource(id = R.string.product_seeall))
         }
     }
     Row(
-        modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 18.dp),
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 18.dp),
         horizontalArrangement = Arrangement.Start
     ) {
         BigStarBox(productDetail = productDetail)

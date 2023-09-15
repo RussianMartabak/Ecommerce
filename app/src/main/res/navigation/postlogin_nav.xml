@@ -40,9 +40,7 @@
             android:defaultValue="@null"
             app:nullable="true"
             />
-        <deepLink
-            app:uri="http://scheissekomputer/{productID}"
-            />
+
         <action
             android:id="@+id/action_productDetailFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -111,6 +109,17 @@
         android:id="@+id/productDetailComposeFragment"
         android:name="com.martabak.ecommerce.product_detail.compose.ProductDetailComposeFragment"
         android:label="ProductDetailComposeFragment" >
+        <argument
+            android:name="ID"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+
+        <deepLink
+            app:uri="http://scheissekomputer/{ID}"
+            />
+
         <action
             android:id="@+id/action_productDetailComposeFragment_to_reviewFragment"
             app:destination="@id/reviewFragment" />

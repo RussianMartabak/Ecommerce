@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,8 +49,17 @@ class WishlistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.errorLayout.isVisible = false
+
         viewModel.itemCount.observe(viewLifecycleOwner) {
             binding.totalWishItem.text = "$it barang"
+            if (it == 0 ) {
+                binding.errorLayout.isVisible = true
+                binding.normallayout.isVisible = false
+            } else {
+                binding.errorLayout.isVisible = false
+                binding.normallayout.isVisible = true
+            }
         }
 
         val grandFrag =  (this.requireParentFragment() as NavHostFragment).requireParentFragment()

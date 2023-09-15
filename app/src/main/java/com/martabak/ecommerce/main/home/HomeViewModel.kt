@@ -10,7 +10,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val userPref: SharedPreferences,
-    val globalState: GlobalState
+    val globalState: GlobalState,
+    val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     fun isUserProductViewing() : Boolean {

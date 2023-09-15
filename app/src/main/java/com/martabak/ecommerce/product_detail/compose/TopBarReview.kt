@@ -23,7 +23,7 @@ import com.martabak.ecommerce.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarReview(navigateBack : () -> Boolean) {
-    Column(Modifier.background(Color.White)) {
+    Column() {
         TopAppBar(title = {
             Text(text = "Ulasan", fontFamily = FontFamily(Font(R.font.poppins)))
         }, navigationIcon = {
@@ -33,7 +33,7 @@ fun TopBarReview(navigateBack : () -> Boolean) {
                 modifier = Modifier
                     .clickable { navigateBack() }
                     .padding(8.dp))
-        }, colors = TopAppBarDefaults.topAppBarColors(Color.White))
+        })
         Divider(Modifier.fillMaxWidth())
     }
 }

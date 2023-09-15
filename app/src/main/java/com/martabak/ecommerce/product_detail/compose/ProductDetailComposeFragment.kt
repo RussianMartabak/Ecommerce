@@ -29,13 +29,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.CheckoutFragmentArgs
 import com.martabak.ecommerce.network.data.product_detail.Data
@@ -45,6 +45,7 @@ import com.martabak.ecommerce.product_detail.compose.product_detail_components.B
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.ErrorScreen
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.NormalLayout
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.TopBar
+import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -59,10 +60,14 @@ class ProductDetailComposeFragment : Fragment() {
     private var productData: Data? = null
     private var variants: List<ProductVariant>? = null
     private var imageList: List<String> = listOf()
+    private val args : ProductDetailComposeFragmentArgs by navArgs()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        args.ID?.let {
+            viewModel.setProductID(it)
+        }
         viewModel.getProductData()
     }
 
@@ -76,9 +81,12 @@ class ProductDetailComposeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
-                DetailScreen(viewModel = viewModel) {
-                    buyNow()
+                EcommerceTheme {
+                    DetailScreen(viewModel = viewModel) {
+                        buyNow()
+                    }
                 }
+
             }
         }
     }
@@ -154,7 +162,7 @@ class ProductDetailComposeFragment : Fragment() {
         Scaffold(
             topBar = { TopBar(navigateBack) }, snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
-            }, modifier = Modifier.background(Color.White), bottomBar = {
+            }, bottomBar = {
                 BottomButton(!nowLoading && productDetail != null, addCart, buyNow)
             }
         ) { paddingValues ->
@@ -162,7 +170,7 @@ class ProductDetailComposeFragment : Fragment() {
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(paddingValues)
-                    .background(Color.White)
+
                     .verticalScroll(rememberScrollState())
             ) {
                 //Snackbar DO NOT TOUCH

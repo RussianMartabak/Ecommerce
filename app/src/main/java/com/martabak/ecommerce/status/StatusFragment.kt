@@ -55,6 +55,8 @@ class StatusFragment : Fragment() {
         }
 
 
+
+
     }
 
     private fun initTexts(parcel: StatusParcel) {

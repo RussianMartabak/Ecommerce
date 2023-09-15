@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -26,8 +27,7 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
     if (show) {
         Column(
             modifier = Modifier
-                .height(56.dp)
-                .background(Color.White),
+                .height(56.dp),
             verticalArrangement = Arrangement.Top
         ) {
             Divider(Modifier.fillMaxWidth())
@@ -40,7 +40,7 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
                         .weight(1f)
                 ) {
                     Text(
-                        text = "Beli Langsung",
+                        text = stringResource(id = R.string.product_buynow),
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.poppins))
                     )
@@ -50,7 +50,7 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
                     .padding(end = 16.dp)
                     .weight(1f)) {
                     Text(
-                        text = "+ Keranjang",
+                        text = stringResource(id = R.string.product_addcart),
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.poppins))
                     )

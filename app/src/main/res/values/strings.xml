@@ -77,4 +77,5 @@
     <string name="transaction_item_total">Total Belanja</string>
     <string name="transaction_item_review">Ulas</string>
     <string name="wishlist_addcart">+ Keranjang</string>
+    <string name="filter_review">Ulasan</string>
 </resources>

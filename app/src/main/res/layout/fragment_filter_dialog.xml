@@ -11,9 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/filter_filter"
-        android:textFontWeight="700"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,9 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_semibold"
         android:text="@string/filter_sort"
-        android:textFontWeight="600"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -48,7 +46,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ulasan"
+            android:text="@string/filter_review"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -82,9 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Kategori"
-        android:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sortGroup" />
 

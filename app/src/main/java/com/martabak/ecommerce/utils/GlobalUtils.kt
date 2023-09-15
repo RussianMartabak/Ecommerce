@@ -83,11 +83,23 @@ object GlobalUtils {
         return this.getString(REFRESH_TOKEN, "")!!
     }
 
+    fun SharedPreferences.nightMode() : Boolean {
+        return this.getBoolean(NIGHT_MODE, false)
+    }
+
+    fun SharedPreferences.setNightMode(night : Boolean) {
+        this.edit().apply{
+            putBoolean(NIGHT_MODE, night)
+            apply()
+        }
+    }
+
     val DATABASE_NAME = "app_db"
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.1.100:8000"
+    val BASE_URL = "http://192.168.1.7:8000"
+    val NIGHT_MODE = "night_mode"
 }

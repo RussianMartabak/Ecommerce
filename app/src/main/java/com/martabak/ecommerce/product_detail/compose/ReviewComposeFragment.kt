@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.network.data.product_detail.ReviewData
 import com.martabak.ecommerce.product_detail.ReviewViewModel
+import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -47,7 +48,10 @@ class ReviewComposeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
-                ReviewScreen(viewModel = viewModel)
+                EcommerceTheme {
+                    ReviewScreen(viewModel = viewModel)
+                }
+
             }
         }
     }

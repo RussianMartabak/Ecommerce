@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.main.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentHomeBinding
+import com.martabak.ecommerce.utils.GlobalUtils.nightMode
+import com.martabak.ecommerce.utils.GlobalUtils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -54,10 +57,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.themeSwitch.isChecked = viewModel.sharedPreferences.nightMode()
 
         //theme switch
         binding.themeSwitch.setOnClickListener {
-            if (binding.themeSwitch.isChecked) activity.setAppTheme(true) else activity.setAppTheme(false)
+            Log.d("zaky", "theme switch clicked")
+            if (binding.themeSwitch.isChecked) {
+                activity.setAppTheme(true)
+                viewModel.sharedPreferences.setNightMode(true)
+            } else {
+                viewModel.sharedPreferences.setNightMode(false)
+                activity.setAppTheme(false)
+            }
         }
     }
 }
