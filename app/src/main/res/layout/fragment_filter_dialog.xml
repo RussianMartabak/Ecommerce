@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/poppins"
-        android:text="Filter"
+        android:text="@string/filter_filter"
         android:textFontWeight="700"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
-        android:text="Urutkan"
+        android:text="@string/filter_sort"
         android:textFontWeight="600"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Penjualan"
+            android:text="@string/filter_sale"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -64,7 +64,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Harga Terendah"
+            android:text="@string/filter_lowest"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -72,7 +72,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Harga Tertinggi"
+            android:text="@string/filter_highest"
             app:checkedIconEnabled="false" />
     </com.google.android.material.chip.ChipGroup>
 
@@ -141,7 +141,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
-        android:text="Harga"
+        android:text="@string/filter_price"
         android:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/brandGroup" />
@@ -154,7 +154,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
 
-        android:hint="Terendah"
+        android:hint="@string/filter_lowesthint"
         app:layout_constraintEnd_toStartOf="@+id/materialDivider4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTitle">
@@ -175,7 +175,7 @@
 
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Tertinggi"
+        android:hint="@string/filter_highesthint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/materialDivider4"
         app:layout_constraintTop_toBottomOf="@+id/priceTitle">
@@ -196,7 +196,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="15dp"
-        android:text="Tampilkan Produk"
+        android:text="@string/filter_show"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

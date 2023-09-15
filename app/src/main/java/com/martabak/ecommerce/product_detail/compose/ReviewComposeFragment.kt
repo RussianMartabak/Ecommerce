@@ -47,7 +47,7 @@ class ReviewComposeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
-
+                ReviewScreen(viewModel = viewModel)
             }
         }
     }

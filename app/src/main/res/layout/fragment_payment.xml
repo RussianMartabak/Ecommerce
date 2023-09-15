@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:navigationIcon="@drawable/arrow_nav_16"
-            app:title="Pilih Pembayaran" />
+            app:title="@string/payment_choose" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

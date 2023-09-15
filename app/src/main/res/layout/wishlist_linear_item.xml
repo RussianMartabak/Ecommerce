@@ -125,7 +125,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/poppins"
-            android:text="+ Keranjang"
+            android:text="@string/wishlist_addcart"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

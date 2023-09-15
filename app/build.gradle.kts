@@ -109,6 +109,9 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:2.5.0")
 
+    //lottie
+    implementation("com.airbnb.android:lottie:6.1.0")
+
 }
 
 kapt {

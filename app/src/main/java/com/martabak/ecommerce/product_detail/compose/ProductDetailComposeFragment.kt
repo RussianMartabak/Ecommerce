@@ -105,7 +105,7 @@ class ProductDetailComposeFragment : Fragment() {
         val sendPrice =
             { variant: ProductVariant -> viewModel.updateProductPrice(variant.variantPrice) }
         val toReview = {
-            findNavController().navigate(R.id.action_productDetailComposeFragment_to_reviewFragment)
+            findNavController().navigate(R.id.action_productDetailComposeFragment_to_reviewComposeFragment)
         }
         val nowLoading by viewModel.nowLoading.observeAsState(true)
         val refresh = {

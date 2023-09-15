@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,10 +37,27 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val activity = requireActivity() as MainActivity
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
             (requireActivity() as MainActivity).logout()
+        }
+
+        val langTag = (requireActivity() as MainActivity).getLang()
+        binding.langSwitch.isChecked = langTag != "en"
+
+        binding.langSwitch.setOnClickListener {
+            if (binding.langSwitch.isChecked) {
+                (requireActivity() as MainActivity).switchLang("in")
+            } else {
+                (requireActivity() as MainActivity).switchLang("en")
+            }
+        }
+
+
+        //theme switch
+        binding.themeSwitch.setOnClickListener {
+            if (binding.themeSwitch.isChecked) activity.setAppTheme(true) else activity.setAppTheme(false)
         }
     }
 }

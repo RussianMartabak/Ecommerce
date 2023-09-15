@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="48dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Pembayaran Berhasil"
+                        android:text="@string/status_success"
                         android:textColor="@color/colorAccent"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -97,7 +97,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Beri Ulasan"
+                        android:text="@string/status_review"
                         android:textSize="14dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +151,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Detail Transaksi"
+                android:text="@string/status_detail"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +173,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="ID Transaksi"
+                    android:text="@string/status_id"
                     android:textSize="14dp" />
 
                 <TextView
@@ -182,7 +182,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Status"
+                    android:text="@string/status_status"
                     android:textSize="14dp" />
 
                 <TextView
@@ -191,7 +191,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Tanggal"
+                    android:text="@string/status_date"
                     android:textSize="14dp" />
 
                 <TextView
@@ -200,7 +200,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Waktu"
+                    android:text="@string/status_time"
                     android:textSize="14dp" />
 
                 <TextView
@@ -209,7 +209,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Metode Pembayaran"
+                    android:text="@string/status_method"
                     android:textSize="14dp" />
 
                 <TextView
@@ -218,7 +218,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Total Pembayaran"
+                    android:text="@string/status_total"
                     android:textSize="14dp" />
             </LinearLayout>
 
@@ -254,7 +254,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
-                    android:text="Berhasil"
+                    android:text="@string/status_successcontent"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -323,7 +323,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Selesai"
+        android:text="@string/status_done"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

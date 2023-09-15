@@ -1,10 +1,12 @@
 package com.martabak.ecommerce
 
+import android.app.LocaleManager
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -39,6 +41,21 @@ class MainActivity : AppCompatActivity() {
     fun logout() {
         viewModel.logout()
         navController.navigate(R.id.action_to_postlogin_prelogin)
+    }
+
+    fun switchLang(tag : String) {
+        val appLocale : LocaleListCompat = LocaleListCompat.forLanguageTags(tag)
+        AppCompatDelegate.setApplicationLocales(appLocale)
+    }
+
+    fun getLang() : String {
+        val appLocale = AppCompatDelegate.getApplicationLocales()
+        return appLocale.toLanguageTags()
+    }
+
+    fun setAppTheme(night : Boolean) {
+        val nightMode = if (night) AppCompatDelegate.MODE_NIGHT_NO else AppCompatDelegate.MODE_NIGHT_YES
+        AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 
 }

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:navigationIcon="@drawable/arrow_nav_16"
-            app:title="Checkout" />
+            app:title="@string/chekout_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -53,7 +53,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Barang yang dibeli"
+                android:text="@string/checkout_products"
 
                  />
 
@@ -80,7 +80,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Pembayaran"
+                android:text="@string/checkout_payment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +134,7 @@
                         android:layout_marginTop="18dp"
                         android:layout_marginBottom="18dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Pilih Pembayaran"
+                        android:text="@string/checkout_choosepayment"
                         android:textSize="14dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/payCardImage"
@@ -171,7 +171,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
-        android:text="Total Bayar"
+        android:text="@string/checkout_total"
         android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/divider11" />
@@ -193,7 +193,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="16dp"
-        android:text="Bayar"
+        android:text="@string/checkout_pay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider11" />
 
