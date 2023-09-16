@@ -9,6 +9,7 @@ import com.martabak.ecommerce.network.data.transaction.TransactionData
 import com.martabak.ecommerce.status.StatusParcel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,6 +17,7 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
     //hit da API
     private val _transactionList = MutableLiveData<List<TransactionData>>()
     val transactionList: LiveData<List<TransactionData>> = _transactionList
+    var notFound = false
 
     //given an id, return a statusparcel object
     fun getStatusParcel(id: String): StatusParcel {
@@ -35,7 +37,14 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
             try {
                 val response = apiService.getTransactions()
                 _transactionList.value = response.data
+                notFound = false
             } catch (e: Throwable) {
+                if (e is HttpException) {
+                    if(e.code() == 404) {
+                       _transactionList.value = listOf()
+                    }
+
+                }
 
             }
         }

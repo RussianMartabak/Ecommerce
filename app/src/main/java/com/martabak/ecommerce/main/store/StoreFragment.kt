@@ -147,9 +147,7 @@ class StoreFragment : Fragment() {
             binding.swiper.isRefreshing = false
         }
 
-        binding.refreshButton.setOnClickListener {
-            pagingAdapter!!.refresh()
-        }
+
 
 
         //listen to list then add all to chips in schip group
@@ -243,11 +241,24 @@ class StoreFragment : Fragment() {
             if (httpError.code() == 404) {
                 binding.errorTitle.text = "Empty"
                 binding.errorDetail.text = "Your requested data is unavailable"
+                binding.refreshButton.text = "Reset"
+                binding.refreshButton.setOnClickListener {
+                    viewModel.resetFilters()
+                    viewModel.query = ""
+                    binding.searchEditText.setText("")
+                    viewModel.callRefresh()
+                }
             } else {
+                binding.refreshButton.setOnClickListener {
+                    pagingAdapter!!.refresh()
+                }
                 binding.errorTitle.text = httpError.code().toString()
                 binding.errorDetail.text = "Internal Server Error"
             }
         } else {
+            binding.refreshButton.setOnClickListener {
+                pagingAdapter!!.refresh()
+            }
             binding.errorTitle.text = "Connection"
             binding.errorDetail.text = "Your connection is unavailable"
         }

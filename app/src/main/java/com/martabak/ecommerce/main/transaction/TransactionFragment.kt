@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -45,6 +46,7 @@ class TransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.errorLayout.isVisible = false
         val adapter = TransactionAdapter {
             val parcel = viewModel.getStatusParcel(it)
             val aktion = MainFragmentDirections.startStatusFromTransaction(parcel)
@@ -53,8 +55,18 @@ class TransactionFragment : Fragment() {
         }
         binding.transactionRecycler.adapter = adapter
         binding.transactionRecycler.layoutManager = LinearLayoutManager(requireActivity())
+        binding.refreshButton.setOnClickListener {
+            viewModel.getTransactions()
+        }
         viewModel.transactionList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.transactionRecycler.isVisible = false
+                binding.errorLayout.isVisible = true
+            } else {
+                binding.transactionRecycler.isVisible = true
+                binding.errorLayout.isVisible = false
+            }
         }
     }
     override fun onResume() {
