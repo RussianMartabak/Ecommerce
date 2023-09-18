@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "308869569950",
+    "project_id": "tokophincon-3cce4",
+    "storage_bucket": "tokophincon-3cce4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308869569950:android:ef3cdd2136639d48e30a8f",
+        "android_client_info": {
+          "package_name": "com.martabak.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCA-MyyAXAU5-OnvC2HkQ6ZgIZi-QJ0Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

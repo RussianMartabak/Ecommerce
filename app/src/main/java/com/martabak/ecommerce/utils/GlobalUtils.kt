@@ -2,6 +2,10 @@ package com.martabak.ecommerce.utils
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.martabak.ecommerce.network.data.payment.PaymentResponse
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 object GlobalUtils {
 
@@ -94,12 +98,19 @@ object GlobalUtils {
         }
     }
 
+    fun String.toPaymentResponse() : PaymentResponse {
+        val moshi : Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+        val jsonAdapter : JsonAdapter<PaymentResponse> = moshi.adapter(PaymentResponse::class.java)
+
+        return jsonAdapter.fromJson(this)!!
+    }
+
     val DATABASE_NAME = "app_db"
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.153.125:5000"
+    val BASE_URL = "http://192.168.1.100:8000"
     val NIGHT_MODE = "night_mode"
 }

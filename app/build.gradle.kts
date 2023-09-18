@@ -4,6 +4,9 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
+    // Add the Crashlytics Gradle plugin
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("kapt")
 
 }
@@ -52,6 +55,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-messaging-ktx:23.2.1")
     val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -111,6 +115,18 @@ dependencies {
 
     //lottie
     implementation("com.airbnb.android:lottie:6.1.0")
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-config-ktx")
+    // Firebase Cloud Messaging (Kotlin)
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
 
 }
 

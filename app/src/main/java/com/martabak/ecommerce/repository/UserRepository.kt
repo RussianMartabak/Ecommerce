@@ -33,8 +33,8 @@ class UserRepository @Inject constructor(
     }
 
 
-    suspend fun register(email : String, password : String) : Boolean{
-        val body = registerBody(email, password, "")
+    suspend fun register(email : String, password : String, token : String) : Boolean{
+        val body = registerBody(email, password, token)
         try{
             val successfulResponse = apiService.postRegister(body)
             userPref.login()

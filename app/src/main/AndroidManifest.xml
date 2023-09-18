@@ -25,7 +25,13 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
-
+        <service
+            android:name="com.martabak.ecommerce.utils.MyFCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <provider
             android:name="com.martabak.ecommerce.utils.MyFileProvider"
             android:authorities="com.martabak.ecommerce.fileprovider"

@@ -8,10 +8,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val globalState: GlobalState,
+    val globalState: GlobalState,
     private val userPref: SharedPreferences
 ) : ViewModel() {
     val logoutFlow = globalState.logoutEventFlow
+
     fun logout() {
         userPref.clearUserData()
     }

@@ -1,6 +1,8 @@
 package com.martabak.ecommerce
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,6 +18,13 @@ class GlobalState() {
             logoutEvent.send(true)
             Log.d("zaky", "LOGOUT SHOULDVE HAPPENED")
         }
+    }
+
+    private val _remoteConfigDataString = MutableLiveData<String>()
+    val remoteConfigDataString : LiveData<String> = _remoteConfigDataString
+
+    fun updateRemoteConfig(msg : String) {
+        _remoteConfigDataString.value = msg
     }
 
 

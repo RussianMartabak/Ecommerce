@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.database.AppDatabase
 import com.martabak.ecommerce.database.CartDao
@@ -125,6 +129,16 @@ object HiltModule {
         return db.wishlistDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideRemoteConfig() : FirebaseRemoteConfig {
+        val remoteConfig : FirebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 100
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        return remoteConfig
+    }
 
 
 
