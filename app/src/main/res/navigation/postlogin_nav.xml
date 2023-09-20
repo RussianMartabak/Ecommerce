@@ -10,6 +10,11 @@
         android:name="com.martabak.ecommerce.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
+        <argument
+            android:name="fromNotif"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
         <action
             android:id="@+id/action_mainFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
@@ -24,10 +29,15 @@
             app:destination="@id/statusFragment" />
         <action
             android:id="@+id/action_mainFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/postlogin"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_mainFragment_to_productDetailComposeFragment"
             app:destination="@id/productDetailComposeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -134,5 +144,10 @@
         android:id="@+id/reviewComposeFragment"
         android:name="com.martabak.ecommerce.product_detail.compose.ReviewComposeFragment"
         android:label="ReviewComposeFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.martabak.ecommerce.notif.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 
 </navigation>

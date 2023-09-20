@@ -61,6 +61,11 @@ class PaymentFragment : Fragment() {
             ))
             findNavController().navigateUp()
         }
+
+        binding.paymentToolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.paymentRecyclerParent.apply {
             setAdapter(adapter)
             layoutManager = LinearLayoutManager(requireActivity())

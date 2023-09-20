@@ -9,17 +9,35 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.R
+import com.martabak.ecommerce.database.NotifDao
+import com.martabak.ecommerce.database.NotifEntity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyFCMService : FirebaseMessagingService() {
+    @Inject
+    lateinit var notifDao: NotifDao
+
     /**
      * Called when message is received.
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
+    private val job = SupervisorJob()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
+
     // [START receive_message]
     val TAG = "zaky"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -41,6 +59,7 @@ class MyFCMService : FirebaseMessagingService() {
             Log.d("zaky", "Message data payload: ${remoteMessage.data}")
             // send notif here
             sendNotification(remoteMessage.data)
+            saveNotification(remoteMessage.data)
             // Check if data needs to be processed by long running job
             if (isLongRunningJob()) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
@@ -52,11 +71,25 @@ class MyFCMService : FirebaseMessagingService() {
         }
 
 
-
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
+
     // [END receive_message]
+    private fun saveNotification(notif: Map<String, String>) {
+        val notifData = NotifEntity(
+            title = notif["title"]!!,
+            body = notif["body"]!!,
+            datetime = "${notif["date"]}, ${notif["time"]}",
+            type = notif["type"]!!,
+            image = notif["image"]!!
+        )
+
+        scope.launch {
+            notifDao.insertNotif(notifData)
+        }
+    }
+
 
     private fun isLongRunningJob() = false
 
@@ -111,16 +144,12 @@ class MyFCMService : FirebaseMessagingService() {
      *
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(message : Map<String, String>) {
+    private fun sendNotification(message: Map<String, String>) {
         val requestCode = 0
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            requestCode,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE,
-        )
+        val pendingIntent = NavDeepLinkBuilder(this)
+            .setDestination(R.id.notificationFragment)
+            .createPendingIntent()
+
 
         val channelId = "fcm_default_channel"
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -132,7 +161,8 @@ class MyFCMService : FirebaseMessagingService() {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -146,6 +176,11 @@ class MyFCMService : FirebaseMessagingService() {
 
         val notificationId = 0
         notificationManager.notify(notificationId, notificationBuilder.build())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
 }

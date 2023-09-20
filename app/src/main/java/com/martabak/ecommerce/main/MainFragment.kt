@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
@@ -31,6 +32,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel : MainViewModel by viewModels()
+    val args: MainFragmentArgs by navArgs()
 
     @Inject
     lateinit var userPref: SharedPreferences
@@ -42,6 +44,10 @@ class MainFragment : Fragment() {
         navHostFragment.navController
     }
 
+
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,17 +56,24 @@ class MainFragment : Fragment() {
         if (!viewModel.userPref.hasUsername()) {
             findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
         }
+
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
     @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
     override fun  onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if (args.fromNotif) {
+            findNavController().navigate(R.id.action_mainFragment_to_notificationFragment)
+        }
         binding.Toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.cart -> {
                     findNavController().navigate(R.id.action_mainFragment_to_cartFragment)
+                    true
+                }
+                R.id.notif -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_notificationFragment)
                     true
                 }
                 else -> false
@@ -68,19 +81,33 @@ class MainFragment : Fragment() {
         }
 
         binding.bottomNav.setupWithNavController(navController)
-        var badge = BadgeDrawable.create(requireActivity())
-        badge.isVisible = false
-        BadgeUtils.attachBadgeDrawable(badge, binding.Toolbar, R.id.cart)
+        val cartBadge = BadgeDrawable.create(requireActivity())
+        cartBadge.isVisible = false
+        BadgeUtils.attachBadgeDrawable(cartBadge, binding.Toolbar, R.id.cart)
         viewModel.cartItemCount.observe(viewLifecycleOwner) {
             if (it > 0) {
-                badge.isVisible = true
-                badge.number = it
+                cartBadge.isVisible = true
+                cartBadge.number = it
             } else {
-                badge.isVisible = false
+                cartBadge.isVisible = false
             }
         }
 
-        var bottomBadge = binding.bottomNav.getOrCreateBadge(R.id.wishlistFragment)
+        //attach badge to topbar for notif
+        val notifBadge = BadgeDrawable.create(requireActivity())
+        notifBadge.isVisible = false
+        BadgeUtils.attachBadgeDrawable(notifBadge, binding.Toolbar, R.id.notif)
+        viewModel.updatedNotifCount.observe(viewLifecycleOwner) {
+            if (it > 0) {
+                notifBadge.isVisible = true
+                notifBadge.number = it
+            } else {
+                notifBadge.isVisible = false
+            }
+        }
+
+
+        val bottomBadge = binding.bottomNav.getOrCreateBadge(R.id.wishlistFragment)
         bottomBadge.isVisible = false
         viewModel.wishItemCount.observe(viewLifecycleOwner) {
             Log.d("zaky", "current wishlisted item is $it")

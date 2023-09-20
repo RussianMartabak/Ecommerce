@@ -11,6 +11,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.database.AppDatabase
 import com.martabak.ecommerce.database.CartDao
+import com.martabak.ecommerce.database.NotifDao
 import com.martabak.ecommerce.database.WishlistDao
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
@@ -127,6 +128,12 @@ object HiltModule {
     @Provides
     fun provideWishlistDao(db : AppDatabase) : WishlistDao {
         return db.wishlistDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotifDao(db : AppDatabase) : NotifDao {
+        return db.notifDao()
     }
 
     @Singleton
