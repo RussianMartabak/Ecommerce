@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -145,6 +147,12 @@ object HiltModule {
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         return remoteConfig
+    }
+
+    @Singleton
+    @Provides
+    fun provideFireAnalytics() : FirebaseAnalytics {
+        return Firebase.analytics
     }
 
 

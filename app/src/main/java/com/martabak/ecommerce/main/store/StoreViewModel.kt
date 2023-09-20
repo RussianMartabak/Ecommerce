@@ -9,6 +9,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.main.store.data.ProductQuery
 import com.martabak.ecommerce.network.ApiService
@@ -23,7 +25,8 @@ class StoreViewModel @Inject constructor(
     val storeRepository: StoreRepository,
     val apiService: ApiService,
     val productRepository: ProductRepository,
-    val globalState : GlobalState
+    val globalState : GlobalState,
+    val analytics: FirebaseAnalytics
 ) : ViewModel() {
     var query = ""
     var brand: String? = null
@@ -93,6 +96,9 @@ class StoreViewModel @Inject constructor(
         val newQuery =
             ProductQuery(search = q, brand = brand, lowest = lowest, highest = highest, sort = sort)
         _queryObject.value = newQuery
+        analytics.logEvent(FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS) {
+            param(FirebaseAnalytics.Param.SEARCH_TERM, q)
+        }
     }
 
     fun setFilters(_brand: String?, _lowest: Int?, _highest: Int?, _sort: String?) {

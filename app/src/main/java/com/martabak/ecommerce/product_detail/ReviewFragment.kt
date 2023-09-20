@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,11 +39,13 @@ class ReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loadingCircle.isVisible = true
         viewModel.getReviews()
         binding.topBarDetail.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         viewModel.reviewData.observe(viewLifecycleOwner) {reviewList ->
+            binding.loadingCircle.isVisible = false
             val reviewAdapter = ReviewAdapter(reviewList)
             binding.recyclerReview.adapter = reviewAdapter
             binding.recyclerReview.layoutManager = LinearLayoutManager(requireActivity())

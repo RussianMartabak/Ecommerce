@@ -4,5 +4,6 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:statusBarColor">@color/black</item>
+        <item name="chipStandaloneStyle">@style/Widget.Material3.Chip.Filter</item>
     </style>
 </resources>

@@ -50,7 +50,7 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.errorLayout.isVisible = false
         binding.deleteSelectedButton.isVisible = false
-        binding.buyButton.isVisible = false
+        binding.buyButton.isEnabled = false
         //start display le items
         val cartAdapter = CartAdapter(viewModel)
         viewModel.liveCartItemsList.observe(viewLifecycleOwner) {
@@ -93,7 +93,7 @@ class CartFragment : Fragment() {
 
         viewModel.someChecked.observe(viewLifecycleOwner) {
             binding.deleteSelectedButton.isVisible = it
-            binding.buyButton.isVisible = it
+            binding.buyButton.isEnabled = it
 
         }
 

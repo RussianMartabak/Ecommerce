@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.martabak.ecommerce.network.ApiService
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     val apiService: ApiService,
     val userPref: SharedPreferences,
-    val userRepository: UserRepository
+    val userRepository: UserRepository,
+    val analytics: FirebaseAnalytics
 ) : ViewModel() {
 
 
@@ -50,12 +53,18 @@ class RegisterViewModel @Inject constructor(
             try {
                 _nowLoading.value = true
                 val response = userRepository.register(email!!, password!!, firebaseToken)
+                analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP) {
+                    param(FirebaseAnalytics.Param.METHOD, email!!)
+                }
                 _validity.value = true
                 _nowLoading.value = false
             } catch (e: Exception) {
                 if (e is HttpException) {
                     if (e.code() == 400) {
                         errorMessage = "Email already taken"
+                    }
+                    analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP) {
+                        param(FirebaseAnalytics.Param.METHOD, email!!)
                     }
                 } else {
                     errorMessage = "${e.message}"

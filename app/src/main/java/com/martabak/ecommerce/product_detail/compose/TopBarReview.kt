@@ -3,6 +3,7 @@ package com.martabak.ecommerce.product_detail.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,11 +20,14 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.martabak.ecommerce.R
+import com.martabak.ecommerce.ui.theme.DarkColorScheme
+import com.martabak.ecommerce.ui.theme.LightColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarReview(navigateBack : () -> Boolean) {
-    Column() {
+    Column(Modifier.background(color = Color.White)) {
+        val surfaceColor : Color = if (isSystemInDarkTheme()) DarkColorScheme.background else LightColorScheme.background
         TopAppBar(title = {
             Text(text = "Ulasan", fontFamily = FontFamily(Font(R.font.poppins)))
         }, navigationIcon = {
@@ -33,7 +37,7 @@ fun TopBarReview(navigateBack : () -> Boolean) {
                 modifier = Modifier
                     .clickable { navigateBack() }
                     .padding(8.dp))
-        })
+        }, colors = TopAppBarDefaults.topAppBarColors(surfaceColor))
         Divider(Modifier.fillMaxWidth())
     }
 }

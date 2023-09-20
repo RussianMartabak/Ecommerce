@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.loginResponse
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     val apiService: ApiService,
-    val userPref: SharedPreferences
+    val userPref: SharedPreferences,
+    val analytics : FirebaseAnalytics
 ) : ViewModel() {
     var emailValidity = false
     var passwordValidity = false
@@ -48,6 +51,9 @@ class LoginViewModel @Inject constructor(
             try {
                 _nowLoading.value = true
                 val response = apiService.postLogin(body)
+                analytics.logEvent(FirebaseAnalytics.Event.LOGIN) {
+                    param(FirebaseAnalytics.Param.METHOD, email!!)
+                }
                 storeTokens(response)
                 userPref.setUsername(response.data.userName)
                 userPref.login()
@@ -58,6 +64,9 @@ class LoginViewModel @Inject constructor(
                 if (e is HttpException) {
                     if (e.code() == 400) {
                         errorMessage = "Wrong Email or Password"
+                    }
+                    analytics.logEvent(FirebaseAnalytics.Event.LOGIN) {
+                        param(FirebaseAnalytics.Param.METHOD, email!!)
                     }
                 } else {
                     errorMessage = e.message.toString()
@@ -83,6 +92,7 @@ class LoginViewModel @Inject constructor(
     private fun storeTokens(responseBody: loginResponse) {
         //put access token
         userPref.putAccessToken(responseBody.data.accessToken)
+
     }
 
 

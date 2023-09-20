@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -83,6 +84,7 @@ class PaymentFragment : Fragment() {
 
     private fun initConfig(adapter : PaymentParentAdapter) {
         remoteConfig.fetchAndActivate().addOnCompleteListener(requireActivity()) { task ->
+            binding.loadingCircle.isVisible = false
             if (task.isSuccessful) {
                 val updated = task.result
                 val config = remoteConfig.getString("remoteconfig_data")

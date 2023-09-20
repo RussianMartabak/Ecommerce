@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,12 +23,15 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.martabak.ecommerce.R
+import com.martabak.ecommerce.ui.theme.DarkColorScheme
+import com.martabak.ecommerce.ui.theme.LightColorScheme
 import okhttp3.internal.wait
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(navigateBack : () -> Boolean) {
         Column(Modifier.background(Color.White)) {
+            val surfaceColor : Color = if (isSystemInDarkTheme()) DarkColorScheme.background else LightColorScheme.background
             TopAppBar(title = {
                 Text(text = stringResource(id = R.string.product_detail), fontFamily = FontFamily(Font(R.font.poppins)))
             }, navigationIcon = {
@@ -37,7 +41,7 @@ fun TopBar(navigateBack : () -> Boolean) {
                     modifier = Modifier
                         .clickable { navigateBack() }
                         .padding(8.dp))
-            })
+            }, colors = TopAppBarDefaults.topAppBarColors(surfaceColor))
             Divider(Modifier.fillMaxWidth())
         }
 

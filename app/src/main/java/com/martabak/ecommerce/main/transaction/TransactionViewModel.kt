@@ -19,6 +19,9 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
     val transactionList: LiveData<List<TransactionData>> = _transactionList
     var notFound = false
 
+    private val _nowLoading = MutableLiveData<Boolean>()
+    val nowLoading : LiveData<Boolean> = _nowLoading
+
     //given an id, return a statusparcel object
     fun getStatusParcel(id: String): StatusParcel {
         val transData: TransactionData = _transactionList.value!!.first { it.invoiceId == id }
@@ -33,17 +36,19 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
     }
 
     fun getTransactions() {
+        _nowLoading.value = true
         viewModelScope.launch {
             try {
                 val response = apiService.getTransactions()
+                _nowLoading.value = false
                 _transactionList.value = response.data
                 notFound = false
             } catch (e: Throwable) {
+                _nowLoading.value = false
                 if (e is HttpException) {
                     if(e.code() == 404) {
                        _transactionList.value = listOf()
                     }
-
                 }
 
             }

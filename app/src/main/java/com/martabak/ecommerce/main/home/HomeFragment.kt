@@ -47,7 +47,10 @@ class HomeFragment : Fragment() {
         }
 
         val langTag = (requireActivity() as MainActivity).getLang()
-        binding.langSwitch.isChecked = langTag != "en"
+        Log.d("zaky", "current language tag : $langTag")
+        binding.langSwitch.isChecked = false
+        if (langTag == "") (requireActivity() as MainActivity).switchLang("en") else binding.langSwitch.isChecked = true
+
 
         binding.langSwitch.setOnClickListener {
             if (binding.langSwitch.isChecked) {

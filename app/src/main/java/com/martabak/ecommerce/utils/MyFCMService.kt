@@ -147,6 +147,7 @@ class MyFCMService : FirebaseMessagingService() {
     private fun sendNotification(message: Map<String, String>) {
         val requestCode = 0
         val pendingIntent = NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.root_nav)
             .setDestination(R.id.notificationFragment)
             .createPendingIntent()
 

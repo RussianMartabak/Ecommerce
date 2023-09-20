@@ -46,6 +46,7 @@ class TransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loadingCircle.isVisible = false
         binding.errorLayout.isVisible = false
         val adapter = TransactionAdapter {
             val parcel = viewModel.getStatusParcel(it)
@@ -58,6 +59,11 @@ class TransactionFragment : Fragment() {
         binding.refreshButton.setOnClickListener {
             viewModel.getTransactions()
         }
+
+        viewModel.nowLoading.observe(viewLifecycleOwner) {
+            binding.loadingCircle.isVisible = it
+        }
+
         viewModel.transactionList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             if (it.isEmpty()) {
