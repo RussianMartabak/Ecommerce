@@ -1,8 +1,11 @@
 package com.martabak.ecommerce.cart.adapters
 
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.cart.CartViewModel
 import com.martabak.ecommerce.database.CartEntity
@@ -42,6 +45,12 @@ class CartViewHolder(private var binding: CartItemBinding, private var viewModel
             }
             binding.deleteButton.setOnClickListener {
                 viewModel.deleteItem(itemId)
+                //log event
+                val productBundle = bundleOf("name" to itemData.productName)
+                viewModel.analytics.logEvent(FirebaseAnalytics.Event.REMOVE_FROM_CART) {
+                    param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+                    param(FirebaseAnalytics.Param.ITEMS, arrayOf(productBundle))
+                }
             }
         }
 

@@ -20,6 +20,8 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStoreBinding
 import com.martabak.ecommerce.main.MainFragment
@@ -29,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
 
 
 /**
@@ -49,6 +52,8 @@ class StoreFragment : Fragment() {
     private var sort: String? = null
     private var gridMode = false
     private var pagingAdapter : ProductsPagingAdapter? = null
+    @Inject
+    lateinit var analytics : FirebaseAnalytics
 
 
     override fun onCreateView(
@@ -102,6 +107,11 @@ class StoreFragment : Fragment() {
             //store product ID on repo then move away from this scheisse
             Log.d("zaky", "selected ID: $id")
             viewModel.selectProductID(id)
+            //log le selected item
+            analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.ITEM_LIST_ID, 3)
+                param(FirebaseAnalytics.Param.ITEM_LIST_NAME, "Products")
+            }
             (grandParentFrag as MainFragment).findNavController()
                 .navigate(R.id.action_mainFragment_to_productDetailComposeFragment)
         }

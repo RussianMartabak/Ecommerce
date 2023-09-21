@@ -37,12 +37,7 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var userPref: SharedPreferences
 
-    private val navHostFragment by lazy {
-        childFragmentManager.findFragmentById(R.id.mainNavHost) as NavHostFragment
-    }
-    private val navController by lazy {
-        navHostFragment.navController
-    }
+
 
 
 
@@ -56,6 +51,7 @@ class MainFragment : Fragment() {
         if (!viewModel.userPref.hasUsername()) {
             findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
         }
+
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -80,7 +76,12 @@ class MainFragment : Fragment() {
             }
         }
 
-        binding.bottomNav.setupWithNavController(navController)
+        var navHost = childFragmentManager.findFragmentById(R.id.mainNavHost) as NavHostFragment
+        val navController = navHost.navController
+
+        binding.bottomNav?.setupWithNavController(navController)
+        binding.navRail?.setupWithNavController(navController)
+
         val cartBadge = BadgeDrawable.create(requireActivity())
         cartBadge.isVisible = false
         BadgeUtils.attachBadgeDrawable(cartBadge, binding.Toolbar, R.id.cart)
@@ -107,7 +108,11 @@ class MainFragment : Fragment() {
         }
 
 
-        val bottomBadge = binding.bottomNav.getOrCreateBadge(R.id.wishlistFragment)
+        val bottomBadge = if (binding.bottomNav != null) {
+            binding.bottomNav!!.getOrCreateBadge(R.id.wishlistFragment)
+        } else {
+            binding.navRail!!.getOrCreateBadge(R.id.wishlistFragment)
+        }
         bottomBadge.isVisible = false
         viewModel.wishItemCount.observe(viewLifecycleOwner) {
             Log.d("zaky", "current wishlisted item is $it")

@@ -29,6 +29,7 @@ class GridViewHolder(private var binding: ProductGridItemBinding, val onClick : 
         }
         binding.rootGridCard.setOnClickListener {
             onClick(product.productId)
+
         }
     }
 }

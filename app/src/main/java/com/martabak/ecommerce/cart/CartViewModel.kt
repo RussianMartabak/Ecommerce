@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.network.data.checkout.CheckoutList
@@ -14,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(val cartRepository: CartRepository) : ViewModel() {
+class CartViewModel @Inject constructor(
+    val cartRepository: CartRepository,
+    val analytics: FirebaseAnalytics
+) : ViewModel() {
     var liveCartItemsList = cartRepository.updatedCartItems
 
 
@@ -61,6 +65,8 @@ class CartViewModel @Inject constructor(val cartRepository: CartRepository) : Vi
     fun deleteItem(id: String) {
         viewModelScope.launch {
             cartRepository.deleteItem(id)
+
+
         }
     }
 

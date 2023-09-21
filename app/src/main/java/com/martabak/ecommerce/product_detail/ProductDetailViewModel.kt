@@ -1,10 +1,14 @@
 package com.martabak.ecommerce.product_detail
 
+import android.os.Bundle
 import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.database.WishlistEntity
@@ -25,7 +29,8 @@ class ProductDetailViewModel @Inject constructor(
     val productRepository: ProductRepository,
     val globalState: GlobalState,
     val cartRepository: CartRepository,
-    val wishlistRepository: WishlistRepository
+    val wishlistRepository: WishlistRepository,
+    private val analytics: FirebaseAnalytics
 ) :
     ViewModel() {
     private var _currentPrice = MutableLiveData<Int>()
@@ -58,12 +63,12 @@ class ProductDetailViewModel @Inject constructor(
     var productData: LiveData<Data> = _productData
 
     private var _nowLoading = MutableLiveData<Boolean>()
-    val nowLoading : LiveData<Boolean> = _nowLoading
+    val nowLoading: LiveData<Boolean> = _nowLoading
 
 
     var errorMessage = ""
 
-    fun setProductID(id : String) {
+    fun setProductID(id: String) {
         productRepository.selectedProductID = id
     }
 
@@ -108,6 +113,15 @@ class ProductDetailViewModel @Inject constructor(
                     wishlistRepository.insertItem(makeWish())
                     _productOnWishlist.value = true
                     triggerSnackbar("Item added to wishlist")
+                    //log event here
+                    analytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST) {
+                        param(
+                            FirebaseAnalytics.Param.ITEMS,
+                            arrayOf(bundleOf("name" to makeWish().productName))
+                        )
+                        param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+                        param(FirebaseAnalytics.Param.VALUE, makeWish().productPrice.toLong())
+                    }
 
                 }
             } catch (e: Throwable) {
@@ -142,6 +156,16 @@ class ProductDetailViewModel @Inject constructor(
             productQuantity = 1,
             item_id = _productData.value!!.productId
         )
+        //log event
+        val productBundle = Bundle().apply {
+            putString("name", _productData.value!!.productName)
+        }
+        analytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART) {
+            param(FirebaseAnalytics.Param.ITEMS, arrayOf(productBundle))
+            param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+            param(FirebaseAnalytics.Param.VALUE, _productData.value!!.productPrice.toDouble())
+        }
+
         viewModelScope.launch {
             try {
                 cartRepository.insertProductData(newEntity)

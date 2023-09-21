@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.CheckoutFragmentArgs
 import com.martabak.ecommerce.network.data.product_detail.Data
@@ -47,6 +49,7 @@ import com.martabak.ecommerce.product_detail.compose.product_detail_components.N
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.TopBar
 import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 /**
@@ -61,6 +64,8 @@ class ProductDetailComposeFragment : Fragment() {
     private var variants: List<ProductVariant>? = null
     private var imageList: List<String> = listOf()
     private val args : ProductDetailComposeFragmentArgs by navArgs()
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -198,6 +203,17 @@ class ProductDetailComposeFragment : Fragment() {
                         updatedPrice = updatedPrice,
                         toReview = toReview
                     )
+                    //make product data as bundle
+                    val bundle = Bundle()
+                    bundle.putString("name", productDetail.productName)
+
+                    //Log event
+                    analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM) {
+                        param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+                        param(FirebaseAnalytics.Param.VALUE, productDetail.productPrice.toDouble())
+                        param(FirebaseAnalytics.Param.ITEMS, arrayOf(bundle))
+                    }
+
                 } else {
                     //error
                     ErrorScreen(refreshFunction)

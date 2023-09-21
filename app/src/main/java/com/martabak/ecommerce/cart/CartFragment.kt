@@ -6,18 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.cart.adapters.CartAdapter
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.databinding.FragmentCartBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
+import javax.inject.Inject
 
 
 /**
@@ -32,6 +36,8 @@ class CartFragment : Fragment() {
 
     private var _binding : FragmentCartBinding? = null
     private val binding get() = _binding!!
+    @Inject
+    lateinit var analytics : FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,6 +66,20 @@ class CartFragment : Fragment() {
             } else {
                 binding.normallayout.isVisible = true
                 binding.errorLayout.isVisible = false
+                //log event here
+                var itemsList = mutableListOf<Bundle>()
+                var sum : Long = 0
+                it.forEach {
+                    val product = bundleOf("nama" to it.productName)
+                    itemsList.add(product)
+                    sum += it.productPrice
+                }
+                analytics.logEvent(FirebaseAnalytics.Event.VIEW_CART) {
+                    param(FirebaseAnalytics.Param.ITEMS, itemsList.toTypedArray())
+                    param(FirebaseAnalytics.Param.VALUE, sum)
+                    param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+                }
+                //logging end here
             }
             cartAdapter.submitList(it)
             binding.totalPriceText.text = integerToRupiah(enumPrice(it))
