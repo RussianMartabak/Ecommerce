@@ -1,9 +1,13 @@
 package com.martabak.ecommerce.checkout
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
@@ -15,9 +19,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckoutViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class CheckoutViewModel @Inject constructor(private val apiService: ApiService, private val analytics: FirebaseAnalytics) : ViewModel() {
     private var _itemList = MutableLiveData<List<CheckoutData>>()
     val itemList: LiveData<List<CheckoutData>> = _itemList
+
+    var sum : Long = 0
 
     private var _payment = MutableLiveData<String>()
     val payment: LiveData<String> = _payment
@@ -57,6 +63,20 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService) 
 
     fun submitItemList(data: List<CheckoutData>) {
         _itemList.value = data
+        sum = 0
+        //log event
+
+        val checkoutList = mutableListOf<Bundle>()
+        data.forEach { item ->
+            checkoutList.add(bundleOf("name" to item.productName))
+            sum += item.productPrice
+        }
+        val checkoutArray = checkoutList.toTypedArray()
+        analytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT) {
+            param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+            param(FirebaseAnalytics.Param.ITEMS, checkoutArray)
+            param(FirebaseAnalytics.Param.VALUE, sum)
+        }
     }
 
     //given an id, add count to that item

@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.adapters.CheckoutAdapter
 import com.martabak.ecommerce.databinding.FragmentCheckoutBinding
@@ -20,6 +22,7 @@ import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
+import javax.inject.Inject
 
 
 /**
@@ -33,6 +36,8 @@ class CheckoutFragment : Fragment() {
     private val binding get() = _binding!!
     val args: CheckoutFragmentArgs by navArgs()
     private val viewModel: CheckoutViewModel by viewModels()
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +103,12 @@ class CheckoutFragment : Fragment() {
             requestKey, bundle ->
             val label = bundle.getString("methodName")
             val image = bundle.getString("methodImage")
+            //Log EVENT
+            analytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO) {
+                param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+                label?.let {param(FirebaseAnalytics.Param.PAYMENT_TYPE, it)}
+                param(FirebaseAnalytics.Param.VALUE, viewModel.sum)
+            }
             binding.apply {
                 payCardImage.load(image) {
                     error(R.drawable.thumbnail)

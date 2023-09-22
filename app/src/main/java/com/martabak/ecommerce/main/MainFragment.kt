@@ -126,6 +126,7 @@ class MainFragment : Fragment() {
 
 
 
+
         Log.d("zaky", "Current username = ${userPref.getUsername()}")
         binding.Toolbar.title = userPref.getUsername()
     }
