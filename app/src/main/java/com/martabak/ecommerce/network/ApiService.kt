@@ -4,7 +4,7 @@ import com.martabak.ecommerce.network.data.ProductsResponse
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.loginResponse
 import com.martabak.ecommerce.network.data.prelogin.profileResponse
-import com.martabak.ecommerce.network.data.prelogin.registerBody
+import com.martabak.ecommerce.network.data.prelogin.RegisterBody
 import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
 import com.martabak.ecommerce.network.data.SearchResponse
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
@@ -31,7 +31,7 @@ interface ApiService {
 
     @Headers("API_KEY: 6f8856ed-9189-488f-9011-0ff4b6c08edc")
     @POST("register")
-    suspend fun postRegister(@Body registerBody: registerBody): RegisterResponse
+    suspend fun postRegister(@Body registerBody: RegisterBody): RegisterResponse
 
     @Headers("API_KEY: 6f8856ed-9189-488f-9011-0ff4b6c08edc")
     @POST("login")

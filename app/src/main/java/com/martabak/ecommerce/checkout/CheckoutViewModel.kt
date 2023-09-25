@@ -13,6 +13,7 @@ import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentData
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentItem
+import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.status.StatusParcel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
             try {
                 _nowLoading.value = true
                 val response = apiService.sendForFulfillment(body)
+                logPurchase(response)
                 _statusParcel.value = convertToStatusParcel(response.data)
                 _nowLoading.value = false
 
@@ -60,6 +62,23 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
         _payment.value = s
     }
 
+
+    private fun logPurchase(r : FulfillmentResponse) {
+        var sum : Long= 0
+        val itemList = mutableListOf<Bundle>()
+        _itemList.value!!.forEach {
+            itemList.add(bundleOf("name" to it.productName))
+            sum += it.productPrice
+        }
+
+
+        analytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
+            param(FirebaseAnalytics.Param.CURRENCY, "IDR")
+            param(FirebaseAnalytics.Param.ITEMS, itemList.toTypedArray())
+            param(FirebaseAnalytics.Param.TRANSACTION_ID, r.data.invoiceId)
+            param(FirebaseAnalytics.Param.VALUE, sum)
+        }
+    }
 
     fun submitItemList(data: List<CheckoutData>) {
         _itemList.value = data

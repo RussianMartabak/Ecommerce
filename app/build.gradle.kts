@@ -56,6 +56,7 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx:23.2.1")
+    implementation("androidx.test:core-ktx:1.5.0")
     val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -127,6 +128,10 @@ dependencies {
     // Firebase Cloud Messaging (Kotlin)
     implementation("com.google.firebase:firebase-messaging-ktx")
 
+    // test dependencies
+    testImplementation("com.squareup.okhttp3:mockwebserver")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("org.robolectric:robolectric:4.10.3")
 
 }
 

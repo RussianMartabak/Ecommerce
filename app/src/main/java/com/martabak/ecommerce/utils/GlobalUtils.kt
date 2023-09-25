@@ -36,6 +36,13 @@ object GlobalUtils {
         return this.getBoolean(LOGGED_IN, false)
     }
 
+    fun SharedPreferences.login() {
+        this.edit().apply {
+            putBoolean(LOGGED_IN, true)
+            apply()
+        }
+    }
+
     fun SharedPreferences.setUsername(name: String) {
         this.edit().apply {
             putString(USERNAME, name)
@@ -60,12 +67,7 @@ object GlobalUtils {
         return result != ""
     }
 
-    fun SharedPreferences.login() {
-        this.edit().apply {
-            putBoolean(LOGGED_IN, true)
-            apply()
-        }
-    }
+
 
     fun SharedPreferences.clearUserData() {
         this.edit().apply{
@@ -111,6 +113,6 @@ object GlobalUtils {
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.1.100:8000"
+    val BASE_URL = "http://192.168.1.7:8000"
     val NIGHT_MODE = "night_mode"
 }

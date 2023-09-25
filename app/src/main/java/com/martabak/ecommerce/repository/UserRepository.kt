@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.ResultData
-import com.martabak.ecommerce.network.data.prelogin.registerBody
+import com.martabak.ecommerce.network.data.prelogin.RegisterBody
 import com.martabak.ecommerce.utils.GlobalUtils.hasUsername
 import com.martabak.ecommerce.utils.GlobalUtils.isFirstTime
 import com.martabak.ecommerce.utils.GlobalUtils.login
@@ -34,7 +34,7 @@ class UserRepository @Inject constructor(
 
 
     suspend fun register(email : String, password : String, token : String) : Boolean{
-        val body = registerBody(email, password, token)
+        val body = RegisterBody(email, password, token)
         try{
             val successfulResponse = apiService.postRegister(body)
             userPref.login()
