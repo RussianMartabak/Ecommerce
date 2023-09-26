@@ -27,11 +27,6 @@ class UserRepository @Inject constructor(
         return userPref.hasUsername()
     }
 
-    var firstEntry = userPref.isFirstTime()
-    fun registerEntry() {
-        userPref.registerEntry()
-    }
-
 
     suspend fun register(email : String, password : String, token : String) : Boolean{
         val body = RegisterBody(email, password, token)
@@ -62,7 +57,7 @@ class UserRepository @Inject constructor(
             userPref.setUsername(username)
             return ResultData<Int>("", true)
         } catch (e: Exception) {
-            Log.d("zaky", "Upload Profile post exception: ${e.message}")
+
             val errorMessage = e.message!!
             return ResultData<Int>(errorMessage, false)
         }

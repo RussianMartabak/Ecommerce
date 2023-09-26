@@ -36,20 +36,6 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
 
     var searchKey = ""
 
-    fun setSearchQuery(q: String) {
-        searchKey = q
-        _liveSearchKey.value = q
-    }
-
-    fun setFilters(_brand: String?, _lowest: Int?, _highest: Int?, _sort: String?) {
-        brand = _brand
-        lowest = _lowest
-        highest = _highest
-        sort = _sort
-        //delegate to function
-        updateChipsList()
-    }
-
     //must be demolished in the near future
     suspend fun getProducts(page: Int = 1): ProductsResponse {
         try {

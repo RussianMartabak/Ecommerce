@@ -132,6 +132,10 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver")
     testImplementation("androidx.test:core:1.5.0")
     testImplementation("org.robolectric:robolectric:4.10.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.mockito:mockito-core:5.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
 
 }
 

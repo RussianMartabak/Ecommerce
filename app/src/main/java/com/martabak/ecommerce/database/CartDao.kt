@@ -18,6 +18,9 @@ interface CartDao {
     @Query("UPDATE cart SET product_qty = product_qty + 1 WHERE item_id = :id")
     suspend fun addItemCount(id : String)
 
+    @Query("UPDATE cart SET product_qty = product_qty - 1 WHERE item_id = :id")
+    suspend fun substractItem(id : String)
+
     @Query("SELECT * FROM cart")
     fun getAll() : LiveData<List<CartEntity>>
 
@@ -36,8 +39,7 @@ interface CartDao {
     @Query("DELETE FROM cart WHERE item_id = :id")
     suspend fun deleteItem(id : String)
 
-    @Query("UPDATE cart SET product_qty = product_qty - 1 WHERE item_id = :id")
-    suspend fun substractItem(id : String)
+
 
     @Query("SELECT COUNT(*) FROM cart")
     fun getItemCount() : LiveData<Int>

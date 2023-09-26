@@ -23,10 +23,10 @@ class ProductRepository @Inject constructor(val apiService: ApiService) {
         try {
 
             val response = apiService.getProductDetail(selectedProductID!!)
-            Log.d("zaky", "server sent ID : $selectedProductID")
+
             return response.data
         } catch (e: Throwable) {
-            Log.d("zaky", "error is thrown from product repository")
+
             throw e
         }
     }

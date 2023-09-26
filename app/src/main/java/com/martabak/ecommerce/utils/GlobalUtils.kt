@@ -21,7 +21,7 @@ object GlobalUtils {
     }
 
     fun SharedPreferences.putAccessToken(token: String) {
-        this.edit().apply {
+        this.edit()?.apply {
             putString(ACCESS_TOKEN, token)
             apply()
         }
@@ -37,14 +37,14 @@ object GlobalUtils {
     }
 
     fun SharedPreferences.login() {
-        this.edit().apply {
+        this.edit()?.apply {
             putBoolean(LOGGED_IN, true)
             apply()
         }
     }
 
     fun SharedPreferences.setUsername(name: String) {
-        this.edit().apply {
+        this.edit()?.apply {
             putString(USERNAME, name)
             Log.d("zaky", "username is set to $name")
             apply()
@@ -79,7 +79,7 @@ object GlobalUtils {
     }
 
     fun SharedPreferences.setRefreshToken(rToken : String) {
-        this.edit().apply{
+        this.edit()?.apply{
             putString(REFRESH_TOKEN, rToken)
             apply()
         }

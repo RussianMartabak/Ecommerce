@@ -19,39 +19,14 @@ class CartViewModel @Inject constructor(
     val cartRepository: CartRepository,
     val analytics: FirebaseAnalytics
 ) : ViewModel() {
-    var liveCartItemsList = cartRepository.updatedCartItems
+    var liveCartItemsList : LiveData<List<CartEntity>>? = cartRepository.updatedCartItems
 
 
-    var liveTotalPrice = liveCartItemsList.switchMap { items ->
-        enumPrice(items)
-    }
-    var allChecked = liveCartItemsList.switchMap { items ->
-        isAllChecked(items)
-    }
-    var someChecked = liveCartItemsList.switchMap { items ->
+    var someChecked = liveCartItemsList?.switchMap { items ->
         anItemSelected(items)
     }
 
-    //calculate the total price everytime db gets updated
-    private fun enumPrice(list: List<CartEntity>): LiveData<Int> {
-        var priceSum = 0
-        list.forEach { item ->
-            if (item.isSelected) {
-                priceSum += (item.productPrice * item.productQuantity)
-            }
-        }
-        return MutableLiveData<Int>(priceSum)
-    }
 
-    private fun isAllChecked(list: List<CartEntity>): LiveData<Boolean> {
-        var checkeds = list.filter { it.isSelected }
-        if (list.size == checkeds.size && list.isNotEmpty()) {
-            return MutableLiveData<Boolean>(true)
-        } else {
-            return MutableLiveData<Boolean>(false)
-        }
-
-    }
 
     private fun anItemSelected(list: List<CartEntity>): LiveData<Boolean> {
         var checkeds = list.filter { it.isSelected }
@@ -108,7 +83,7 @@ class CartViewModel @Inject constructor(
 
     //function to convert list
     fun parcelizeCartList(): CheckoutList {
-        val entityList = liveCartItemsList.value!!.filter { it.isSelected }
+        val entityList = liveCartItemsList?.value!!.filter { it.isSelected }
         val checkoutList = entityList!!.map { cart ->
             CheckoutData(
                 productStock = cart.productStock,
