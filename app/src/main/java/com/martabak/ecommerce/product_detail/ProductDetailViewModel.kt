@@ -72,6 +72,11 @@ class ProductDetailViewModel @Inject constructor(
         productRepository.selectedProductID = id
     }
 
+    fun setProductData(data : Data) {
+        _productData.value = data
+        basePrice = data.productPrice
+    }
+
     fun getProductData() {
         viewModelScope.launch {
             try {
@@ -92,7 +97,7 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun triggerSnackbar(s: String) {
+    private fun triggerSnackbar(s: String) {
         viewModelScope.launch {
             eventChannel.send(s)
         }

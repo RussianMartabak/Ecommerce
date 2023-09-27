@@ -24,7 +24,7 @@ class ReviewViewModel @Inject constructor(val productRepository: ProductReposito
                 val reviews = productRepository.getProductReviews()
                 _reviewData.value = reviews
             } catch(e : Throwable) {
-                Log.d("zaky", "Error $e")
+
             }
         }
     }

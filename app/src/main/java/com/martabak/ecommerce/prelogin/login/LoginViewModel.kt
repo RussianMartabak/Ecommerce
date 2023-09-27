@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.messaging.FirebaseMessaging
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.loginResponse
@@ -32,6 +34,7 @@ class LoginViewModel @Inject constructor(
     var passwordValidity = false
     var email: String? = null
     var password: String? = null
+    var token : String = ""
     var errorMessage = ""
     private var _serverValidity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
@@ -41,12 +44,23 @@ class LoginViewModel @Inject constructor(
     var serverValidity: LiveData<Boolean> = _serverValidity
     var firstEntry = userPref.isFirstTime()
 
+    init {
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+                token = it.result
+                Log.d("zaky", "FB Token: $token")
+            })
+        } catch (e : Throwable) {
+
+        }
+    }
+
     fun isLoggedIn(): Boolean {
         return userPref.isLoggedIn()
     }
 
     fun Login() {
-        val body = LoginBody(email!!, password!!, "")
+        val body = LoginBody(email!!, password!!, token)
         viewModelScope.launch {
             try {
                 _nowLoading.value = true

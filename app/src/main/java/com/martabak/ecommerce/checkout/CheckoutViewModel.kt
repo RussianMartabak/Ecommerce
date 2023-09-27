@@ -51,7 +51,7 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
                 _nowLoading.value = false
 
             } catch (e: Throwable) {
-                _errorMessage.value = e.toString()
+                _errorMessage.value = e.message
                 _nowLoading.value = false
             }
         }
@@ -82,9 +82,9 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
 
     fun submitItemList(data: List<CheckoutData>) {
         _itemList.value = data
-        sum = 0
-        //log event
 
+        //log event
+        sum = 0
         val checkoutList = mutableListOf<Bundle>()
         data.forEach { item ->
             checkoutList.add(bundleOf("name" to item.productName))

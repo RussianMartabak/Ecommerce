@@ -42,10 +42,15 @@ class RegisterViewModel @Inject constructor(
     var nowLoading : LiveData<Boolean> = _nowLoading
 
     init {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
-            firebaseToken = it.result
-            Log.d("zaky", "FB Token: $firebaseToken")
-        })
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+                firebaseToken = it.result
+                Log.d("zaky", "FB Token: $firebaseToken")
+            })
+        } catch (e : Throwable) {
+
+        }
+
     }
 
     fun register() {
