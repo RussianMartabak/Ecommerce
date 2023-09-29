@@ -63,10 +63,5 @@ class NotifDaoTest {
     fun setNotifAsReadTest() = runTest {
         notifDao.setNotifAsRead(1, true)
         assertEquals(true, notifDao.getAllNotifs().getOrAwaitValue().get(0).read)
-
     }
-
-
-
-
 }

@@ -9,12 +9,12 @@ import com.martabak.ecommerce.main.wishlist.WishlistViewModel
 import java.text.NumberFormat
 
 class LinearWishViewHolder(
-    private val viewModel : WishlistViewModel,
+    private val viewModel: WishlistViewModel,
     private val binding: WishlistLinearItemBinding,
     private val onClick: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(wish : WishlistEntity) {
+    fun bind(wish: WishlistEntity) {
         binding.productTitle.text = wish.productName
         val formattedPrice =
             NumberFormat.getInstance().format(wish.productPrice).replace(",", ".")
@@ -37,6 +37,5 @@ class LinearWishViewHolder(
         binding.rootLinearCard.setOnClickListener {
             onClick(wish.item_id)
         }
-
     }
 }

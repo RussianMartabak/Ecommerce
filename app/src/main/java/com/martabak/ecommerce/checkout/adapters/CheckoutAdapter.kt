@@ -6,22 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.martabak.ecommerce.checkout.CheckoutViewModel
-import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.databinding.CheckoutItemBinding
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
 
-class CheckoutAdapter(private val viewModel : CheckoutViewModel) : ListAdapter<CheckoutData, CheckoutViewHolder>(CheckoutComparator) {
+class CheckoutAdapter(private val viewModel: CheckoutViewModel) : ListAdapter<CheckoutData, CheckoutViewHolder>(
+    CheckoutComparator
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckoutViewHolder {
         val binding =
             CheckoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CheckoutViewHolder(binding, viewModel)
+        return CheckoutViewHolder(binding, viewModel, parent.context)
     }
 
     override fun onBindViewHolder(holder: CheckoutViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
     }
-
 }
 
 object CheckoutComparator : DiffUtil.ItemCallback<CheckoutData>() {

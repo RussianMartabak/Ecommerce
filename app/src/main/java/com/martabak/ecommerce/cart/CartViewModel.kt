@@ -19,14 +19,11 @@ class CartViewModel @Inject constructor(
     val cartRepository: CartRepository,
     val analytics: FirebaseAnalytics
 ) : ViewModel() {
-    var liveCartItemsList : LiveData<List<CartEntity>>? = cartRepository.updatedCartItems
-
+    var liveCartItemsList: LiveData<List<CartEntity>>? = cartRepository.updatedCartItems
 
     var someChecked = liveCartItemsList?.switchMap { items ->
         anItemSelected(items)
     }
-
-
 
     private fun anItemSelected(list: List<CartEntity>): LiveData<Boolean> {
         var checkeds = list.filter { it.isSelected }
@@ -40,8 +37,6 @@ class CartViewModel @Inject constructor(
     fun deleteItem(id: String) {
         viewModelScope.launch {
             cartRepository.deleteItem(id)
-
-
         }
     }
 
@@ -81,7 +76,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    //function to convert list
+    // function to convert list
     fun parcelizeCartList(): CheckoutList {
         val entityList = liveCartItemsList?.value!!.filter { it.isSelected }
         val checkoutList = entityList!!.map { cart ->

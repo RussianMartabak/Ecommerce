@@ -30,26 +30,26 @@ class WishlistViewModel @Inject constructor(
         productRepository.selectedProductID = id
     }
 
-   fun insertItem(item : WishlistEntity) {
-       val newCartEntity = CartEntity(
-           isSelected = false,
-           item_id = item.item_id,
-           productPrice = item.productPrice,
-           productImage = item.productImage,
-           productName = item.productName,
-           productQuantity = 1,
-           productStock = item.productStock,
-           productVariant = item.productVariant
-       )
-       viewModelScope.launch {
-           try {
-               cartRepository.insertProductData(newCartEntity)
-               sendSnackbar("Item added to cart")
-           } catch (e : Throwable) {
-               sendSnackbar(e.message!!)
-           }
-       }
-   }
+    fun insertItem(item: WishlistEntity) {
+        val newCartEntity = CartEntity(
+            isSelected = false,
+            item_id = item.item_id,
+            productPrice = item.productPrice,
+            productImage = item.productImage,
+            productName = item.productName,
+            productQuantity = 1,
+            productStock = item.productStock,
+            productVariant = item.productVariant
+        )
+        viewModelScope.launch {
+            try {
+                cartRepository.insertProductData(newCartEntity)
+                sendSnackbar("Item added to cart")
+            } catch (e: Throwable) {
+                sendSnackbar(e.message!!)
+            }
+        }
+    }
 
     fun deleteItem(id: String) {
         viewModelScope.launch {
@@ -62,6 +62,5 @@ class WishlistViewModel @Inject constructor(
         viewModelScope.launch {
             eventChannel.send(s)
         }
-
     }
 }

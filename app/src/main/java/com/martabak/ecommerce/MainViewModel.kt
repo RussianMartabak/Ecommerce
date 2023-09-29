@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     val globalState: GlobalState,
     private val userPref: SharedPreferences,
-    private val db : AppDatabase
+    private val db: AppDatabase
 ) : ViewModel() {
     val logoutFlow = globalState.logoutEventFlow
 

@@ -24,7 +24,8 @@ class ProductDetailTest : BasedNetworkTest() {
                     userImage = "a",
                     userReview = "aa",
                     userRating = 4
-                ), ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
+                ),
+                ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
             )
         )
 
@@ -67,5 +68,4 @@ class ProductDetailTest : BasedNetworkTest() {
             assertEquals(actual, expected)
         }
     }
-
 }

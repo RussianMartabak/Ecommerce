@@ -80,4 +80,5 @@
     <string name="wishlist_addcart">+ Keranjang</string>
     <string name="filter_review">Ulasan</string>
     <string name="notification_title">Notifikasi</string>
+    <string name="stock">stok</string>
 </resources>

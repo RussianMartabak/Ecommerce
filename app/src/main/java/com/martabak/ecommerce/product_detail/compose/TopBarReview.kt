@@ -25,9 +25,9 @@ import com.martabak.ecommerce.ui.theme.LightColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarReview(navigateBack : () -> Boolean) {
+fun TopBarReview(navigateBack: () -> Boolean) {
     Column(Modifier.background(color = Color.White)) {
-        val surfaceColor : Color = if (isSystemInDarkTheme()) DarkColorScheme.background else LightColorScheme.background
+        val surfaceColor: Color = if (isSystemInDarkTheme()) DarkColorScheme.background else LightColorScheme.background
         TopAppBar(title = {
             Text(text = "Ulasan", fontFamily = FontFamily(Font(R.font.poppins)))
         }, navigationIcon = {
@@ -36,7 +36,8 @@ fun TopBarReview(navigateBack : () -> Boolean) {
                 null,
                 modifier = Modifier
                     .clickable { navigateBack() }
-                    .padding(8.dp))
+                    .padding(8.dp)
+            )
         }, colors = TopAppBarDefaults.topAppBarColors(surfaceColor))
         Divider(Modifier.fillMaxWidth())
     }

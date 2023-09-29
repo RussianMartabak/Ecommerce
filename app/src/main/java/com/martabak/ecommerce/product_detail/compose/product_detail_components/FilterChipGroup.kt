@@ -17,15 +17,14 @@ fun FilterChipGroup(
     variantList: List<ProductVariant>
 ) {
     variantList.forEach { variant ->
-        //make le function to send price to viewmodel
+        // make le function to send price to viewmodel
         FilterChip(
             selected = selectedVariant == variant,
             onClick = {
                 updatePrice(variant)
-                      },
+            },
             label = { Text(text = variant.variantName) },
             modifier = Modifier.padding(end = 8.dp)
         )
-
     }
 }

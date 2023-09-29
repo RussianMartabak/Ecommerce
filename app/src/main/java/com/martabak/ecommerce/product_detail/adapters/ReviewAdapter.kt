@@ -2,7 +2,6 @@ package com.martabak.ecommerce.product_detail.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.martabak.ecommerce.R
@@ -23,7 +22,6 @@ class ReviewAdapter(private val reviews: List<ReviewData>) :
                 placeholder(R.drawable.thumbnail)
                 error(R.drawable.thumbnail)
             }
-
         }
     }
 
@@ -40,6 +38,4 @@ class ReviewAdapter(private val reviews: List<ReviewData>) :
         val item = reviews[position]
         holder.bind(item)
     }
-
-
 }

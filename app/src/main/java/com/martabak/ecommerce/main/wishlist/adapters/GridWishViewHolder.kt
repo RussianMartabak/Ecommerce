@@ -1,6 +1,5 @@
 package com.martabak.ecommerce.main.wishlist.adapters
 
-
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.martabak.ecommerce.R
@@ -10,12 +9,12 @@ import com.martabak.ecommerce.main.wishlist.WishlistViewModel
 import java.text.NumberFormat
 
 class GridWishViewHolder(
-    private val viewModel : WishlistViewModel,
+    private val viewModel: WishlistViewModel,
     private val binding: WishlistGridItemBinding,
     private val onClick: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(wish : WishlistEntity) {
+    fun bind(wish: WishlistEntity) {
         binding.productTitleGrid.text = wish.productName
         val formattedPrice =
             NumberFormat.getInstance().format(wish.productPrice).replace(",", ".")
@@ -38,6 +37,5 @@ class GridWishViewHolder(
         binding.rootGridCard.setOnClickListener {
             onClick(wish.item_id)
         }
-
     }
 }

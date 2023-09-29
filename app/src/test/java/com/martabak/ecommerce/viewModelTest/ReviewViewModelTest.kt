@@ -18,9 +18,9 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class ReviewViewModelTest {
-    private lateinit var reviewModel : ReviewViewModel
-    private lateinit var productRepo : ProductRepository
-    private lateinit var reviewData : List<ReviewData>
+    private lateinit var reviewModel: ReviewViewModel
+    private lateinit var productRepo: ProductRepository
+    private lateinit var reviewData: List<ReviewData>
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -39,7 +39,8 @@ class ReviewViewModelTest {
                 userImage = "a",
                 userReview = "aa",
                 userRating = 4
-            ), ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
+            ),
+            ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
         )
     }
 
@@ -49,6 +50,4 @@ class ReviewViewModelTest {
         reviewModel.getReviews()
         assertEquals(reviewData, reviewModel.reviewData.getOrAwaitValue())
     }
-
-
 }

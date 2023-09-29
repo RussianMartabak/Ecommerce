@@ -68,7 +68,7 @@ object HiltModule {
             .build()
     }
 
-    //what matters is the return type, everything else doesn't matter
+    // what matters is the return type, everything else doesn't matter
     @Singleton
     @Provides
     fun provideApiService(moshi: Moshi, client: OkHttpClient): ApiService {
@@ -79,7 +79,6 @@ object HiltModule {
             .build()
             .create(ApiService::class.java)
     }
-
 
     @Singleton
     @Provides
@@ -122,26 +121,26 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideCartDao(db : AppDatabase) : CartDao {
+    fun provideCartDao(db: AppDatabase): CartDao {
         return db.cartDao()
     }
 
     @Singleton
     @Provides
-    fun provideWishlistDao(db : AppDatabase) : WishlistDao {
+    fun provideWishlistDao(db: AppDatabase): WishlistDao {
         return db.wishlistDao()
     }
 
     @Singleton
     @Provides
-    fun provideNotifDao(db : AppDatabase) : NotifDao {
+    fun provideNotifDao(db: AppDatabase): NotifDao {
         return db.notifDao()
     }
 
     @Singleton
     @Provides
-    fun provideRemoteConfig() : FirebaseRemoteConfig {
-        val remoteConfig : FirebaseRemoteConfig = Firebase.remoteConfig
+    fun provideRemoteConfig(): FirebaseRemoteConfig {
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
             minimumFetchIntervalInSeconds = 100
         }
@@ -151,10 +150,7 @@ object HiltModule {
 
     @Singleton
     @Provides
-    fun provideFireAnalytics() : FirebaseAnalytics {
+    fun provideFireAnalytics(): FirebaseAnalytics {
         return Firebase.analytics
     }
-
-
-
 }

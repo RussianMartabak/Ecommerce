@@ -10,7 +10,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
 import com.martabak.ecommerce.repository.UserRepository
@@ -28,29 +27,28 @@ class RegisterViewModel @Inject constructor(
     val analytics: FirebaseAnalytics
 ) : ViewModel() {
 
-
     var email: String? = null
     var password: String? = null
-    var firebaseToken : String = ""
+    var firebaseToken: String = ""
 
     var errorMessage: String = ""
 
     private var _validity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var connectionStatus: LiveData<Boolean> = _validity
 
-    private var _nowLoading : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    var nowLoading : LiveData<Boolean> = _nowLoading
+    private var _nowLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var nowLoading: LiveData<Boolean> = _nowLoading
 
     init {
         try {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
-                firebaseToken = it.result
-                Log.d("zaky", "FB Token: $firebaseToken")
-            })
-        } catch (e : Throwable) {
-
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                OnCompleteListener {
+                    firebaseToken = it.result
+                    Log.d("zaky", "FB Token: $firebaseToken")
+                }
+            )
+        } catch (e: Throwable) {
         }
-
     }
 
     fun register() {
@@ -81,7 +79,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun storeTokens(responseBody: RegisterResponse) {
-        //put access token
+        // put access token
         userPref.putAccessToken(responseBody.data.accessToken)
     }
 }

@@ -10,7 +10,7 @@ import coil.compose.AsyncImage
 import com.martabak.ecommerce.R
 
 @Composable
-fun ImagePagerItem(i : Int, imageList : List<String>) {
+fun ImagePagerItem(i: Int, imageList: List<String>) {
     AsyncImage(
         modifier = Modifier
             .height(309.dp)

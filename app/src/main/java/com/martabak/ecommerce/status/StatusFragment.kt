@@ -1,11 +1,11 @@
 package com.martabak.ecommerce.status
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,7 +13,6 @@ import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStatusBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
-
 
 /**
  * A simple [Fragment] subclass.
@@ -24,16 +23,16 @@ import java.text.NumberFormat
 class StatusFragment : Fragment() {
     private var _binding: FragmentStatusBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : StatusViewModel by viewModels()
+    private val viewModel: StatusViewModel by viewModels()
     private val args: StatusFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStatusBinding.inflate(inflater, container, false)
@@ -58,10 +57,6 @@ class StatusFragment : Fragment() {
         val backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_statusFragment_to_mainFragment)
         }
-
-
-
-
     }
 
     private fun initTexts(parcel: StatusParcel) {
@@ -83,6 +78,4 @@ class StatusFragment : Fragment() {
             }
         }
     }
-
-
 }

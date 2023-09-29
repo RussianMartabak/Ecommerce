@@ -7,7 +7,9 @@ import com.martabak.ecommerce.database.NotifEntity
 import com.martabak.ecommerce.databinding.NotificationItemBinding
 import com.martabak.ecommerce.notif.NotificationViewModel
 
-class NotifAdapter(private val viewModel : NotificationViewModel) : ListAdapter<NotifEntity, NotificationViewHolder>(NotifComparator) {
+class NotifAdapter(private val viewModel: NotificationViewModel) : ListAdapter<NotifEntity, NotificationViewHolder>(
+    NotifComparator
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val binding = NotificationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotificationViewHolder(binding, viewModel)

@@ -17,8 +17,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class StoreViewModelTest {
     private lateinit var storeModel: StoreViewModel
-    private lateinit var storeRepo : StoreRepository
-
+    private lateinit var storeRepo: StoreRepository
 
     @Before
     fun setup() {
@@ -45,7 +44,6 @@ class StoreViewModelTest {
         whenever(storeRepo.getSearchItems("asus")).thenReturn(successResult)
         storeModel.getSearchItems("asus")
         assertEquals(listOf<String>(), storeModel.items.getOrAwaitValue())
-
     }
 
     @Test
@@ -69,9 +67,4 @@ class StoreViewModelTest {
         assertEquals(expected, storeModel.queryObject.getOrAwaitValue())
         storeModel.setFilters(null, null, null, null)
     }
-
-
-
-
-
 }

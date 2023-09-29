@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.martabak.ecommerce.R
 
 @Composable
-fun ErrorScreen(refreshFunction : () -> Unit) {
+fun ErrorScreen(refreshFunction: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -29,7 +29,8 @@ fun ErrorScreen(refreshFunction : () -> Unit) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.store_error_smartphone),
-            null, modifier = Modifier.size(128.dp)
+            null,
+            modifier = Modifier.size(128.dp)
         )
         Spacer(Modifier.height(8.dp))
         Text(

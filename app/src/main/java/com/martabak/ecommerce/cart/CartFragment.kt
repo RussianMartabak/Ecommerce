@@ -2,12 +2,12 @@ package com.martabak.ecommerce.cart
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,14 +15,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.cart.adapters.CartAdapter
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.databinding.FragmentCartBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -32,19 +30,20 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CartFragment : Fragment() {
 
-    private val viewModel : CartViewModel by viewModels()
+    private val viewModel: CartViewModel by viewModels()
 
-    private var _binding : FragmentCartBinding? = null
+    private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
+
     @Inject
-    lateinit var analytics : FirebaseAnalytics
+    lateinit var analytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -57,7 +56,7 @@ class CartFragment : Fragment() {
         binding.errorLayout.isVisible = false
         binding.deleteSelectedButton.isVisible = false
         binding.buyButton.isEnabled = false
-        //start display le items
+        // start display le items
         val cartAdapter = CartAdapter(viewModel)
         viewModel.liveCartItemsList?.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
@@ -66,9 +65,9 @@ class CartFragment : Fragment() {
             } else {
                 binding.normallayout.isVisible = true
                 binding.errorLayout.isVisible = false
-                //log event here
+                // log event here
                 var itemsList = mutableListOf<Bundle>()
-                var sum : Long = 0
+                var sum: Long = 0
                 it.forEach {
                     val product = bundleOf("nama" to it.productName)
                     itemsList.add(product)
@@ -79,7 +78,7 @@ class CartFragment : Fragment() {
                     param(FirebaseAnalytics.Param.VALUE, sum)
                     param(FirebaseAnalytics.Param.CURRENCY, "IDR")
                 }
-                //logging end here
+                // logging end here
             }
             cartAdapter.submitList(it)
             binding.totalPriceText.text = integerToRupiah(enumPrice(it))
@@ -90,7 +89,6 @@ class CartFragment : Fragment() {
         }
         binding.cartRecycler.adapter = cartAdapter
         binding.cartRecycler.layoutManager = LinearLayoutManager(requireActivity())
-
 
         binding.checkAllButton.setOnClickListener {
             if (binding.checkAllButton.isChecked) {
@@ -114,17 +112,14 @@ class CartFragment : Fragment() {
         viewModel.someChecked?.observe(viewLifecycleOwner) {
             binding.deleteSelectedButton.isVisible = it
             binding.buyButton.isEnabled = it
-
         }
-
-
     }
     fun integerToRupiah(value: Int): String {
         var price = NumberFormat.getInstance().format(value).replace(",", ".")
         return "Rp$price"
     }
 
-    private fun enumPrice(list : List<CartEntity>) : Int {
+    private fun enumPrice(list: List<CartEntity>): Int {
         var priceSum = 0
         list.forEach { item ->
             if (item.isSelected) {
@@ -134,13 +129,12 @@ class CartFragment : Fragment() {
         return priceSum
     }
 
-    private fun isAllChecked(list : List<CartEntity>) : Boolean {
+    private fun isAllChecked(list: List<CartEntity>): Boolean {
         var checkeds = list.filter { it.isSelected }
         return list.size == checkeds.size && list.isNotEmpty()
-
     }
 
-    private fun anItemSelected(list : List<CartEntity>) : LiveData<Boolean> {
+    private fun anItemSelected(list: List<CartEntity>): LiveData<Boolean> {
         var checkeds = list.filter { it.isSelected }
         if (checkeds.isEmpty()) {
             return MutableLiveData(false)
@@ -148,6 +142,4 @@ class CartFragment : Fragment() {
             return MutableLiveData(true)
         }
     }
-
-
 }

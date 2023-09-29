@@ -1,7 +1,6 @@
 package com.martabak.ecommerce.notif.adapters
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -16,7 +15,7 @@ class NotificationViewHolder(
     private val viewModel: NotificationViewModel
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    var itemId : Int = 0
+    var itemId: Int = 0
 
     @SuppressLint("ResourceAsColor")
     fun bind(itemData: NotifEntity) {

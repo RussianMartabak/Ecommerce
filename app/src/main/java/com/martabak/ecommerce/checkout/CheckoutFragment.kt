@@ -2,11 +2,11 @@ package com.martabak.ecommerce.checkout
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,11 +19,9 @@ import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.adapters.CheckoutAdapter
 import com.martabak.ecommerce.databinding.FragmentCheckoutBinding
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -36,17 +34,18 @@ class CheckoutFragment : Fragment() {
     private val binding get() = _binding!!
     val args: CheckoutFragmentArgs by navArgs()
     private val viewModel: CheckoutViewModel by viewModels()
+
     @Inject
     lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.submitItemList(args.checkoutData.itemList)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -62,7 +61,7 @@ class CheckoutFragment : Fragment() {
         viewModel.itemList.observe(viewLifecycleOwner) {
             adapter!!.submitList(it)
             Log.d("zaky", it.toString())
-            //change price accordingly
+            // change price accordingly
             binding.totalPriceText.text = sumPrice(it)
         }
         binding.checkOutToolbar.setNavigationOnClickListener {
@@ -85,7 +84,7 @@ class CheckoutFragment : Fragment() {
             }
         }
 
-        //send parcel
+        // send parcel
         viewModel.statusParcel.observe(viewLifecycleOwner) {
             val aktion = CheckoutFragmentDirections.startStatusFromCheckout(it)
             findNavController().navigate(aktion)
@@ -100,13 +99,13 @@ class CheckoutFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener("paymentMethod", viewLifecycleOwner) {
-            requestKey, bundle ->
+                requestKey, bundle ->
             val label = bundle.getString("methodName")
             val image = bundle.getString("methodImage")
-            //Log EVENT
+            // Log EVENT
             analytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO) {
                 param(FirebaseAnalytics.Param.CURRENCY, "IDR")
-                label?.let {param(FirebaseAnalytics.Param.PAYMENT_TYPE, it)}
+                label?.let { param(FirebaseAnalytics.Param.PAYMENT_TYPE, it) }
                 param(FirebaseAnalytics.Param.VALUE, viewModel.sum)
             }
             binding.apply {
@@ -114,7 +113,6 @@ class CheckoutFragment : Fragment() {
                     error(R.drawable.thumbnail)
                 }
                 payCardText.text = label
-
             }
             viewModel.setPayment(label!!)
         }
@@ -126,12 +124,9 @@ class CheckoutFragment : Fragment() {
         binding.checkOutToolbar.setNavigationOnClickListener {
             findNavController()
         }
-
     }
 
     private fun initRecycler() {
-
-
     }
 
     private fun sumPrice(list: List<CheckoutData>): String {
@@ -142,6 +137,4 @@ class CheckoutFragment : Fragment() {
         val formattedPrice = NumberFormat.getInstance().format(totalPrice).replace(",", ".")
         return "Rp$formattedPrice"
     }
-
-
 }

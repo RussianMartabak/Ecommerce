@@ -1,7 +1,5 @@
 package com.martabak.ecommerce.networkTest
 
-import android.util.Log
-import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.prelogin.DataRegister
 import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
@@ -16,15 +14,11 @@ import com.martabak.ecommerce.network.data.prelogin.profileResponse
 import com.martabak.ecommerce.networkTest.util.BasedNetworkTest
 import kotlinx.coroutines.runBlocking
 import okhttp3.MultipartBody
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
-import retrofit2.http.Multipart
 
 class PreloginTest : BasedNetworkTest() {
-
 
     @Test
     fun loginApiTest() {
@@ -43,7 +37,7 @@ class PreloginTest : BasedNetworkTest() {
     fun registerApiTest() {
         mockwebServer.enqueueResponse("prelogin/RegisterMockResponse.json")
 
-        //make a request
+        // make a request
         val registerBody = RegisterBody("zaky@gmail.com", "lalalalalaa", "")
         val expected = RegisterResponse(
             code = 200,
@@ -58,10 +52,7 @@ class PreloginTest : BasedNetworkTest() {
         runBlocking {
             val actual = apiService.postRegister(registerBody)
             assertEquals(actual, expected)
-
-
         }
-
     }
 
     @Test

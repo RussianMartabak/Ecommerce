@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.payment.PaymentData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,6 @@ class PaymentViewModel @Inject constructor(
     val paymentData: LiveData<List<PaymentData>> = _paymentData
 
     init {
-
     }
 
     fun getPaymentData() {

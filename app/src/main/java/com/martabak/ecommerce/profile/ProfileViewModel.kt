@@ -13,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
 
-
     val UserRep: UserRepository
 ) : ViewModel() {
 
@@ -21,12 +20,12 @@ class ProfileViewModel @Inject constructor(
     var connectSuccess: LiveData<Boolean> = _connectSuccess
 
     private var _nowLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    var nowLoading : LiveData<Boolean> = _nowLoading
+    var nowLoading: LiveData<Boolean> = _nowLoading
 
     var selectedFile: File? = null
     var errorMessage = ""
 
-    fun hasUsername() : Boolean {
+    fun hasUsername(): Boolean {
         return UserRep.hasUsername()
     }
 

@@ -11,9 +11,9 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 class CartRepoTest {
-    private lateinit var cartRepo : CartRepository
-    private lateinit var mockCartDao : CartDao
-    private lateinit var leEntity : CartEntity
+    private lateinit var cartRepo: CartRepository
+    private lateinit var mockCartDao: CartDao
+    private lateinit var leEntity: CartEntity
 
     @Before
     fun setup() {
@@ -32,7 +32,7 @@ class CartRepoTest {
     }
 
     @Test
-    fun insertProductDataTest() =  runTest {
+    fun insertProductDataTest() = runTest {
         whenever(mockCartDao.findItembyId("lol")).thenReturn(null)
         whenever(mockCartDao.insertItem(leEntity)).thenReturn(Unit)
         assertEquals(Unit, cartRepo.insertProductData(leEntity))
@@ -66,7 +66,7 @@ class CartRepoTest {
     }
 
     @Test
-    fun deleteItemTest() =  runTest {
+    fun deleteItemTest() = runTest {
         assertEquals(Unit, cartRepo.deleteItem("lol"))
     }
 
@@ -74,6 +74,4 @@ class CartRepoTest {
     fun substractItemTest() = runTest {
         assertEquals(Unit, cartRepo.substractItem("lol"))
     }
-
-
 }

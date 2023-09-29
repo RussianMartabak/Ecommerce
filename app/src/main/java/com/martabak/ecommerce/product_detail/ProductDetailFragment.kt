@@ -2,12 +2,11 @@ package com.martabak.ecommerce.product_detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,7 +24,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 
-
 private const val ARG_PRODUCT_ID = "param1"
 
 /**
@@ -41,8 +39,7 @@ class ProductDetailFragment : Fragment() {
     private var connectionOK = false
     private var productData: Data? = null
     private var variants: List<ProductVariant>? = null
-    private val args : ProductDetailFragmentArgs by navArgs()
-
+    private val args: ProductDetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +50,8 @@ class ProductDetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -103,10 +101,8 @@ class ProductDetailFragment : Fragment() {
                 val variantObject = variants!!.first { it.variantName == variantName }
                 viewModel.updateProductPrice(variantObject.variantPrice)
                 viewModel.selectedVariantIndex = variants!!.indexOf(variantObject)
-                //get the price!!!
+                // get the price!!!
             }
-
-
         }
 
         binding.favButton.setOnClickListener {
@@ -133,7 +129,6 @@ class ProductDetailFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-
             viewModel.eventFlow.collectLatest {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
             }
@@ -156,12 +151,11 @@ class ProductDetailFragment : Fragment() {
         viewModel.productData.observe(viewLifecycleOwner) {
             displayData(it)
         }
-
     }
 
-    private fun displayData(it : Data) {
+    private fun displayData(it: Data) {
         productData = it
-        //set displays
+        // set displays
         val priceSum = it.productPrice + it.productVariant[0].variantPrice
         binding.productPrice.text = integerToRupiah(priceSum)
         binding.productTitle.text = it.productName
@@ -195,7 +189,6 @@ class ProductDetailFragment : Fragment() {
         return String.format("%.1f", value)
     }
 
-
     fun makeChips() {
         var chipIndex = 0
         variants!!.forEach {
@@ -214,5 +207,4 @@ class ProductDetailFragment : Fragment() {
             chipIndex += 1
         }
     }
-
 }

@@ -21,7 +21,6 @@ class SearchListAdapter(private val onClick: (String) -> Unit) :
         fun bind(text: String) {
             binding.name.text = text
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -43,6 +42,4 @@ object DiffCallback : DiffUtil.ItemCallback<String>() {
     override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
         return oldItem == newItem
     }
-
-
 }

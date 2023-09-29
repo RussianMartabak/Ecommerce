@@ -20,11 +20,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckoutViewModel @Inject constructor(private val apiService: ApiService, private val analytics: FirebaseAnalytics) : ViewModel() {
+class CheckoutViewModel @Inject constructor(
+    private val apiService: ApiService,
+    private val analytics: FirebaseAnalytics
+) : ViewModel() {
     private var _itemList = MutableLiveData<List<CheckoutData>>()
     val itemList: LiveData<List<CheckoutData>> = _itemList
 
-    var sum : Long = 0
+    var sum: Long = 0
 
     private var _payment = MutableLiveData<String>()
     val payment: LiveData<String> = _payment
@@ -36,12 +39,12 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
     val errorMessage: LiveData<String> = _errorMessage
 
     private var _statusParcel = MutableLiveData<StatusParcel>()
-    val statusParcel : LiveData<StatusParcel> = _statusParcel
+    val statusParcel: LiveData<StatusParcel> = _statusParcel
 
-    //ask for fulfillment response then parcel and send it to status
+    // ask for fulfillment response then parcel and send it to status
     fun sendFulfillment() {
         viewModelScope.launch {
-            //make body
+            // make body
             val body = convertListToFullfillment(_payment.value!!, _itemList.value!!)
             try {
                 _nowLoading.value = true
@@ -49,28 +52,24 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
                 logPurchase(response)
                 _statusParcel.value = convertToStatusParcel(response.data)
                 _nowLoading.value = false
-
             } catch (e: Throwable) {
                 _errorMessage.value = e.message
                 _nowLoading.value = false
             }
         }
-
     }
 
     fun setPayment(s: String) {
         _payment.value = s
     }
 
-
-    private fun logPurchase(r : FulfillmentResponse) {
-        var sum : Long= 0
+    private fun logPurchase(r: FulfillmentResponse) {
+        var sum: Long = 0
         val itemList = mutableListOf<Bundle>()
         _itemList.value!!.forEach {
             itemList.add(bundleOf("name" to it.productName))
             sum += it.productPrice
         }
-
 
         analytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
             param(FirebaseAnalytics.Param.CURRENCY, "IDR")
@@ -83,7 +82,7 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
     fun submitItemList(data: List<CheckoutData>) {
         _itemList.value = data
 
-        //log event
+        // log event
         sum = 0
         val checkoutList = mutableListOf<Bundle>()
         data.forEach { item ->
@@ -98,18 +97,17 @@ class CheckoutViewModel @Inject constructor(private val apiService: ApiService, 
         }
     }
 
-    //given an id, add count to that item
+    // given an id, add count to that item
     fun addItemCount(id: String) {
-        //get the object
+        // get the object
         val target = _itemList.value!!.first { it.item_id == id }
         val targetIndex = _itemList.value!!.indexOf(target)
         val listCopy: List<CheckoutData> = deepCopyList(_itemList.value!!)
-        //precondition for adding item
+        // precondition for adding item
         if (listCopy[targetIndex].productStock > listCopy[targetIndex].productQuantity) {
             listCopy[targetIndex].productQuantity += 1
             _itemList.value = listCopy
         }
-
     }
 
     fun decreaseItemCount(id: String) {

@@ -14,15 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
-    //hit da API
+    // hit da API
     private val _transactionList = MutableLiveData<List<TransactionData>>()
     val transactionList: LiveData<List<TransactionData>> = _transactionList
     var notFound = false
 
     private val _nowLoading = MutableLiveData<Boolean>()
-    val nowLoading : LiveData<Boolean> = _nowLoading
+    val nowLoading: LiveData<Boolean> = _nowLoading
 
-    //given an id, return a statusparcel object
+    // given an id, return a statusparcel object
     fun getStatusParcel(id: String): StatusParcel {
         val transData: TransactionData = _transactionList.value!!.first { it.invoiceId == id }
         return StatusParcel(
@@ -32,7 +32,6 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
             payment = transData.payment,
             invoiceSum = transData.total
         )
-
     }
 
     fun getTransactions() {
@@ -46,11 +45,10 @@ class TransactionViewModel @Inject constructor(private val apiService: ApiServic
             } catch (e: Throwable) {
                 _nowLoading.value = false
                 if (e is HttpException) {
-                    if(e.code() == 404) {
-                       _transactionList.value = listOf()
+                    if (e.code() == 404) {
+                        _transactionList.value = listOf()
                     }
                 }
-
             }
         }
     }

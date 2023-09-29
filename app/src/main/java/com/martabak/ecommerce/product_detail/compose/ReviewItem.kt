@@ -26,7 +26,7 @@ import com.martabak.ecommerce.network.data.product_detail.ReviewData
 
 @Composable
 fun ReviewItem(data: ReviewData) {
-    Column() {
+    Column {
         Divider(Modifier.fillMaxWidth())
         Spacer(Modifier.height(16.dp))
         Row(
@@ -45,7 +45,7 @@ fun ReviewItem(data: ReviewData) {
                 placeholder = painterResource(id = R.drawable.thumbnail)
             )
             Spacer(Modifier.width(8.dp))
-            Column() {
+            Column {
                 Text(
                     text = data.userName,
                     fontSize = 12.sp,

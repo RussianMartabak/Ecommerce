@@ -14,7 +14,7 @@ class HomeViewModel @Inject constructor(
     val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
-    fun isUserProductViewing() : Boolean {
+    fun isUserProductViewing(): Boolean {
         return globalState.inProductDetail
     }
 

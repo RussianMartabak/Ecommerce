@@ -35,7 +35,8 @@ class RegisterFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
@@ -76,7 +77,7 @@ class RegisterFragment : Fragment() {
             checkButton()
         }
 
-        //observe if register successful
+        // observe if register successful
         viewModel.connectionStatus.observe(viewLifecycleOwner) {
             if (it) {
                 view.findNavController().navigate(R.id.action_prelogin_to_postlogin)

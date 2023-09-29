@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentNotificationBinding
 import com.martabak.ecommerce.notif.adapters.NotifAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,17 +22,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotificationFragment : Fragment() {
 
-    private var _binding : FragmentNotificationBinding? = null
+    private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : NotificationViewModel by viewModels()
+    private val viewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -56,8 +55,6 @@ class NotificationFragment : Fragment() {
             Log.d("zaky", "notifSize : ${it.size}")
             binding.errorLayout.isVisible = it.size == 0
             adeptus.submitList(it)
-
         }
-
     }
 }

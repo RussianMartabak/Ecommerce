@@ -1,6 +1,5 @@
 package com.martabak.ecommerce.preferenceTest
 
-
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
@@ -43,7 +42,6 @@ class SharedPreferencesTest {
     fun saveAccessTokenTest() {
         userPref.putAccessToken("hoshino")
         assertEquals("Bearer hoshino", userPref.getBearerToken())
-
     }
 
     @Test
@@ -69,5 +67,4 @@ class SharedPreferencesTest {
         userPref.setNightMode(true)
         assertEquals(true, userPref.nightMode())
     }
-
 }

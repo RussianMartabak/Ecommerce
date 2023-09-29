@@ -19,7 +19,6 @@ class PaymentChildViewHolder(
         binding.methodName.text = childData.label
         if (!childData.status) {
             binding.paymentChildRoot.alpha = 0.5F
-
         } else {
             binding.paymentChildRoot.setOnClickListener {
                 onClick(childData.label, childData.image)

@@ -28,6 +28,4 @@ class WishlistViewModelTest {
         wishModel.deleteItem("lol")
         assertEquals("Item removed from wishlist", wishModel.eventFlow.first())
     }
-
-
 }

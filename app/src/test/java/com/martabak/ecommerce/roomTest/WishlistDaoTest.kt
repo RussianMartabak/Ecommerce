@@ -73,6 +73,4 @@ class WishlistDaoTest {
         assertEquals(null, wishlistDao.findItemById("lol"))
         wishlistDao.insertItem(dbItem)
     }
-
-
 }

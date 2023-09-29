@@ -15,7 +15,9 @@ class StoreTest : BasedNetworkTest() {
         mockwebServer.enqueueResponse("store/ProductsMockResponse.json")
 
         val expected = ProductsResponse(
-            code = 200, message = "OK", data = Data(
+            code = 200,
+            message = "OK",
+            data = Data(
                 itemsPerPage = 10,
                 currentItemCount = 10,
                 pageIndex = 1,
@@ -55,13 +57,16 @@ class StoreTest : BasedNetworkTest() {
     fun searchApiTest() {
         mockwebServer.enqueueResponse("store/SearchMockResponse.json")
 
-        val expected = SearchResponse(code = 200, message = "OK", data = listOf(
-            "Lenovo Legion 3",
-            "Lenovo Legion 5",
-            "Lenovo Legion 7",
-            "Lenovo Ideapad 3",
-            "Lenovo Ideapad 5",
-            "Lenovo Ideapad 7"
+        val expected = SearchResponse(
+            code = 200,
+            message = "OK",
+            data = listOf(
+                "Lenovo Legion 3",
+                "Lenovo Legion 5",
+                "Lenovo Legion 7",
+                "Lenovo Ideapad 3",
+                "Lenovo Ideapad 5",
+                "Lenovo Ideapad 7"
             )
         )
 
@@ -70,5 +75,4 @@ class StoreTest : BasedNetworkTest() {
             assertEquals(actual, expected)
         }
     }
-
 }

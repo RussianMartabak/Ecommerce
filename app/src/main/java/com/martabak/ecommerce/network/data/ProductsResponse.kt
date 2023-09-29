@@ -17,4 +17,3 @@ data class Data(
     val totalPages: Int,
     val items: List<Product>
 )
-

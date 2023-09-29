@@ -2,12 +2,12 @@ package com.martabak.ecommerce.checkout
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,13 +16,11 @@ import com.google.firebase.remoteconfig.ConfigUpdate
 import com.google.firebase.remoteconfig.ConfigUpdateListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.adapters.PaymentParentAdapter
 import com.martabak.ecommerce.databinding.FragmentPaymentBinding
 import com.martabak.ecommerce.utils.GlobalUtils.toPaymentResponse
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -31,19 +29,20 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class PaymentFragment : Fragment() {
-    private var _binding : FragmentPaymentBinding? = null
+    private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : PaymentViewModel by viewModels()
+    private val viewModel: PaymentViewModel by viewModels()
+
     @Inject
-    lateinit var remoteConfig : FirebaseRemoteConfig
+    lateinit var remoteConfig: FirebaseRemoteConfig
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPaymentBinding.inflate(inflater, container, false)
@@ -56,10 +55,13 @@ class PaymentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = PaymentParentAdapter { label, image ->
-            setFragmentResult("paymentMethod", bundleOf(
-                "methodName" to label,
-                "methodImage" to image
-            ))
+            setFragmentResult(
+                "paymentMethod",
+                bundleOf(
+                    "methodName" to label,
+                    "methodImage" to image
+                )
+            )
             findNavController().navigateUp()
         }
 
@@ -70,19 +72,14 @@ class PaymentFragment : Fragment() {
         binding.paymentRecyclerParent.apply {
             setAdapter(adapter)
             layoutManager = LinearLayoutManager(requireActivity())
-
         }
 
         initConfig(adapter)
 
         Log.d("zaky", "Catch a data : ${viewModel.remoteConfig.getString("remoteconfig_data")}")
-
-
-
-
     }
 
-    private fun initConfig(adapter : PaymentParentAdapter) {
+    private fun initConfig(adapter: PaymentParentAdapter) {
         remoteConfig.fetchAndActivate().addOnCompleteListener(requireActivity()) { task ->
             binding.loadingCircle.isVisible = false
             if (task.isSuccessful) {
@@ -94,7 +91,6 @@ class PaymentFragment : Fragment() {
 
         remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
             override fun onUpdate(configUpdate: ConfigUpdate) {
-
                 if (configUpdate.updatedKeys.contains("remoteconfig_data")) {
                     remoteConfig.activate().addOnCompleteListener {
                         val config = remoteConfig.getString("remoteconfig_data")
@@ -107,11 +103,5 @@ class PaymentFragment : Fragment() {
                 Log.w("zaky", "Config update error with code: " + error.code, error)
             }
         })
-
-
     }
-
-
-
-   
 }

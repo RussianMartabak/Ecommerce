@@ -8,9 +8,8 @@ import com.martabak.ecommerce.databinding.ProductGridItemBinding
 import com.martabak.ecommerce.network.data.Product
 import java.text.NumberFormat
 
-class GridViewHolder(private var binding: ProductGridItemBinding, val onClick : (String) -> Unit) :
+class GridViewHolder(private var binding: ProductGridItemBinding, val onClick: (String) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
-
 
     fun bind(product: Product) {
         binding.productTitleGrid.text = product.productName
@@ -21,7 +20,6 @@ class GridViewHolder(private var binding: ProductGridItemBinding, val onClick : 
         val formattedRating = String.format("%.1f", product.productRating)
         binding.productInfoGrid.text = "$formattedRating | Terjual ${product.sale}"
 
-
         val imgUri = product.image.toUri().buildUpon().scheme("http").build()
         binding.productImageGrid.load(imgUri) {
             placeholder(R.drawable.thumbnail)
@@ -29,7 +27,6 @@ class GridViewHolder(private var binding: ProductGridItemBinding, val onClick : 
         }
         binding.rootGridCard.setOnClickListener {
             onClick(product.productId)
-
         }
     }
 }

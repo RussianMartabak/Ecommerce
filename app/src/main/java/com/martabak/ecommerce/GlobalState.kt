@@ -21,11 +21,9 @@ class GlobalState() {
     }
 
     private val _remoteConfigDataString = MutableLiveData<String>()
-    val remoteConfigDataString : LiveData<String> = _remoteConfigDataString
+    val remoteConfigDataString: LiveData<String> = _remoteConfigDataString
 
-    fun updateRemoteConfig(msg : String) {
+    fun updateRemoteConfig(msg: String) {
         _remoteConfigDataString.value = msg
     }
-
-
 }

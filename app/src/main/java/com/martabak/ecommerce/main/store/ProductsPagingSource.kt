@@ -6,10 +6,8 @@ import androidx.paging.PagingState
 import com.martabak.ecommerce.main.store.data.ProductQuery
 import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.Product
-import com.martabak.ecommerce.repository.StoreRepository
 
-
-class ProductsPagingSource (
+class ProductsPagingSource(
     val apiService: ApiService,
     val query: ProductQuery
 ) :
@@ -43,6 +41,4 @@ class ProductsPagingSource (
             return LoadResult.Error(e)
         }
     }
-
-
 }

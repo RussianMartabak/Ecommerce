@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import com.martabak.ecommerce.R
 
 @Composable
-fun WishlistButton(onWishlist : Boolean?, processWish : () -> Unit) {
+fun WishlistButton(onWishlist: Boolean?, processWish: () -> Unit) {
     Box(Modifier.clickable { processWish() }) {
         if (onWishlist!!) {
             Image(painter = painterResource(id = R.drawable.fav_24), null)

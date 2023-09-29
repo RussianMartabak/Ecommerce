@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ImagePager(imageList : List<String>) {
+fun ImagePager(imageList: List<String>) {
     val pagerState = rememberPagerState()
-    Box() {
+    Box {
         HorizontalPager(pageCount = imageList.size, state = pagerState) {
             ImagePagerItem(i = it, imageList = imageList)
         }

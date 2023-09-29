@@ -11,7 +11,7 @@ import javax.inject.Inject
 class NotificationViewModel @Inject constructor(private val notifDao: NotifDao) : ViewModel() {
     val updatedNotif = notifDao.getAllNotifs()
 
-    fun updateNotif(id : Int, read : Boolean) {
+    fun updateNotif(id: Int, read: Boolean) {
         viewModelScope.launch {
             notifDao.setNotifAsRead(id, read)
         }

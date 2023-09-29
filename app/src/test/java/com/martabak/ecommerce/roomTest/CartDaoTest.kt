@@ -23,7 +23,7 @@ import org.robolectric.RobolectricTestRunner
 class CartDaoTest {
     private lateinit var cartDao: CartDao
     private lateinit var db: AppDatabase
-    private lateinit var dbItem : CartEntity
+    private lateinit var dbItem: CartEntity
 
     @JvmField
     @Rule
@@ -47,8 +47,6 @@ class CartDaoTest {
         cartDao.insertItem(dbItem)
     }
 
-
-
     @After
     fun closeDb() {
         db.close()
@@ -56,7 +54,6 @@ class CartDaoTest {
 
     @Test
     fun saveCartItemTest() = runTest {
-
         assertEquals(dbItem, cartDao.findItembyId("lol"))
     }
 
@@ -79,7 +76,7 @@ class CartDaoTest {
         cartDao.selectItem("lol", true)
         assertEquals(true, cartDao.findItembyId("lol")?.isSelected)
         cartDao.selectItem("lol", false)
-        //reset the state again
+        // reset the state again
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -92,12 +89,12 @@ class CartDaoTest {
     }
 
     @Test
-    fun getCartItemCountTest() =  runTest {
+    fun getCartItemCountTest() = runTest {
         assertEquals(1, cartDao.getItemCount().getOrAwaitValue())
     }
 
     @Test
-    fun deleteCartItemTest() =  runTest{
+    fun deleteCartItemTest() = runTest {
         cartDao.deleteItem("lol")
         assertEquals(null, cartDao.findItembyId("lol"))
         cartDao.insertItem(dbItem)
@@ -107,12 +104,4 @@ class CartDaoTest {
     fun getCartItemCount() = runTest {
         assertEquals(1, cartDao.getItemCount().getOrAwaitValue())
     }
-
-
-
-
-
-
-
-
 }

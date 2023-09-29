@@ -11,11 +11,9 @@ import okio.source
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.TimeUnit
 
 abstract class BasedNetworkTest {
     protected val mockwebServer = MockWebServer()
-
 
     private val client = OkHttpClient.Builder()
         .build()
@@ -30,7 +28,7 @@ abstract class BasedNetworkTest {
         .build()
         .create(ApiService::class.java)
 
-    fun MockWebServer.enqueueResponse(filepath : String) {
+    fun MockWebServer.enqueueResponse(filepath: String) {
         val inputStream = javaClass.classLoader!!.getResourceAsStream(filepath)
         val source = inputStream!!.source().buffer()
         source!!.let {

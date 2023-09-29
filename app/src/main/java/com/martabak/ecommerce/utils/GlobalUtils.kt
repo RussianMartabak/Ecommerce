@@ -2,6 +2,8 @@ package com.martabak.ecommerce.utils
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.network.data.payment.PaymentResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -67,10 +69,8 @@ object GlobalUtils {
         return result != ""
     }
 
-
-
     fun SharedPreferences.clearUserData() {
-        this.edit().apply{
+        this.edit().apply {
             remove(LOGGED_IN)
             remove(ACCESS_TOKEN)
             remove(USERNAME)
@@ -78,33 +78,39 @@ object GlobalUtils {
         }
     }
 
-    fun SharedPreferences.setRefreshToken(rToken : String) {
-        this.edit()?.apply{
+    fun SharedPreferences.setRefreshToken(rToken: String) {
+        this.edit()?.apply {
             putString(REFRESH_TOKEN, rToken)
             apply()
         }
     }
 
-    fun SharedPreferences.getRefreshToken() : String {
+    fun SharedPreferences.getRefreshToken(): String {
         return this.getString(REFRESH_TOKEN, "")!!
     }
 
-    fun SharedPreferences.nightMode() : Boolean {
+    fun SharedPreferences.nightMode(): Boolean {
         return this.getBoolean(NIGHT_MODE, false)
     }
 
-    fun SharedPreferences.setNightMode(night : Boolean) {
-        this.edit().apply{
+    fun SharedPreferences.setNightMode(night: Boolean) {
+        this.edit().apply {
             putBoolean(NIGHT_MODE, night)
             apply()
         }
     }
 
-    fun String.toPaymentResponse() : PaymentResponse {
-        val moshi : Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-        val jsonAdapter : JsonAdapter<PaymentResponse> = moshi.adapter(PaymentResponse::class.java)
+    fun String.toPaymentResponse(): PaymentResponse {
+        val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+        val jsonAdapter: JsonAdapter<PaymentResponse> = moshi.adapter(PaymentResponse::class.java)
 
         return jsonAdapter.fromJson(this)!!
+    }
+
+    fun FirebaseAnalytics.logButton(buttonName: String) {
+        this.logEvent("button_click") {
+            param("button_name", buttonName)
+        }
     }
 
     val DATABASE_NAME = "app_db"
@@ -113,6 +119,6 @@ object GlobalUtils {
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.1.7:8000"
+    val BASE_URL = "http://192.168.1.100:8000"
     val NIGHT_MODE = "night_mode"
 }

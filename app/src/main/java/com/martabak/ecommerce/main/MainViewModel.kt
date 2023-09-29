@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.martabak.ecommerce.database.NotifDao
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.repository.WishlistRepository
-import com.martabak.ecommerce.utils.GlobalUtils.clearUserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,5 +20,4 @@ class MainViewModel @Inject constructor(
     val cartItemCount = cartRepository.updatedItemCount
 
     val updatedNotifCount = notifDao.getCount()
-
 }

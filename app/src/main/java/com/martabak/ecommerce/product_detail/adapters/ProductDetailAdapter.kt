@@ -34,6 +34,5 @@ class ProductDetailAdapter(private val images: List<String>) :
     override fun onBindViewHolder(holder: ProductDetailViewHolder, position: Int) {
         val item = images[position]
         holder.bind(item)
-
     }
 }

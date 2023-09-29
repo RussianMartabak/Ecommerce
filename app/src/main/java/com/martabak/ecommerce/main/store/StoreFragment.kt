@@ -5,20 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -33,7 +29,6 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [StoreFragment.newInstance] factory method to
@@ -45,19 +40,20 @@ class StoreFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: StoreViewModel by activityViewModels()
 
-    //params for bottomsheet
+    // params for bottomsheet
     private var brand: String? = null
     private var lowest: Int? = null
     private var highest: Int? = null
     private var sort: String? = null
     private var gridMode = false
-    private var pagingAdapter : ProductsPagingAdapter? = null
-    @Inject
-    lateinit var analytics : FirebaseAnalytics
+    private var pagingAdapter: ProductsPagingAdapter? = null
 
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -74,18 +70,18 @@ class StoreFragment : Fragment() {
         binding.linearShimmerLayout.isVisible = false
         binding.errorLayout.isVisible = false
         val fragmentManager = childFragmentManager
-        //FM listeners
+        // FM listeners
         fragmentManager.setFragmentResultListener(
             "searchKey",
             viewLifecycleOwner
         ) { _, bundle ->
-            //listen to search query change
+            // listen to search query change
             val result = bundle.getString("searchKey")
             viewModel.setSearch(result!!)
             binding.searchEditText.setText(result)
             Log.d("zaky", "Fragment result is $result")
         }
-        //listen for bottomsheet value
+        // listen for bottomsheet value
         fragmentManager.setFragmentResultListener(
             "filters",
             viewLifecycleOwner
@@ -102,12 +98,11 @@ class StoreFragment : Fragment() {
             showSearchDialog(viewModel.query)
         }
 
-
         pagingAdapter = ProductsPagingAdapter { id ->
-            //store product ID on repo then move away from this scheisse
+            // store product ID on repo then move away from this scheisse
             Log.d("zaky", "selected ID: $id")
             viewModel.selectProductID(id)
-            //log le selected item
+            // log le selected item
             analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                 param(FirebaseAnalytics.Param.ITEM_LIST_ID, 3)
                 param(FirebaseAnalytics.Param.ITEM_LIST_NAME, "Products")
@@ -118,7 +113,7 @@ class StoreFragment : Fragment() {
         binding.productRecycler.adapter =
             pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())
         binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
-        //listen to recycler load state
+        // listen to recycler load state
         viewLifecycleOwner.lifecycleScope.launch {
             pagingAdapter!!.loadStateFlow.collectLatest { loadStates ->
 
@@ -137,30 +132,24 @@ class StoreFragment : Fragment() {
         }
         binding.gridSelector.setOnClickListener {
             gridMode = !gridMode
-            Log.d("zaky", "switching to gridMode ${gridMode}")
+            Log.d("zaky", "switching to gridMode $gridMode")
             switchLayout()
         }
 
         viewModel.updatedPagingSource.observe(viewLifecycleOwner) { pagingData ->
             viewLifecycleOwner.lifecycleScope.launch {
                 pagingAdapter!!.submitData(pagingData)
-
             }
         }
 
-        //listen to coordinate shimmer
-
+        // listen to coordinate shimmer
 
         binding.swiper.setOnRefreshListener {
-
             pagingAdapter!!.refresh()
             binding.swiper.isRefreshing = false
         }
 
-
-
-
-        //listen to list then add all to chips in schip group
+        // listen to list then add all to chips in schip group
         viewModel.filterChips.observe(viewLifecycleOwner) { filterList ->
             binding.filterChipGroup.removeAllViews()
             filterList.forEach {
@@ -171,18 +160,15 @@ class StoreFragment : Fragment() {
             }
         }
 
-
         binding.filterChip.setOnClickListener {
             showBottomSheet()
         }
-        //content here boys
-
+        // content here boys
     }
 
     override fun onResume() {
         super.onResume()
         switchLayout()
-
     }
 
     private fun switchLayout() {
@@ -190,7 +176,7 @@ class StoreFragment : Fragment() {
             binding.gridSelector.setImageResource(R.drawable.grid_view)
             val gridManager = GridLayoutManager(requireActivity(), 2)
             val footerAdapter = ProductsLoadStateAdapter()
-            //change recycler to grid
+            // change recycler to grid
             pagingAdapter!!.setGridMode(true)
             binding.productRecycler.layoutManager = gridManager
             binding.productRecycler.adapter =
@@ -206,7 +192,7 @@ class StoreFragment : Fragment() {
             }
         } else {
             binding.gridSelector.setImageResource(R.drawable.format_list_bulleted)
-            //change to linear
+            // change to linear
             pagingAdapter!!.setGridMode(false)
             binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
             binding.productRecycler.adapter =
@@ -274,8 +260,6 @@ class StoreFragment : Fragment() {
         }
     }
 
-    //Functiom to change the edittext text
+    // Functiom to change the edittext text
     //
-
-
 }

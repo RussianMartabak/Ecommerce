@@ -29,5 +29,4 @@ object TransactionComparator : DiffUtil.ItemCallback<TransactionData>() {
     override fun areContentsTheSame(oldItem: TransactionData, newItem: TransactionData): Boolean {
         return oldItem == newItem
     }
-
 }

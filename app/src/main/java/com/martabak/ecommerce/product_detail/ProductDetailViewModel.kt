@@ -40,21 +40,18 @@ class ProductDetailViewModel @Inject constructor(
 
     private var basePrice: Int = 0
 
-
-    //we need a boolean liveData
+    // we need a boolean liveData
     private var _productOnWishlist = MutableLiveData<Boolean>()
     val productOnWishlist: LiveData<Boolean> = _productOnWishlist
-
 
     fun updateProductPrice(variantPrice: Int) {
         _productData.value!!.productPrice = basePrice + variantPrice
         _currentPrice.value = basePrice + variantPrice
     }
 
-    //for notifying if action is completed
+    // for notifying if action is completed
     private val eventChannel = Channel<String>()
     val eventFlow = eventChannel.receiveAsFlow()
-
 
     private var _connectionSuccess: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var connectionSuccess: LiveData<Boolean> = _connectionSuccess
@@ -65,14 +62,13 @@ class ProductDetailViewModel @Inject constructor(
     private var _nowLoading = MutableLiveData<Boolean>()
     val nowLoading: LiveData<Boolean> = _nowLoading
 
-
     var errorMessage = ""
 
     fun setProductID(id: String) {
         productRepository.selectedProductID = id
     }
 
-    fun setProductData(data : Data) {
+    fun setProductData(data: Data) {
         _productData.value = data
         basePrice = data.productPrice
     }
@@ -104,21 +100,21 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun processWishlist() {
-        //check whether on wishlist or not
+        // check whether on wishlist or not
         val onWishlist = _productOnWishlist.value!!
         viewModelScope.launch {
             try {
                 if (onWishlist) {
-                    //remove
+                    // remove
                     wishlistRepository.deleteItemById(_productData.value!!.productId)
                     _productOnWishlist.value = false
                     triggerSnackbar("Item removed from wishlist")
                 } else {
-                    //add
+                    // add
                     wishlistRepository.insertItem(makeWish())
                     _productOnWishlist.value = true
                     triggerSnackbar("Item added to wishlist")
-                    //log event here
+                    // log event here
                     analytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST) {
                         param(
                             FirebaseAnalytics.Param.ITEMS,
@@ -127,7 +123,6 @@ class ProductDetailViewModel @Inject constructor(
                         param(FirebaseAnalytics.Param.CURRENCY, "IDR")
                         param(FirebaseAnalytics.Param.VALUE, makeWish().productPrice.toLong())
                     }
-
                 }
             } catch (e: Throwable) {
                 Log.d("zaky", "$e")
@@ -149,7 +144,6 @@ class ProductDetailViewModel @Inject constructor(
         )
     }
 
-
     fun addToCart() {
         val newEntity = CartEntity(
             productName = _productData.value!!.productName,
@@ -161,7 +155,7 @@ class ProductDetailViewModel @Inject constructor(
             productQuantity = 1,
             item_id = _productData.value!!.productId
         )
-        //log event
+        // log event
         val productBundle = Bundle().apply {
             putString("name", _productData.value!!.productName)
         }
@@ -178,7 +172,6 @@ class ProductDetailViewModel @Inject constructor(
             } catch (e: Throwable) {
                 triggerSnackbar(e.message!!)
             }
-
         }
     }
 
@@ -199,5 +192,4 @@ class ProductDetailViewModel @Inject constructor(
         )
         return CheckoutList(listOf(newCheckoutData))
     }
-
 }

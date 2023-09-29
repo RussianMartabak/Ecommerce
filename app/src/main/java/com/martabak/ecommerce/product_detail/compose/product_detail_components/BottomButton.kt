@@ -1,6 +1,5 @@
 package com.martabak.ecommerce.product_detail.compose.product_detail_components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +13,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -23,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.martabak.ecommerce.R
 
 @Composable
-fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
+fun BottomButton(show: Boolean, addCart: () -> Unit, buyNow: () -> Unit) {
     if (show) {
         Column(
             modifier = Modifier
@@ -32,7 +30,7 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
         ) {
             Divider(Modifier.fillMaxWidth())
             Spacer(Modifier.height(8.dp))
-            Row() {
+            Row {
                 OutlinedButton(
                     onClick = buyNow,
                     modifier = Modifier
@@ -46,9 +44,12 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
                     )
                 }
 
-                Button(onClick = addCart, modifier = Modifier
-                    .padding(end = 16.dp)
-                    .weight(1f)) {
+                Button(
+                    onClick = addCart,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .weight(1f)
+                ) {
                     Text(
                         text = stringResource(id = R.string.product_addcart),
                         fontSize = 14.sp,
@@ -58,5 +59,4 @@ fun BottomButton(show : Boolean, addCart : () -> Unit, buyNow : () -> Unit) {
             }
         }
     }
-
 }

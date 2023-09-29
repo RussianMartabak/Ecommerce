@@ -2,7 +2,6 @@ package com.martabak.ecommerce.product_detail.compose.product_detail_components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -42,10 +41,9 @@ fun NormalLayout(
     shareLink: () -> Unit,
     updatePrice: (ProductVariant) -> Unit,
     updatedPrice: Int?,
-    toReview : () -> Unit,
+    toReview: () -> Unit,
 
 ) {
-
     val imageList = productDetail!!.image
     ImagePager(imageList = imageList)
     Spacer(Modifier.height(12.dp))
@@ -67,9 +65,8 @@ fun NormalLayout(
                 .padding(end = 16.dp)
                 .clickable { shareLink() }
         )
-        //passed boolean and a function for updating wishlist
+        // passed boolean and a function for updating wishlist
         WishlistButton(onWishlist, processWish)
-
     }
     Text(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -90,7 +87,6 @@ fun NormalLayout(
         )
         Spacer(modifier = Modifier.width(8.dp))
         ReviewBox(productDetail)
-
     }
     Spacer(Modifier.height(12.dp))
     Divider(Modifier.fillMaxWidth())
@@ -162,14 +158,11 @@ fun NormalLayout(
                 fontSize = 12.sp,
                 fontFamily = FontFamily(Font(R.font.poppins))
             )
-
         }
     }
-
 }
 
 fun integerToRupiah(value: Int): String {
     val price = NumberFormat.getInstance().format(value).replace(",", ".")
     return "Rp$price"
 }
-

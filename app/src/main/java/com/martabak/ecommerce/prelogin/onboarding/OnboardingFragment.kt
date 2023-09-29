@@ -10,9 +10,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentOnboardingBinding
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -20,15 +23,19 @@ import dagger.hilt.android.AndroidEntryPoint
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class OnboardingFragment (): Fragment() {
+class OnboardingFragment() : Fragment() {
 
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: OnboardingViewModel by viewModels()
 
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
@@ -61,20 +68,23 @@ class OnboardingFragment (): Fragment() {
         }
         onboardingPager.registerOnPageChangeCallback(pagerCallback)
 
-        //hook with "indicator"
+        // hook with "indicator"
         TabLayoutMediator(binding.indicator, binding.onboardPager) { _, _ -> }.attach()
 
         binding.skipButton.setOnClickListener {
             viewModel.registerInstall()
+            analytics.logButton("skip")
             view.findNavController().navigate(R.id.action_onboarding_to_loginFragment)
         }
 
         binding.toRegisterButton.setOnClickListener {
             viewModel.registerInstall()
+            analytics.logButton("register")
             view.findNavController().navigate(R.id.action_onboarding_to_registerFragment)
         }
 
         binding.nextButton.setOnClickListener {
+            analytics.logButton("next")
             pagerIndex += 1
             if (pagerIndex < 3) {
                 onboardingPager.currentItem = pagerIndex

@@ -12,7 +12,6 @@ class TokenInterceptor @Inject constructor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-
         val request: Request = chain.request()
             .newBuilder()
             .addHeader("Authorization", userPref.getBearerToken())

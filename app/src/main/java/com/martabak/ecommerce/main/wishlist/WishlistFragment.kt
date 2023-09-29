@@ -1,7 +1,6 @@
 package com.martabak.ecommerce.main.wishlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,15 +30,15 @@ class WishlistFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: WishlistViewModel by viewModels()
     private var gridMode = false
-    private var adapter : WishlistAdapter? = null
+    private var adapter: WishlistAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
@@ -53,7 +52,7 @@ class WishlistFragment : Fragment() {
 
         viewModel.itemCount.observe(viewLifecycleOwner) {
             binding.totalWishItem.text = "$it barang"
-            if (it == 0 ) {
+            if (it == 0) {
                 binding.errorLayout.isVisible = true
                 binding.normallayout.isVisible = false
             } else {
@@ -62,7 +61,7 @@ class WishlistFragment : Fragment() {
             }
         }
 
-        val grandFrag =  (this.requireParentFragment() as NavHostFragment).requireParentFragment()
+        val grandFrag = (this.requireParentFragment() as NavHostFragment).requireParentFragment()
         adapter = WishlistAdapter(viewModel) {
             viewModel.setSelectedId(it)
             grandFrag.findNavController().navigate(R.id.action_mainFragment_to_productDetailFragment)
@@ -70,7 +69,6 @@ class WishlistFragment : Fragment() {
 
         binding.wishRecycler.adapter = adapter
         binding.wishRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
-
 
         viewModel.wishItems.observe(viewLifecycleOwner) {
             adapter!!.submitList(it)
@@ -86,13 +84,11 @@ class WishlistFragment : Fragment() {
             gridMode = !gridMode
             switchLayout()
         }
-
     }
 
     override fun onResume() {
         super.onResume()
         switchLayout()
-
     }
 
     private fun switchLayout() {
@@ -109,6 +105,4 @@ class WishlistFragment : Fragment() {
             binding.wishRecycler.adapter = adapter
         }
     }
-
-
 }

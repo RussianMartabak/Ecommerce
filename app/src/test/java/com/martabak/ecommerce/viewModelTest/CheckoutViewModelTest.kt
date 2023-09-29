@@ -11,7 +11,6 @@ import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import com.martabak.ecommerce.util.MainDispatcherRule
 import kotlinx.coroutines.test.runTest
-import okhttp3.internal.checkOffsetAndCount
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +24,7 @@ import org.robolectric.RobolectricTestRunner
 class CheckoutViewModelTest {
     private lateinit var checkoutModel: CheckoutViewModel
     private lateinit var mockApi: ApiService
-    private lateinit var testFulfillmentBody : FulfillmentBody
+    private lateinit var testFulfillmentBody: FulfillmentBody
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -34,12 +33,11 @@ class CheckoutViewModelTest {
     @Rule
     val jaRule = InstantTaskExecutorRule()
 
-
     @Before
     fun setup() {
         mockApi = mock()
         checkoutModel = CheckoutViewModel(mockApi, mock())
-        //fill out livedata that will be required
+        // fill out livedata that will be required
         checkoutModel.setPayment("bca")
         checkoutModel.submitItemList(listOf(CheckoutData("1.jpg", "asus", 1000, 100, "16", 100, "10")))
         testFulfillmentBody = FulfillmentBody("bca", listOf(FulfillmentItem("10", "16", 100)))
@@ -60,7 +58,7 @@ class CheckoutViewModelTest {
     }
 
     @Test
-    fun addAndSubstractItemCountTest() =  runTest {
+    fun addAndSubstractItemCountTest() = runTest {
         var expected = listOf(CheckoutData("1.jpg", "asus", 1000, 100, "16", 101, "10"))
         checkoutModel.addItemCount("10")
         assertEquals(expected, checkoutModel.itemList.getOrAwaitValue())
@@ -68,8 +66,4 @@ class CheckoutViewModelTest {
         checkoutModel.decreaseItemCount("10")
         assertEquals(expected, checkoutModel.itemList.getOrAwaitValue())
     }
-
-
-
-
 }

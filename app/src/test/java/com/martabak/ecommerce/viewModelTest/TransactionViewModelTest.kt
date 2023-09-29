@@ -30,7 +30,9 @@ class TransactionViewModelTest {
     @Test
     fun getTransactionListAndParcelize() = runTest {
         val response = TransactionResponse(
-            200, "OK", listOf(
+            200,
+            "OK",
+            listOf(
                 TransactionData(
                     invoiceId = "1",
                     date = "1",

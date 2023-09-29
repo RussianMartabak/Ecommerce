@@ -12,14 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StatusViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
-    var rating : Int? = null
-    var review : String? = null
+    var rating: Int? = null
+    var review: String? = null
     var parcel: StatusParcel? = null
 
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> = _success
 
-    //send le package to france
+    // send le package to france
     fun sendRating() {
         val body = RatingBody(invoiceId = parcel!!.invoiceId, rating = rating, review = review)
         viewModelScope.launch {
@@ -27,7 +27,6 @@ class StatusViewModel @Inject constructor(private val apiService: ApiService) : 
                 val response = apiService.postRating(body)
                 _success.value = true
             } catch (e: Throwable) {
-
             }
         }
     }

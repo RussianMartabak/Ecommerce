@@ -11,7 +11,8 @@ import com.martabak.ecommerce.databinding.WishlistLinearItemBinding
 import com.martabak.ecommerce.main.wishlist.WishlistViewModel
 
 class WishlistAdapter(
-    private val viewModel: WishlistViewModel, private val onClick: (String) -> Unit
+    private val viewModel: WishlistViewModel,
+    private val onClick: (String) -> Unit
 ) : ListAdapter<WishlistEntity, RecyclerView.ViewHolder>(WishComparator) {
     private var gridMode = false
     fun setGridMode(b: Boolean) {
@@ -20,10 +21,11 @@ class WishlistAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         if (!gridMode) {
             val binding = WishlistLinearItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
             return LinearWishViewHolder(binding = binding, viewModel = viewModel, onClick = onClick)
         } else {
@@ -41,8 +43,6 @@ class WishlistAdapter(
             holder.bind(item)
         }
     }
-
-
 }
 
 object WishComparator : DiffUtil.ItemCallback<WishlistEntity>() {
@@ -53,5 +53,4 @@ object WishComparator : DiffUtil.ItemCallback<WishlistEntity>() {
     override fun areContentsTheSame(oldItem: WishlistEntity, newItem: WishlistEntity): Boolean {
         return oldItem == newItem
     }
-
 }

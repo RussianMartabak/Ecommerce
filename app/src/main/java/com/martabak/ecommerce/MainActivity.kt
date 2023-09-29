@@ -1,6 +1,5 @@
 package com.martabak.ecommerce
 
-import android.app.LocaleManager
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
-import com.google.firebase.remoteconfig.ConfigUpdate
-import com.google.firebase.remoteconfig.ConfigUpdateListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.martabak.ecommerce.utils.GlobalUtils.nightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -44,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val night =
             if (sharedPreference.nightMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.setDefaultNightMode(night)
-        //subscribe channel
+        // subscribe channel
         Firebase.messaging.subscribeToTopic("promo").addOnCompleteListener { task ->
             var msg = "Subscribed"
             if (!task.isSuccessful) {
@@ -58,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                 if (kick) logout()
             }
         }
-
     }
 
     fun simulateBack() {
@@ -85,7 +80,4 @@ class MainActivity : AppCompatActivity() {
             if (night) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.setDefaultNightMode(nightMode)
     }
-
-
-
 }

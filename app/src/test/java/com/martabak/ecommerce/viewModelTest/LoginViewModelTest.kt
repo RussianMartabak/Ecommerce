@@ -26,7 +26,6 @@ class LoginViewModelTest {
         loginModel = LoginViewModel(apiService = mockApi, analytics = mock(), userPref = mock())
         loginModel.email = ""
         loginModel.password = ""
-
     }
 
     @Test
@@ -67,6 +66,4 @@ class LoginViewModelTest {
     fun validatePasswordInvalidTest() {
         assertEquals(false, loginModel.validatePassword("as"))
     }
-
-
 }

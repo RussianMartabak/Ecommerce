@@ -13,7 +13,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentStoreDialogBinding
@@ -27,14 +26,13 @@ class SearchDialogFragment : DialogFragment() {
     private var _binding: FragmentStoreDialogBinding? = null
     private val binding get() = _binding!!
 
-    //params
+    // params
     private var searchKey = ""
     private val viewModel: StoreViewModel by activityViewModels()
     fun newInstance(q: String): SearchDialogFragment {
         searchKey = q
         return this
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +43,7 @@ class SearchDialogFragment : DialogFragment() {
         return binding.root
     }
 
-    //called when creating layout
+    // called when creating layout
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState)
     }
@@ -67,18 +65,20 @@ class SearchDialogFragment : DialogFragment() {
             )
             dismiss()
         }
-        //should transfer the search key to store frag when enter is pressed
-        binding.searchEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                query = binding.searchEditText.text.toString()
+        // should transfer the search key to store frag when enter is pressed
+        binding.searchEditText.setOnKeyListener(
+            View.OnKeyListener { v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    query = binding.searchEditText.text.toString()
 
-                setFragmentResult("searchKey", bundleOf("searchKey" to query))
+                    setFragmentResult("searchKey", bundleOf("searchKey" to query))
 
-                dismiss()
-                return@OnKeyListener true
+                    dismiss()
+                    return@OnKeyListener true
+                }
+                false
             }
-            false
-        })
+        )
 
         binding.loadingIndicator.visibility = View.GONE
         val bounceManager = object : CountDownTimer(1000, 100) {
@@ -89,23 +89,23 @@ class SearchDialogFragment : DialogFragment() {
                 Log.d("zaky", "Hitting API right now")
                 viewModel.getSearchItems(query)
             }
-
         }
-
 
         binding.searchRecyclerView.adapter = searchItemListAdapter
         binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        //loading stuffs
+        // loading stuffs
         viewModel.nowLoading.observe(viewLifecycleOwner) {
-            if (it) binding.loadingIndicator.visibility =
-                View.VISIBLE else binding.loadingIndicator.visibility = View.GONE
+            if (it) {
+                binding.loadingIndicator.visibility =
+                    View.VISIBLE
+            } else {
+                binding.loadingIndicator.visibility = View.GONE
+            }
         }
 
         viewModel.items.observe(viewLifecycleOwner) {
             searchItemListAdapter.submitList(it)
-
         }
-
 
         binding.searchEditText.doOnTextChanged { text, start, _, _ ->
             query = text.toString()

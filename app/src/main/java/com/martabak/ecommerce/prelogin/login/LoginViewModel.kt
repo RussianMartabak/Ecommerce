@@ -28,30 +28,31 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     val apiService: ApiService,
     val userPref: SharedPreferences,
-    val analytics : FirebaseAnalytics
+    val analytics: FirebaseAnalytics
 ) : ViewModel() {
     var emailValidity = false
     var passwordValidity = false
     var email: String? = null
     var password: String? = null
-    var token : String = ""
+    var token: String = ""
     var errorMessage = ""
     private var _serverValidity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     private var _nowLoading = MutableLiveData<Boolean>()
-    var nowLoading : LiveData<Boolean> = _nowLoading
+    var nowLoading: LiveData<Boolean> = _nowLoading
 
     var serverValidity: LiveData<Boolean> = _serverValidity
     var firstEntry = userPref.isFirstTime()
 
     init {
         try {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
-                token = it.result
-                Log.d("zaky", "FB Token: $token")
-            })
-        } catch (e : Throwable) {
-
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                OnCompleteListener {
+                    token = it.result
+                    Log.d("zaky", "FB Token: $token")
+                }
+            )
+        } catch (e: Throwable) {
         }
     }
 
@@ -104,10 +105,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun storeTokens(responseBody: loginResponse) {
-        //put access token
+        // put access token
         userPref.putAccessToken(responseBody.data.accessToken)
-
     }
-
-
 }

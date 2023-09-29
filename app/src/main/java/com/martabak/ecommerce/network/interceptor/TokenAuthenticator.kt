@@ -1,8 +1,6 @@
 package com.martabak.ecommerce.network.interceptor
 
-
 import android.content.SharedPreferences
-import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.martabak.ecommerce.GlobalState
 import com.martabak.ecommerce.network.ApiService
@@ -13,10 +11,8 @@ import com.martabak.ecommerce.utils.GlobalUtils.getRefreshToken
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
 import com.martabak.ecommerce.utils.GlobalUtils.setRefreshToken
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -31,22 +27,21 @@ class TokenAuthenticator @Inject constructor(
     val userPref: SharedPreferences,
     val moshi: Moshi,
     private val tokenInterceptor: TokenInterceptor,
-    private val chucker : ChuckerInterceptor,
-    private val globalState : GlobalState
+    private val chucker: ChuckerInterceptor,
+    private val globalState: GlobalState
 ) : Authenticator {
 
     @OptIn(InternalCoroutinesApi::class)
     override fun authenticate(route: Route?, response: Response): Request? {
         synchronized(this) {
             return runBlocking {
-
                 var currentRefreshToken = userPref.getRefreshToken()
-                //first build a okhttp client
+                // first build a okhttp client
                 val client = OkHttpClient.Builder().apply {
                     addInterceptor(tokenInterceptor)
                     addInterceptor(chucker)
                 }.build()
-                //build own retrofit
+                // build own retrofit
                 val retrofit = Retrofit.Builder()
                     .baseUrl(GlobalUtils.BASE_URL)
                     .client(client)
@@ -55,12 +50,11 @@ class TokenAuthenticator @Inject constructor(
                     .create(ApiService::class.java)
                 // send refresh request and get the new accesstoken and refreshtoken into SP
 
-
                 try {
                     var refreshResponse = refresh(retrofit, currentRefreshToken)
                     userPref.putAccessToken(refreshResponse.data.accessToken)
                     userPref.setRefreshToken(refreshResponse.data.refreshToken)
-                    //after all set re send the old request with new bearer token
+                    // after all set re send the old request with new bearer token
                     return@runBlocking response.request.newBuilder()
                         .header("Authorization", "Bearer ${refreshResponse.data.accessToken}")
                         .build()
@@ -68,13 +62,11 @@ class TokenAuthenticator @Inject constructor(
                     globalState.sendLogoutEvent()
                     return@runBlocking null
                 }
-
-
             }
         }
     }
 
-    private suspend fun refresh(retrofit : ApiService, currentRefreshToken : String) : RefreshResponse {
+    private suspend fun refresh(retrofit: ApiService, currentRefreshToken: String): RefreshResponse {
         return retrofit.postRefresh(RefreshBody(currentRefreshToken))
     }
 }

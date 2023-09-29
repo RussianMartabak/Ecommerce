@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.martabak.ecommerce.MainActivity
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentHomeBinding
 import com.martabak.ecommerce.utils.GlobalUtils.nightMode
 import com.martabak.ecommerce.utils.GlobalUtils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
-
 
 /**
  * A simple [Fragment] subclass.
@@ -28,12 +25,11 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,8 +45,7 @@ class HomeFragment : Fragment() {
         val langTag = (requireActivity() as MainActivity).getLang()
         Log.d("zaky", "current language tag : $langTag")
         binding.langSwitch.isChecked = false
-        if (langTag == "") (requireActivity() as MainActivity).switchLang("en") else binding.langSwitch.isChecked = true
-
+        (requireActivity() as MainActivity).switchLang("en")
 
         binding.langSwitch.setOnClickListener {
             if (binding.langSwitch.isChecked) {
@@ -62,7 +57,7 @@ class HomeFragment : Fragment() {
 
         binding.themeSwitch.isChecked = viewModel.sharedPreferences.nightMode()
 
-        //theme switch
+        // theme switch
         binding.themeSwitch.setOnClickListener {
             Log.d("zaky", "theme switch clicked")
             if (binding.themeSwitch.isChecked) {

@@ -8,6 +8,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("org.gradle.jacoco")
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
     kotlin("kapt")
 
 }
@@ -93,11 +94,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -162,6 +164,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
     implementation("androidx.paging:paging-runtime:3.1.1")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
@@ -171,6 +174,11 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:2.5.0")
 
+    //deteks
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
+
+
+    
     //lottie
     implementation("com.airbnb.android:lottie:6.1.0")
 
@@ -195,6 +203,8 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
 
 }
+
+
 
 kapt {
     correctErrorTypes = true

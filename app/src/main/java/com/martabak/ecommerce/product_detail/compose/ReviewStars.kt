@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.martabak.ecommerce.R
 
 @Composable
-fun ReviewStars(rating : Int) {
-    Row() {
+fun ReviewStars(rating: Int) {
+    Row {
         var index = 1
         repeat(5) {
             val color = if (index > rating) Color.LightGray else Color.Black

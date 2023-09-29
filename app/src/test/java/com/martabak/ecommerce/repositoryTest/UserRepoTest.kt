@@ -24,7 +24,6 @@ class UserRepoTest {
         mockSP = mock()
         mockApi = mock()
         userRepo = UserRepository(mockSP, mockApi)
-
     }
 
     @Test
@@ -45,6 +44,4 @@ class UserRepoTest {
         val expected = ResultData<Int>("", true)
         assertEquals(expected, userRepo.uploadProfile("zaky", null))
     }
-
-
 }

@@ -1,11 +1,9 @@
 package com.martabak.ecommerce.product_detail.compose
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.network.data.product_detail.ReviewData
 import com.martabak.ecommerce.product_detail.ReviewViewModel
 import com.martabak.ecommerce.ui.theme.EcommerceTheme
@@ -32,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class ReviewComposeFragment : Fragment() {
-    private val viewModel : ReviewViewModel by viewModels()
+    private val viewModel: ReviewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +38,8 @@ class ReviewComposeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -51,12 +50,11 @@ class ReviewComposeFragment : Fragment() {
                 EcommerceTheme {
                     ReviewScreen(viewModel = viewModel)
                 }
-
             }
         }
     }
 
-    //composable for passing only viewmodel and function
+    // composable for passing only viewmodel and function
     @Composable
     fun ReviewScreen(viewModel: ReviewViewModel) {
         val navigateBack = {
@@ -66,9 +64,9 @@ class ReviewComposeFragment : Fragment() {
         ReviewScreen(navigateBack, reviewList)
     }
 
-    //the real composable
+    // the real composable
     @Composable
-    fun ReviewScreen(navigateBack : () -> Boolean, reviewList : List<ReviewData>?) {
+    fun ReviewScreen(navigateBack: () -> Boolean, reviewList: List<ReviewData>?) {
         Scaffold(topBar = {
             TopBarReview(navigateBack)
         }) { paddingValues ->
@@ -76,21 +74,19 @@ class ReviewComposeFragment : Fragment() {
                 LazyColumn(
                     Modifier
                         .fillMaxSize()
-                        .padding(paddingValues)) {
+                        .padding(paddingValues)
+                ) {
                     items(reviewList.size) { reviewIndex ->
                         ReviewItem(data = reviewList[reviewIndex])
                     }
                 }
             }
-
         }
     }
-    
+
     @Preview
     @Composable
     fun ReviewScreenPreview() {
-        ReviewScreen({true}, sampleReviewData)
+        ReviewScreen({ true }, sampleReviewData)
     }
-
-
 }

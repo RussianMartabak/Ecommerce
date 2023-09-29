@@ -1,8 +1,6 @@
 package com.martabak.ecommerce.viewModelTest
 
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import com.martabak.ecommerce.cart.CartViewModel
 import com.martabak.ecommerce.database.CartEntity
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
@@ -10,19 +8,16 @@ import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.mock
-import javax.inject.Inject
 
 class CartViewModelTest {
-    private lateinit var cartModel : CartViewModel
-    private lateinit var cartRepo : CartRepository
-
+    private lateinit var cartModel: CartViewModel
+    private lateinit var cartRepo: CartRepository
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -31,18 +26,19 @@ class CartViewModelTest {
     fun setup() {
         cartRepo = mock()
         cartModel = CartViewModel(cartRepo, mock())
-        cartModel.liveCartItemsList = MutableLiveData(listOf(
-            CartEntity(
-            item_id = "lol",
-            productName = "i3 12100F",
-            productVariant = "8",
-            productStock = 1,
-            isSelected = true,
-            productImage = "1945.jpg",
-            productPrice = 100,
-            productQuantity = 2
+        cartModel.liveCartItemsList = MutableLiveData(
+            listOf(
+                CartEntity(
+                    item_id = "lol",
+                    productName = "i3 12100F",
+                    productVariant = "8",
+                    productStock = 1,
+                    isSelected = true,
+                    productImage = "1945.jpg",
+                    productPrice = 100,
+                    productQuantity = 2
+                )
             )
-        )
         )
     }
 
@@ -84,19 +80,19 @@ class CartViewModelTest {
 
     @Test
     fun parcelizeCartListTest() {
-        val expected = CheckoutList(listOf(CheckoutData(
-            item_id = "lol",
-            productName = "i3 12100F",
-            productVariant = "8",
-            productStock = 1,
-            productImage = "1945.jpg",
-            productPrice = 100,
-            productQuantity = 2)))
+        val expected = CheckoutList(
+            listOf(
+                CheckoutData(
+                    item_id = "lol",
+                    productName = "i3 12100F",
+                    productVariant = "8",
+                    productStock = 1,
+                    productImage = "1945.jpg",
+                    productPrice = 100,
+                    productQuantity = 2
+                )
+            )
+        )
         assertEquals(expected, cartModel.parcelizeCartList())
     }
-
-
-
-
-
 }

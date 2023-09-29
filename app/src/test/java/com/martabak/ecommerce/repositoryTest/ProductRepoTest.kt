@@ -15,8 +15,8 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 class ProductRepoTest {
-    private lateinit var productRepo : ProductRepository
-    private lateinit var mockApi : ApiService
+    private lateinit var productRepo: ProductRepository
+    private lateinit var mockApi: ApiService
 
     @Before
     fun setup() {
@@ -36,7 +36,8 @@ class ProductRepoTest {
                     userImage = "a",
                     userReview = "aa",
                     userRating = 4
-                ), ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
+                ),
+                ReviewData(userName = "Doe", userImage = "a", userReview = "aa", userRating = 5)
             )
         )
         whenever(mockApi.getProductReviews("lol")).thenReturn(response)

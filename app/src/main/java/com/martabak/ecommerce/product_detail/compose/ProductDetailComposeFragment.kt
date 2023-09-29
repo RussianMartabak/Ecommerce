@@ -2,12 +2,10 @@ package com.martabak.ecommerce.product_detail.compose
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +31,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,7 +50,6 @@ import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [ProductDetailComposeFragment.newInstance] factory method to
@@ -63,10 +61,10 @@ class ProductDetailComposeFragment : Fragment() {
     private var productData: Data? = null
     private var variants: List<ProductVariant>? = null
     private var imageList: List<String> = listOf()
-    private val args : ProductDetailComposeFragmentArgs by navArgs()
+    private val args: ProductDetailComposeFragmentArgs by navArgs()
+
     @Inject
     lateinit var analytics: FirebaseAnalytics
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +75,8 @@ class ProductDetailComposeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return ComposeView(requireContext()).apply {
@@ -91,12 +90,11 @@ class ProductDetailComposeFragment : Fragment() {
                         buyNow()
                     }
                 }
-
             }
         }
     }
 
-    //Composable used to pass datas from viewmodel for use in production
+    // Composable used to pass datas from viewmodel for use in production
     @Composable
     fun DetailScreen(viewModel: ProductDetailViewModel, buyNow: () -> Unit) {
         val navBack = { findNavController().navigateUp() }
@@ -144,7 +142,7 @@ class ProductDetailComposeFragment : Fragment() {
         )
     }
 
-    //Composable wihtout viewmode (consumed live by preview)
+    // Composable wihtout viewmode (consumed live by preview)
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     // For Real Usage Not Preview
     @Composable
@@ -165,9 +163,11 @@ class ProductDetailComposeFragment : Fragment() {
     ) {
         val snackbarHostState = remember { SnackbarHostState() }
         Scaffold(
-            topBar = { TopBar(navigateBack) }, snackbarHost = {
+            topBar = { TopBar(navigateBack) },
+            snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
-            }, bottomBar = {
+            },
+            bottomBar = {
                 BottomButton(!nowLoading && productDetail != null, addCart, buyNow)
             }
         ) { paddingValues ->
@@ -175,10 +175,9 @@ class ProductDetailComposeFragment : Fragment() {
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(paddingValues)
-
                     .verticalScroll(rememberScrollState())
             ) {
-                //Snackbar DO NOT TOUCH
+                // Snackbar DO NOT TOUCH
                 if (snackbarMessage != null) {
                     LaunchedEffect(null) {
                         snackbarHostState.showSnackbar(snackbarMessage)
@@ -192,7 +191,6 @@ class ProductDetailComposeFragment : Fragment() {
                     ) {
                         CircularProgressIndicator(Modifier.padding(top = 200.dp))
                     }
-
                 } else if (productDetail != null) {
                     NormalLayout(
                         productDetail = productDetail,
@@ -203,47 +201,43 @@ class ProductDetailComposeFragment : Fragment() {
                         updatedPrice = updatedPrice,
                         toReview = toReview
                     )
-                    //make product data as bundle
+                    // make product data as bundle
                     val bundle = Bundle()
                     bundle.putString("name", productDetail.productName)
 
-                    //Log event
+                    // Log event
                     analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM) {
                         param(FirebaseAnalytics.Param.CURRENCY, "IDR")
                         param(FirebaseAnalytics.Param.VALUE, productDetail.productPrice.toDouble())
                         param(FirebaseAnalytics.Param.ITEMS, arrayOf(bundle))
                     }
-
                 } else {
-                    //error
+                    // error
                     ErrorScreen(refreshFunction)
-
                 }
-
             }
         }
     }
 
-    //Preview Thingy
+    // Preview Thingy
     @Preview(showBackground = true)
     @Composable
     fun DetailScreenPreview() {
         val previewData = null
-        DetailScreen({ true }, previewData, {}, false, null,
+        DetailScreen(
+            { true }, previewData, {}, false, null,
             {}, {}, 29000, {}, false, {}, {}, {}
         )
     }
-
 
     private fun buyNow() {
         val paket = viewModel.parcelizeProduct()
         findNavController().navigate(
             R.id.StartCheckoutFromDetailCompose,
-            //this way is a must if called in composable!!!!!!!!!!!!!!!!!!!
-            //DO NOT USE FRAGMENT DIRECTIONS IN COMPOSABLE, EVER!!
+            // this way is a must if called in composable!!!!!!!!!!!!!!!!!!!
+            // DO NOT USE FRAGMENT DIRECTIONS IN COMPOSABLE, EVER!!
             CheckoutFragmentArgs(paket).toBundle(),
             navOptions = null
         )
     }
-
 }

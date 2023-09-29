@@ -35,10 +35,12 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        if(viewModel.hasUsername()) {
+        if (viewModel.hasUsername()) {
             Log.d("zaky", "username exist: ${viewModel.hasUsername()}")
             findNavController().navigate(R.id.action_prelogin_to_postlogin)
         }
@@ -51,13 +53,15 @@ class ProfileFragment : Fragment() {
         binding.loadingIndicator.visibility = View.GONE
 
         viewModel.nowLoading.observe(viewLifecycleOwner) {
-            if(it) {
+            if (it) {
                 binding.loadingIndicator.visibility = View.VISIBLE
-            } else binding.loadingIndicator.visibility = View.GONE
+            } else {
+                binding.loadingIndicator.visibility = View.GONE
+            }
         }
 
         val cameraPicUri = PhotoUriManager(requireActivity()).buildNewUri()
-        //take le picture
+        // take le picture
         val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) {
             if (it) {
                 Log.d("zaky", "Photo taking success")
@@ -81,7 +85,7 @@ class ProfileFragment : Fragment() {
                         MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
                     val imgFile: File = PhotoUriManager(requireActivity()).uriToFile(uri)
                     viewModel.selectedFile = imgFile
-                    //here get the file
+                    // here get the file
                     binding.profileOutline.visibility = View.GONE
                     binding.profileImage.setImageBitmap(bitmap)
                 }
@@ -100,7 +104,6 @@ class ProfileFragment : Fragment() {
                     .show()
             }
             Log.d("zaky", "connection status change: $it")
-
         }
 
         binding.inputUsername.doOnTextChanged { text, start, before, count ->
@@ -111,11 +114,10 @@ class ProfileFragment : Fragment() {
         binding.profileImage.setOnClickListener {
             MaterialAlertDialogBuilder(requireActivity()).setTitle("Pilih Gambar")
                 .setItems(items) { _, which ->
-                    //camera
+                    // camera
                     if (which == 0) {
                         takePhoto.launch(cameraPicUri)
                         Log.d("zaky", "camera launch executed")
-
                     } else {
                         pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }

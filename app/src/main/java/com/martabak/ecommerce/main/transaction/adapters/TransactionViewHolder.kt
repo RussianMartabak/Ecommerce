@@ -22,11 +22,10 @@ class TransactionViewHolder(
         binding.transactionDate.text = item.date
         val formattedPrice = NumberFormat.getInstance().format(item.total).replace(",", ".")
         binding.transactionTotal.text = "Rp$formattedPrice"
-        binding.transactionItemCount.text = "${item.items.size.toString()} barang"
+        binding.transactionItemCount.text = "${item.items.size} barang"
         if (item.review != null) binding.reviewButton.isVisible = false
         binding.reviewButton.setOnClickListener {
             onClick(item.invoiceId)
         }
     }
-
 }

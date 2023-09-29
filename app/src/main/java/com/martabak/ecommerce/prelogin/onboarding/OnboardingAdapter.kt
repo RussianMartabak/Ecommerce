@@ -13,7 +13,6 @@ class OnboardingAdapter : RecyclerView.Adapter<OnboardingAdapter.OnboardingViewH
     private val pictures =
         listOf<Int>(R.drawable.onboard_1, R.drawable.onboard_2, R.drawable.onboard_3)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_onboarding, parent, false)

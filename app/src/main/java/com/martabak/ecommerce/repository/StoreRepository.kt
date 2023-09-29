@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.paging.liveData
 import com.martabak.ecommerce.main.store.ProductsPagingSource
 import com.martabak.ecommerce.main.store.data.ProductQuery
@@ -14,7 +13,6 @@ import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.Product
 import com.martabak.ecommerce.network.data.ProductsResponse
 import com.martabak.ecommerce.network.data.ResultData
-import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 class StoreRepository @Inject constructor(val apiService: ApiService) {
@@ -29,14 +27,13 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
         }
     }
 
-
-    //search word livedata
+    // search word livedata
     private var _liveSearchKey: MutableLiveData<String> = MutableLiveData<String>()
     var liveSearchKey: LiveData<String> = _liveSearchKey
 
     var searchKey = ""
 
-    //must be demolished in the near future
+    // must be demolished in the near future
     suspend fun getProducts(page: Int = 1): ProductsResponse {
         try {
             val response =
@@ -45,12 +42,10 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
         } catch (e: Throwable) {
             Log.d("zaky", e.message!!)
             throw e
-
         }
-
     }
 
-    //function that return transformed livedata as pagingdata
+    // function that return transformed livedata as pagingdata
     fun getProductsPagingData(
         query: ProductQuery
     ): LiveData<PagingData<Product>> {
@@ -62,12 +57,11 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
         return pagingData
     }
 
-
     // use this to notify viewmodels
     private var _productsPagingUpdateCycle: MutableLiveData<Int> = MutableLiveData<Int>()
     var productsPagingUpdateCycle: LiveData<Int> = _productsPagingUpdateCycle
 
-    //function to construct array
+    // function to construct array
     private fun updateChipsList() {
         val newFilterChips = mutableListOf<String>()
         if (brand != null) newFilterChips.add(brand!!)
@@ -77,17 +71,14 @@ class StoreRepository @Inject constructor(val apiService: ApiService) {
         _filterChips.value = newFilterChips
     }
 
-    //array for creating filter chips
+    // array for creating filter chips
     private var _filterChips: MutableLiveData<MutableList<String>> =
         MutableLiveData<MutableList<String>>()
     var filterChips: LiveData<MutableList<String>> = _filterChips
 
-    //filter variables
+    // filter variables
     var brand: String? = null
     var lowest: Int? = null
     var highest: Int? = null
     var sort: String? = null
-
-
-
 }

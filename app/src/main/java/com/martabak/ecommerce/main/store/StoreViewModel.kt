@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import androidx.paging.liveData
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.GlobalState
@@ -25,7 +22,7 @@ class StoreViewModel @Inject constructor(
     val storeRepository: StoreRepository,
     val apiService: ApiService,
     val productRepository: ProductRepository,
-    val globalState : GlobalState,
+    val globalState: GlobalState,
     val analytics: FirebaseAnalytics
 ) : ViewModel() {
     var query = ""
@@ -34,7 +31,7 @@ class StoreViewModel @Inject constructor(
     var highest: Int? = null
     var sort: String? = null
 
-    //storing selected chip IDs
+    // storing selected chip IDs
     var selectedBrand: Int? = null
     var selectedSort: Int? = null
 
@@ -50,14 +47,11 @@ class StoreViewModel @Inject constructor(
         _queryObject.value = ProductQuery()
     }
 
-
     val updatedPagingSource = queryObject.switchMap { productQuery ->
         storeRepository.getProductsPagingData(productQuery)
-
     }.cachedIn(viewModelScope)
 
-    //observe/transform the query object
-
+    // observe/transform the query object
 
     private var _filterChips = MutableLiveData<List<String>>()
     var filterChips: LiveData<List<String>> = _filterChips
@@ -66,9 +60,7 @@ class StoreViewModel @Inject constructor(
         _filterChips.value = list
     }
 
-
     fun sendQuery(q: String) {
-
         viewModelScope.launch {
             storeRepository.getProducts()
         }
@@ -90,7 +82,7 @@ class StoreViewModel @Inject constructor(
         }
     }
 
-    //function to tamper with the pagingsource
+    // function to tamper with the pagingsource
     fun setSearch(q: String) {
         query = q
         val newQuery =
@@ -136,9 +128,7 @@ class StoreViewModel @Inject constructor(
         highest = null
     }
 
-    fun selectProductID(id : String) {
+    fun selectProductID(id: String) {
         productRepository.selectedProductID = id
     }
-
-
 }

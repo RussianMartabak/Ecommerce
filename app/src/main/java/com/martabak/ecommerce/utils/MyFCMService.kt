@@ -2,18 +2,14 @@ package com.martabak.ecommerce.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.database.NotifDao
 import com.martabak.ecommerce.database.NotifEntity
@@ -22,7 +18,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,7 +46,6 @@ class MyFCMService : FirebaseMessagingService() {
         // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
         // [END_EXCLUDE]
 
-
         Log.d("zaky", "From: ${remoteMessage.from}")
 
         // Check if message contains a data payload.
@@ -63,13 +57,12 @@ class MyFCMService : FirebaseMessagingService() {
             // Check if data needs to be processed by long running job
             if (isLongRunningJob()) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
-                //scheduleJob()
+                // scheduleJob()
             } else {
                 // Handle message within 10 seconds
                 handleNow()
             }
         }
-
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -89,7 +82,6 @@ class MyFCMService : FirebaseMessagingService() {
             notifDao.insertNotif(notifData)
         }
     }
-
 
     private fun isLongRunningJob() = false
 
@@ -151,7 +143,6 @@ class MyFCMService : FirebaseMessagingService() {
             .setDestination(R.id.notificationFragment)
             .createPendingIntent()
 
-
         val channelId = "fcm_default_channel"
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -183,5 +174,4 @@ class MyFCMService : FirebaseMessagingService() {
         super.onDestroy()
         job.cancel()
     }
-
 }

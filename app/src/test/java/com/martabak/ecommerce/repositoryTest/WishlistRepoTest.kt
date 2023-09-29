@@ -34,7 +34,7 @@ class WishlistRepoTest {
     }
 
     @Test
-    fun itemExistOnWishlistTest() = runTest{
+    fun itemExistOnWishlistTest() = runTest {
         whenever(mockdDao.findItemById("lol")).thenReturn(null)
         assertEquals(false, wishlistRepo.itemExistOnWishlist("lol"))
     }

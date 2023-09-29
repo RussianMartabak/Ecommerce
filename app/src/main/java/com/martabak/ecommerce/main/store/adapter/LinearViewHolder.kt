@@ -8,7 +8,7 @@ import com.martabak.ecommerce.databinding.ProductLinearItemBinding
 import com.martabak.ecommerce.network.data.Product
 import java.text.NumberFormat
 
-class LinearViewHolder(private var binding: ProductLinearItemBinding, val onClick : (String) -> Unit) :
+class LinearViewHolder(private var binding: ProductLinearItemBinding, val onClick: (String) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(product: Product) {

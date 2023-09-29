@@ -22,7 +22,6 @@ class StoreRepoTest {
     fun setup() {
         apiService = mock()
         storeRepo = StoreRepository(apiService)
-
     }
 
     @Test
@@ -43,7 +42,9 @@ class StoreRepoTest {
     @Test
     fun getProductsTest() = runTest {
         val expected = ProductsResponse(
-            code = 200, message = "OK", data = Data(
+            code = 200,
+            message = "OK",
+            data = Data(
                 itemsPerPage = 10,
                 currentItemCount = 10,
                 pageIndex = 1,
@@ -75,6 +76,4 @@ class StoreRepoTest {
         whenever(apiService.postProducts("", null, null, null, null, 6, 1)).thenReturn(expected)
         assertEquals(expected, storeRepo.getProducts())
     }
-
-
 }

@@ -2,18 +2,14 @@ package com.martabak.ecommerce.main.store.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.ProductGridItemBinding
 import com.martabak.ecommerce.databinding.ProductLinearItemBinding
 import com.martabak.ecommerce.network.data.Product
-import java.text.NumberFormat
 
-class ProductsPagingAdapter(val onClick : (String) -> Unit) :
+class ProductsPagingAdapter(val onClick: (String) -> Unit) :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(ProductDiffCallback) {
 
     private var gridMode = false
@@ -21,7 +17,6 @@ class ProductsPagingAdapter(val onClick : (String) -> Unit) :
         gridMode = b
         notifyDataSetChanged()
     }
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
@@ -33,7 +28,6 @@ class ProductsPagingAdapter(val onClick : (String) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         if (gridMode) {
             val binding =
                 ProductGridItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,7 +37,6 @@ class ProductsPagingAdapter(val onClick : (String) -> Unit) :
                 ProductLinearItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return LinearViewHolder(binding, onClick)
         }
-
     }
 }
 
@@ -55,5 +48,4 @@ object ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
         return oldItem.productId == newItem.productId
     }
-
 }

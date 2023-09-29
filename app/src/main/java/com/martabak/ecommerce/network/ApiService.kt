@@ -1,17 +1,17 @@
 package com.martabak.ecommerce.network
 
 import com.martabak.ecommerce.network.data.ProductsResponse
-import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.prelogin.loginResponse
-import com.martabak.ecommerce.network.data.prelogin.profileResponse
-import com.martabak.ecommerce.network.data.prelogin.RegisterBody
-import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
 import com.martabak.ecommerce.network.data.SearchResponse
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
 import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.network.data.payment.PaymentResponse
+import com.martabak.ecommerce.network.data.prelogin.LoginBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshBody
 import com.martabak.ecommerce.network.data.prelogin.RefreshResponse
+import com.martabak.ecommerce.network.data.prelogin.RegisterBody
+import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
+import com.martabak.ecommerce.network.data.prelogin.loginResponse
+import com.martabak.ecommerce.network.data.prelogin.profileResponse
 import com.martabak.ecommerce.network.data.product_detail.ProductDetailResponse
 import com.martabak.ecommerce.network.data.product_detail.ReviewResponse
 import com.martabak.ecommerce.network.data.rating.RatingBody
@@ -39,7 +39,7 @@ interface ApiService {
 
     @Headers("API_KEY: 6f8856ed-9189-488f-9011-0ff4b6c08edc")
     @POST("refresh")
-    suspend fun postRefresh(@Body refreshBody : RefreshBody) : RefreshResponse
+    suspend fun postRefresh(@Body refreshBody: RefreshBody): RefreshResponse
 
     @POST("profile")
     @Multipart
@@ -52,10 +52,10 @@ interface ApiService {
     suspend fun postSearch(@Query("query") query: String): SearchResponse
 
     @GET("products/{id}")
-    suspend fun getProductDetail(@Path("id") productID : String) : ProductDetailResponse
+    suspend fun getProductDetail(@Path("id") productID: String): ProductDetailResponse
 
     @GET("review/{id}")
-    suspend fun getProductReviews(@Path("id") productID: String) : ReviewResponse
+    suspend fun getProductReviews(@Path("id") productID: String): ReviewResponse
 
     @POST("products")
     suspend fun postProducts(
@@ -64,21 +64,19 @@ interface ApiService {
         @Query("lowest") lowest: Int?,
         @Query("highest") highest: Int?,
         @Query("sort") sort: String?,
-        @Query("limit") limit : Int?,
-        @Query("page") page : Int?
-    ) : ProductsResponse
+        @Query("limit") limit: Int?,
+        @Query("page") page: Int?
+    ): ProductsResponse
 
     @GET("payment")
-    suspend fun getPaymentMethods() : PaymentResponse
+    suspend fun getPaymentMethods(): PaymentResponse
 
     @POST("fulfillment")
-    suspend fun sendForFulfillment(@Body fulfillBody : FulfillmentBody) : FulfillmentResponse
+    suspend fun sendForFulfillment(@Body fulfillBody: FulfillmentBody): FulfillmentResponse
 
     @POST("rating")
-    suspend fun postRating(@Body ratingBody : RatingBody) : RatingResponse
+    suspend fun postRating(@Body ratingBody: RatingBody): RatingResponse
 
     @GET("transaction")
-    suspend fun getTransactions() : TransactionResponse
-
-
+    suspend fun getTransactions(): TransactionResponse
 }

@@ -28,21 +28,20 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var analytics : FirebaseAnalytics
+    lateinit var analytics: FirebaseAnalytics
 
-    //list for analytics
+    // list for analytics
     val filters = arrayOf("rating", "sale", "lowest", "highest", "lowest", "Apple", "Asus", "Dell", "Lenovo")
 
-    //filter vars
+    // filter vars
     private var brand: String? = null
     private var lowest: Int? = null
     private var highest: Int? = null
     private var sort: String? = null
 
-    //for display
+    // for display
     private var sortText: String = ""
     private var brandText: String = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,12 +57,11 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //reset shit
+        // reset shit
         binding.resetButton.isVisible = isFilterSelected()
 
-        //pre filling
+        // pre filling
         viewModel.selectedSort?.let {
             binding.sortGroup.check(it)
         }
@@ -82,7 +80,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         viewModel.highest?.let {
             binding.editTextHighest.setText(it.toString())
         }
-        //reset everything
+        // reset everything
         binding.resetButton.setOnClickListener {
             brand = null
             highest = null
@@ -96,10 +94,10 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
             binding.resetButton.isVisible = false
         }
 
-        //listeners for data input
+        // listeners for data input
         binding.editTextLowest.doOnTextChanged { text, _, _, _ ->
             binding.resetButton.isVisible = text != ""
-         }
+        }
 
         binding.editTextHighest.doOnTextChanged { text, _, _, _ ->
             binding.resetButton.isVisible = text != ""
@@ -107,21 +105,20 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
         binding.sortGroup.setOnCheckedStateChangeListener { group, checkedId ->
             if (checkedId.size != 0) {
-                //send id to viewmodel
-                //send sort http key to fragment
-                //send sort string to viewmodel for making a string list
+                // send id to viewmodel
+                // send sort http key to fragment
+                // send sort string to viewmodel for making a string list
                 var selectedChip = group.findViewById<Chip>(checkedId[0])
                 viewModel.selectedSort = selectedChip.id
-                //text thats on view already, send to filterchips livedata
+                // text thats on view already, send to filterchips livedata
                 sortText = selectedChip.text.toString()
-                //analytics shit
+                // analytics shit
                 logToFirebase(0, "sort")
 
-                //value thats needed for http ops nad send back to fragment
+                // value thats needed for http ops nad send back to fragment
                 sort = convertSorttoKey(sortText)
                 binding.resetButton.isVisible = true
             }
-
         }
         binding.brandGroup.setOnCheckedStateChangeListener { group, checkedId ->
             if (!(checkedId.size == 0)) {
@@ -133,15 +130,18 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
                 logToFirebase(1, "brand")
                 binding.resetButton.isVisible = true
             }
-
         }
 
         binding.sendButton.setOnClickListener {
-            //make the list
-            if (binding.editTextLowest.text.toString().isNotEmpty()) lowest =
-                binding.editTextLowest.text.toString().toInt()
-            if (binding.editTextHighest.text.toString().isNotEmpty()) highest =
-                binding.editTextHighest.text.toString().toInt()
+            // make the list
+            if (binding.editTextLowest.text.toString().isNotEmpty()) {
+                lowest =
+                    binding.editTextLowest.text.toString().toInt()
+            }
+            if (binding.editTextHighest.text.toString().isNotEmpty()) {
+                highest =
+                    binding.editTextHighest.text.toString().toInt()
+            }
             viewModel.updateFilterChipList(makeFilterList())
             Log.d("zaky", "on dialog fragment Highest: $highest , Lowest: $lowest")
             setFragmentResult(
@@ -173,7 +173,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun logToFirebase(catId : Int, catName : String) {
+    private fun logToFirebase(catId: Int, catName: String) {
         val itemList = mutableListOf<Bundle>()
         filters.forEach { filtername ->
             val bundle = Bundle().apply {
@@ -215,5 +215,4 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "ModalBottomSheet"
     }
-
 }

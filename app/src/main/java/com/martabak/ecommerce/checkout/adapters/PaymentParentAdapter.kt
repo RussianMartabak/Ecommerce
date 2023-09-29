@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.martabak.ecommerce.databinding.PaymentItemParentBinding
 import com.martabak.ecommerce.network.data.payment.PaymentData
 
-class PaymentParentAdapter(var onClick : (String, String) -> Unit) : ListAdapter<PaymentData, PaymentParentViewHolder>(PaymentParentComparator) {
+class PaymentParentAdapter(var onClick: (String, String) -> Unit) : ListAdapter<PaymentData, PaymentParentViewHolder>(
+    PaymentParentComparator
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentParentViewHolder {
         val binding =
             PaymentItemParentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,5 +30,4 @@ object PaymentParentComparator : DiffUtil.ItemCallback<PaymentData>() {
     override fun areContentsTheSame(oldItem: PaymentData, newItem: PaymentData): Boolean {
         return oldItem == newItem
     }
-
 }

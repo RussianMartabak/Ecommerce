@@ -86,7 +86,7 @@ class ProductDetailViewModelTest {
 
     @Test
     fun processWishlistTrueTest() = runTest {
-        //set the wishlist bool by getdata and mocking the wishrepo
+        // set the wishlist bool by getdata and mocking the wishrepo
         whenever(productRepo.getProductDetail()).thenReturn(productData)
         whenever(wishRepo.itemExistOnWishlist("1")).thenReturn(true)
         productModel.getProductData()
@@ -96,7 +96,7 @@ class ProductDetailViewModelTest {
 
     @Test
     fun processWishlistFalseTest() = runTest {
-        //set the wishlist bool by getdata and mocking the wishrepo
+        // set the wishlist bool by getdata and mocking the wishrepo
         whenever(productRepo.getProductDetail()).thenReturn(productData)
         whenever(wishRepo.itemExistOnWishlist("1")).thenReturn(false)
         productModel.getProductData()
@@ -120,6 +120,4 @@ class ProductDetailViewModelTest {
         val expectedList = CheckoutList(expected)
         assertEquals(expectedList, productModel.parcelizeProduct())
     }
-
-
 }

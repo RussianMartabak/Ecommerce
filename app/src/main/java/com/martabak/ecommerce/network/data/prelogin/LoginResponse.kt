@@ -1,6 +1,5 @@
 package com.martabak.ecommerce.network.data.prelogin
 
-import com.martabak.ecommerce.network.data.prelogin.dataLogin
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

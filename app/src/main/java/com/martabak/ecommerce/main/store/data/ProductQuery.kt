@@ -4,7 +4,7 @@ data class ProductQuery(
     var search: String = "",
     var brand: String? = null,
     var lowest: Int? = null,
-    var highest : Int? = null,
+    var highest: Int? = null,
     var sort: String? = null,
-    var limit : Int = 6
+    var limit: Int = 6
 )

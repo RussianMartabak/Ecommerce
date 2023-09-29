@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentTransactionBinding
 import com.martabak.ecommerce.main.MainFragment
 import com.martabak.ecommerce.main.MainFragmentDirections
 import com.martabak.ecommerce.main.transaction.adapters.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
-
 
 /**
  * A simple [Fragment] subclass.
@@ -25,17 +22,17 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
-    private var _binding : FragmentTransactionBinding? = null
+    private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : TransactionViewModel by viewModels()
+    private val viewModel: TransactionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -79,8 +76,4 @@ class TransactionFragment : Fragment() {
         super.onResume()
         viewModel.getTransactions()
     }
-
-
-
-
 }

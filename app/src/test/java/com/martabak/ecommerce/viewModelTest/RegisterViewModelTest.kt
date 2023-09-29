@@ -18,7 +18,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class RegisterViewModelTest {
     private lateinit var registerModel: RegisterViewModel
-    private lateinit var userRepo : UserRepository
+    private lateinit var userRepo: UserRepository
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -48,11 +48,9 @@ class RegisterViewModelTest {
     }
 
     @Test
-    fun registerErrorTest() =  runTest {
+    fun registerErrorTest() = runTest {
         whenever(userRepo.register("", "", "")).thenThrow(RuntimeException("test error"))
         registerModel.register()
         assertEquals(false, registerModel.connectionStatus.getOrAwaitValue())
     }
-
-
 }
