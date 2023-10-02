@@ -93,7 +93,7 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -110,6 +110,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    lint {
+        disable += "instantiatable"
     }
 }
 
@@ -194,7 +198,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
 
     // test dependencies
-    testImplementation("com.squareup.okhttp3:mockwebserver")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
     testImplementation("androidx.test:core:1.5.0")
     testImplementation("org.robolectric:robolectric:4.10.3")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")

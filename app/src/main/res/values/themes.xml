@@ -9,6 +9,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="chipStandaloneStyle">@style/Widget.Material3.Chip.Filter</item>
         <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
 
     </style>
     <style name="FullScreenDialogStyle">
