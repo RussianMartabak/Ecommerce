@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.payment.PaymentData
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.payment.PaymentData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

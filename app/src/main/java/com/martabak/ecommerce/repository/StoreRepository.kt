@@ -7,12 +7,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.Product
+import com.martabak.core.network.data.ProductsResponse
+import com.martabak.core.network.data.ResultData
 import com.martabak.ecommerce.main.store.ProductsPagingSource
 import com.martabak.ecommerce.main.store.data.ProductQuery
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.Product
-import com.martabak.ecommerce.network.data.ProductsResponse
-import com.martabak.ecommerce.network.data.ResultData
 import javax.inject.Inject
 
 class StoreRepository @Inject constructor(val apiService: ApiService) {

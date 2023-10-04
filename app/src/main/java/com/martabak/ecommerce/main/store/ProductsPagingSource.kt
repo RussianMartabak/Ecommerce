@@ -3,9 +3,10 @@ package com.martabak.ecommerce.main.store
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.Product
 import com.martabak.ecommerce.main.store.data.ProductQuery
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.Product
+
 
 class ProductsPagingSource(
     val apiService: ApiService,

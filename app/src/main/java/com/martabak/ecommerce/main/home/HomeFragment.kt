@@ -42,10 +42,8 @@ class HomeFragment : Fragment() {
             (requireActivity() as MainActivity).logout()
         }
 
-        val langTag = (requireActivity() as MainActivity).getLang()
-        Log.d("zaky", "current language tag : $langTag")
-        binding.langSwitch.isChecked = false
-        (requireActivity() as MainActivity).switchLang("en")
+
+
 
         binding.langSwitch.setOnClickListener {
             if (binding.langSwitch.isChecked) {
@@ -68,5 +66,12 @@ class HomeFragment : Fragment() {
                 activity.setAppTheme(false)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val langTag = (requireActivity() as MainActivity).getLang()
+        Log.d("zaky", "current language tag : $langTag")
+        if (langTag == "id") binding.langSwitch.isChecked = true
     }
 }

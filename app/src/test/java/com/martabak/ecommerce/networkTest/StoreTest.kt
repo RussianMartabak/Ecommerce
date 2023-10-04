@@ -1,9 +1,10 @@
 package com.martabak.ecommerce.networkTest
 
-import com.martabak.ecommerce.network.data.Data
-import com.martabak.ecommerce.network.data.Product
-import com.martabak.ecommerce.network.data.ProductsResponse
-import com.martabak.ecommerce.network.data.SearchResponse
+
+import com.martabak.core.network.data.Data
+import com.martabak.core.network.data.Product
+import com.martabak.core.network.data.ProductsResponse
+import com.martabak.core.network.data.SearchResponse
 import com.martabak.ecommerce.networkTest.util.BasedNetworkTest
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

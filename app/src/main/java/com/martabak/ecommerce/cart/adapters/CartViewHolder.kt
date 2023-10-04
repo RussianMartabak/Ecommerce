@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.cart.adapters
 
+import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -7,11 +8,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.cart.CartViewModel
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.databinding.CartItemBinding
 import java.text.NumberFormat
 
-class CartViewHolder(private var binding: CartItemBinding, private var viewModel: CartViewModel) :
+class CartViewHolder(private var binding: CartItemBinding, private var viewModel: CartViewModel, private var context : Context) :
     RecyclerView.ViewHolder(binding.root) {
     private var itemId = ""
 
@@ -25,7 +26,9 @@ class CartViewHolder(private var binding: CartItemBinding, private var viewModel
         binding.cartItemVariant.text = itemData.productVariant
         binding.itemCheckbox.isChecked = itemData.isSelected
         binding.orderQtyText.text = itemData.productQuantity.toString()
-        binding.cartItemStock.text = "Stok ${itemData.productStock}"
+        val stokString = context.getString(R.string.stock)
+        binding.cartItemStock.text = "$stokString ${itemData.productStock}"
+        if (itemData.productStock < 10) binding.cartItemStock.setTextColor(context.getColor(R.color.red))
         val price = NumberFormat.getInstance().format(itemData.productPrice).replace(",", ".")
         binding.cartItemPrice.text = "Rp$price"
         binding.itemCheckbox.setOnClickListener {

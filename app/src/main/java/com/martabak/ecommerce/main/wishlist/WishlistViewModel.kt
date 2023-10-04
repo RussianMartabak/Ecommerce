@@ -2,8 +2,8 @@ package com.martabak.ecommerce.main.wishlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.martabak.ecommerce.database.CartEntity
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.CartEntity
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.WishlistRepository

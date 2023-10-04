@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.martabak.ecommerce.utils.GlobalUtils.isFirstTime
 import com.martabak.ecommerce.utils.GlobalUtils.nightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var remoteConfig: FirebaseRemoteConfig
+
 
     @Inject
     lateinit var sharedPreference: SharedPreferences
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             }
             Log.d("zaky", msg)
         }
+
+        //language
+        val firstEntry = sharedPreference.isFirstTime()
+        if (firstEntry) switchLang("en")
 
         lifecycleScope.launch {
             viewModel.logoutFlow.collectLatest { kick ->

@@ -3,8 +3,8 @@ package com.martabak.ecommerce.checkout.adapters
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.martabak.core.network.data.payment.PaymentData
 import com.martabak.ecommerce.databinding.PaymentItemParentBinding
-import com.martabak.ecommerce.network.data.payment.PaymentData
 
 class PaymentParentViewHolder(
     private val binding: PaymentItemParentBinding,

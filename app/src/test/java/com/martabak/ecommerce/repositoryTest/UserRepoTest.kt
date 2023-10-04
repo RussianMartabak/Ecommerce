@@ -1,11 +1,12 @@
 package com.martabak.ecommerce.repositoryTest
 
 import android.content.SharedPreferences
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.ResultData
-import com.martabak.ecommerce.network.data.prelogin.DataRegister
-import com.martabak.ecommerce.network.data.prelogin.RegisterBody
-import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.ResultData
+import com.martabak.core.network.data.prelogin.DataRegister
+import com.martabak.core.network.data.prelogin.RegisterBody
+import com.martabak.core.network.data.prelogin.RegisterResponse
+
 import com.martabak.ecommerce.repository.UserRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

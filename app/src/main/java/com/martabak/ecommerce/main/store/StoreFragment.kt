@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -98,6 +99,8 @@ class StoreFragment : Fragment() {
             showSearchDialog(viewModel.query)
         }
 
+
+
         pagingAdapter = ProductsPagingAdapter { id ->
             // store product ID on repo then move away from this scheisse
             Log.d("zaky", "selected ID: $id")
@@ -135,6 +138,7 @@ class StoreFragment : Fragment() {
             Log.d("zaky", "switching to gridMode $gridMode")
             switchLayout()
         }
+
 
         viewModel.updatedPagingSource.observe(viewLifecycleOwner) { pagingData ->
             viewLifecycleOwner.lifecycleScope.launch {
@@ -235,28 +239,30 @@ class StoreFragment : Fragment() {
         if (errorState.error is HttpException) {
             val httpError = errorState.error as HttpException
             if (httpError.code() == 404) {
-                binding.errorTitle.text = "Empty"
-                binding.errorDetail.text = "Your requested data is unavailable"
+                binding.errorTitle.text = requireActivity().getString(R.string.empty)
+                binding.errorDetail.text = requireActivity().getString(R.string.data_unavailable)
                 binding.refreshButton.text = "Reset"
                 binding.refreshButton.setOnClickListener {
                     viewModel.resetFilters()
                     viewModel.query = ""
                     binding.searchEditText.setText("")
                     viewModel.callRefresh()
+                    binding.filterChipGroup.removeAllViews()
                 }
             } else {
                 binding.refreshButton.setOnClickListener {
                     pagingAdapter!!.refresh()
                 }
                 binding.errorTitle.text = httpError.code().toString()
-                binding.errorDetail.text = "Internal Server Error"
+                binding.errorDetail.text = requireActivity().getString(R.string.internal_error)
             }
         } else {
             binding.refreshButton.setOnClickListener {
+
                 pagingAdapter!!.refresh()
             }
             binding.errorTitle.text = "Connection"
-            binding.errorDetail.text = "Your connection is unavailable"
+            binding.errorDetail.text = requireActivity().getString(R.string.connection_error)
         }
     }
 

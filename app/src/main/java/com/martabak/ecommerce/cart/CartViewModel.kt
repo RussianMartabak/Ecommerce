@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.network.data.checkout.CheckoutList
+import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import com.martabak.ecommerce.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

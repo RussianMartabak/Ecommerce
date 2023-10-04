@@ -3,7 +3,8 @@ package com.martabak.ecommerce
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.martabak.ecommerce.database.AppDatabase
+import com.martabak.core.util.GlobalState
+import com.martabak.core.database.AppDatabase
 import com.martabak.ecommerce.utils.GlobalUtils.clearUserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -18,7 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.martabak.ecommerce.network.data.product_detail.ReviewData
+import com.martabak.core.network.data.product_detail.ReviewData
+
 import com.martabak.ecommerce.product_detail.ReviewViewModel
 import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint

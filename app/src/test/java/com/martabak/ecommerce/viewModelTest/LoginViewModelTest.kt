@@ -1,9 +1,10 @@
 package com.martabak.ecommerce.viewModelTest
 
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.prelogin.dataLogin
-import com.martabak.ecommerce.network.data.prelogin.loginResponse
+
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.prelogin.LoginBody
+import com.martabak.core.network.data.prelogin.dataLogin
+import com.martabak.core.network.data.prelogin.loginResponse
 import com.martabak.ecommerce.prelogin.login.LoginViewModel
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import kotlinx.coroutines.test.runTest

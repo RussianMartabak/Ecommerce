@@ -1,7 +1,7 @@
 package com.martabak.ecommerce.repositoryTest
 
-import com.martabak.ecommerce.database.WishlistDao
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.WishlistDao
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.repository.WishlistRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

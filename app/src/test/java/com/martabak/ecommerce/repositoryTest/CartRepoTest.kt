@@ -1,7 +1,7 @@
 package com.martabak.ecommerce.repositoryTest
 
-import com.martabak.ecommerce.database.CartDao
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.CartDao
+import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.repository.CartRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

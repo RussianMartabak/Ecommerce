@@ -1,13 +1,14 @@
 package com.martabak.ecommerce.networkTest
 
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentData
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
-import com.martabak.ecommerce.network.data.rating.RatingBody
-import com.martabak.ecommerce.network.data.rating.RatingResponse
-import com.martabak.ecommerce.network.data.transaction.TransactionData
-import com.martabak.ecommerce.network.data.transaction.TransactionItem
-import com.martabak.ecommerce.network.data.transaction.TransactionResponse
+
+import com.martabak.core.network.data.fulfillment.FulfillmentBody
+import com.martabak.core.network.data.fulfillment.FulfillmentData
+import com.martabak.core.network.data.fulfillment.FulfillmentResponse
+import com.martabak.core.network.data.rating.RatingBody
+import com.martabak.core.network.data.rating.RatingResponse
+import com.martabak.core.network.data.transaction.TransactionData
+import com.martabak.core.network.data.transaction.TransactionItem
+import com.martabak.core.network.data.transaction.TransactionResponse
 import com.martabak.ecommerce.networkTest.util.BasedNetworkTest
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

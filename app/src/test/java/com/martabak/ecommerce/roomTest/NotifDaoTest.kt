@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.martabak.ecommerce.database.AppDatabase
-import com.martabak.ecommerce.database.NotifDao
-import com.martabak.ecommerce.database.NotifEntity
+import com.martabak.core.database.AppDatabase
+import com.martabak.core.database.NotifDao
+import com.martabak.core.database.NotifEntity
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import kotlinx.coroutines.test.runTest
 import org.junit.After

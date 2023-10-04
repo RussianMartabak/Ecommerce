@@ -2,9 +2,9 @@ package com.martabak.ecommerce.checkout.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.martabak.core.network.data.payment.PaymentItem
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.PaymentItemChildBinding
-import com.martabak.ecommerce.network.data.payment.PaymentItem
 
 class PaymentChildViewHolder(
     private val binding: PaymentItemChildBinding,

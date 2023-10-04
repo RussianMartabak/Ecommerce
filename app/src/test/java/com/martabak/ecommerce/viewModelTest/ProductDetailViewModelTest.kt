@@ -1,10 +1,10 @@
 package com.martabak.ecommerce.viewModelTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.martabak.core.network.data.checkout.CheckoutList
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.checkout.CheckoutList
-import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.product_detail.ProductDetailViewModel
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.WishlistRepository

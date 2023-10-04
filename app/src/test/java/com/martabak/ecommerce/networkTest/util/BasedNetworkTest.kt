@@ -1,6 +1,6 @@
 package com.martabak.ecommerce.networkTest.util
 
-import com.martabak.ecommerce.network.ApiService
+import com.martabak.core.network.ApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient

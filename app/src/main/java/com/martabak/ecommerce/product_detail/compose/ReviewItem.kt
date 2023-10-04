@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.martabak.core.network.data.product_detail.ReviewData
 import com.martabak.ecommerce.R
-import com.martabak.ecommerce.network.data.product_detail.ReviewData
 
 @Composable
 fun ReviewItem(data: ReviewData) {

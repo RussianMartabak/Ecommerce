@@ -27,9 +27,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.R
-import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
 import java.text.NumberFormat
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -43,7 +43,7 @@ fun NormalLayout(
     updatedPrice: Int?,
     toReview: () -> Unit,
 
-) {
+    ) {
     val imageList = productDetail!!.image
     ImagePager(imageList = imageList)
     Spacer(Modifier.height(12.dp))

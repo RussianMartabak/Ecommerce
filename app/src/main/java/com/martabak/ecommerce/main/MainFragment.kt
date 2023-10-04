@@ -67,6 +67,10 @@ class MainFragment : Fragment() {
                     findNavController().navigate(R.id.action_mainFragment_to_notificationFragment)
                     true
                 }
+                R.id.menu -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_screenFragment)
+                    true
+                }
                 else -> false
             }
         }

@@ -11,8 +11,8 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.martabak.ecommerce.R
-import com.martabak.ecommerce.database.NotifDao
-import com.martabak.ecommerce.database.NotifEntity
+import com.martabak.core.database.NotifDao
+import com.martabak.core.database.NotifEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

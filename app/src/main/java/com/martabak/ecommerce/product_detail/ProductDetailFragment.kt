@@ -14,10 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentProductDetailBinding
-import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.product_detail.adapters.ProductDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

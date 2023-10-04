@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
+import com.martabak.core.network.data.product_detail.ProductVariant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

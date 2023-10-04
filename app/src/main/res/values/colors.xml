@@ -6,5 +6,6 @@
     <color name="plain">#CAC4D0</color>
     <color name="background">#dddddd</color>
     <color name="notif_unread">#EADDFF</color>
+    <color name="red">#B3261E</color>
 
 </resources>

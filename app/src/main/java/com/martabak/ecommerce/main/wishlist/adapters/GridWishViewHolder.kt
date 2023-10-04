@@ -1,9 +1,10 @@
 package com.martabak.ecommerce.main.wishlist.adapters
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.martabak.ecommerce.R
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.databinding.WishlistGridItemBinding
 import com.martabak.ecommerce.main.wishlist.WishlistViewModel
 import java.text.NumberFormat
@@ -11,7 +12,8 @@ import java.text.NumberFormat
 class GridWishViewHolder(
     private val viewModel: WishlistViewModel,
     private val binding: WishlistGridItemBinding,
-    private val onClick: (String) -> Unit
+    private val onClick: (String) -> Unit,
+    val context : Context
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wish: WishlistEntity) {
@@ -21,7 +23,8 @@ class GridWishViewHolder(
         binding.productPriceGrid.text = "Rp$formattedPrice"
         binding.productSellerGrid.text = wish.productSeller
         val formattedRating = String.format("%.1f", wish.productRating)
-        binding.productInfoGrid.text = "$formattedRating | Terjual ${wish.productSale}"
+        val soldString = context.resources.getString(R.string.sold)
+        binding.productInfoGrid.text = "$formattedRating | $soldString ${wish.productSale}"
         binding.productImageGrid.load(wish.productImage) {
             placeholder(R.drawable.thumbnail)
             error(R.drawable.thumbnail)

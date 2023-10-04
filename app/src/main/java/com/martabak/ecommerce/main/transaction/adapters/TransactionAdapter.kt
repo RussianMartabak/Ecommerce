@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.martabak.core.network.data.transaction.TransactionData
 import com.martabak.ecommerce.databinding.TransactionItemBinding
-import com.martabak.ecommerce.network.data.transaction.TransactionData
+
 
 class TransactionAdapter(private val onClick: (String) -> Unit) :
     ListAdapter<TransactionData, TransactionViewHolder>(TransactionComparator) {

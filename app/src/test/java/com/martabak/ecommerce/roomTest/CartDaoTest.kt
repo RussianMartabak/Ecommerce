@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.martabak.ecommerce.database.AppDatabase
-import com.martabak.ecommerce.database.CartDao
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.AppDatabase
+import com.martabak.core.database.CartDao
+import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle

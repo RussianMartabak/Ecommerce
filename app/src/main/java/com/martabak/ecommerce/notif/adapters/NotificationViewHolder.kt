@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.color.MaterialColors
 import com.martabak.ecommerce.R
-import com.martabak.ecommerce.database.NotifEntity
+import com.martabak.core.database.NotifEntity
 import com.martabak.ecommerce.databinding.NotificationItemBinding
 import com.martabak.ecommerce.notif.NotificationViewModel
 

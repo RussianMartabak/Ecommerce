@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.databinding.WishlistGridItemBinding
 import com.martabak.ecommerce.databinding.WishlistLinearItemBinding
 import com.martabak.ecommerce.main.wishlist.WishlistViewModel
@@ -27,11 +27,11 @@ class WishlistAdapter(
                 parent,
                 false
             )
-            return LinearWishViewHolder(binding = binding, viewModel = viewModel, onClick = onClick)
+            return LinearWishViewHolder(binding = binding, viewModel = viewModel, onClick = onClick, context = parent.context)
         } else {
             val binding =
                 WishlistGridItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return GridWishViewHolder(viewModel = viewModel, binding = binding, onClick = onClick)
+            return GridWishViewHolder(viewModel = viewModel, binding = binding, onClick = onClick, context = parent.context)
         }
     }
 

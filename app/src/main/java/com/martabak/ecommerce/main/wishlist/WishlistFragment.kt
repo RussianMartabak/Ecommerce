@@ -51,7 +51,8 @@ class WishlistFragment : Fragment() {
         binding.errorLayout.isVisible = false
 
         viewModel.itemCount.observe(viewLifecycleOwner) {
-            binding.totalWishItem.text = "$it barang"
+            val itemString = requireActivity().resources.getString(R.string.item)
+            binding.totalWishItem.text = "$it $itemString"
             if (it == 0) {
                 binding.errorLayout.isVisible = true
                 binding.normallayout.isVisible = false

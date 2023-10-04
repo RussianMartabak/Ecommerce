@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.martabak.core.network.data.product_detail.ReviewData
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.ReviewItemBinding
-import com.martabak.ecommerce.network.data.product_detail.ReviewData
 
 class ReviewAdapter(private val reviews: List<ReviewData>) :
     RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {

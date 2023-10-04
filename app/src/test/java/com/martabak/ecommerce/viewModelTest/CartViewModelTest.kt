@@ -2,9 +2,9 @@ package com.martabak.ecommerce.viewModelTest
 
 import androidx.lifecycle.MutableLiveData
 import com.martabak.ecommerce.cart.CartViewModel
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.CartEntity
+import com.martabak.core.network.data.checkout.CheckoutList
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.checkout.CheckoutList
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -10,14 +10,15 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import com.martabak.ecommerce.GlobalState
-import com.martabak.ecommerce.database.AppDatabase
-import com.martabak.ecommerce.database.CartDao
-import com.martabak.ecommerce.database.NotifDao
-import com.martabak.ecommerce.database.WishlistDao
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.interceptor.TokenAuthenticator
-import com.martabak.ecommerce.network.interceptor.TokenInterceptor
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.interceptor.TokenAuthenticator
+import com.martabak.core.network.interceptor.TokenInterceptor
+import com.martabak.core.util.GlobalState
+import com.martabak.core.database.AppDatabase
+import com.martabak.core.database.CartDao
+import com.martabak.core.database.NotifDao
+import com.martabak.core.database.WishlistDao
+
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.repository.UserRepository
@@ -38,6 +39,24 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HiltModule {
+
+    @Singleton
+    @Provides
+    fun provideInterceptor(userPref: SharedPreferences): TokenInterceptor {
+        return TokenInterceptor(userPref)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTokenAuthenticator(
+        userPref: SharedPreferences,
+        moshi: Moshi,
+        interceptor: TokenInterceptor,
+        chucker: ChuckerInterceptor,
+        globalState: GlobalState
+    ): TokenAuthenticator {
+        return TokenAuthenticator(userPref, moshi, interceptor, chucker, globalState)
+    }
 
     @Singleton
     @Provides

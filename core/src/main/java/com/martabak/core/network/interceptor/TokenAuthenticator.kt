@@ -1,0 +1,72 @@
+package com.martabak.core.network.interceptor
+
+import android.content.SharedPreferences
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.martabak.core.network.ApiService
+import com.martabak.core.util.GlobalState
+import com.martabak.core.util.GlobalUtils
+import com.martabak.core.util.GlobalUtils.getRefreshToken
+import com.martabak.core.util.GlobalUtils.putAccessToken
+import com.martabak.core.util.GlobalUtils.setRefreshToken
+import com.martabak.core.network.data.prelogin.RefreshBody
+import com.martabak.core.network.data.prelogin.RefreshResponse
+import com.squareup.moshi.Moshi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.internal.synchronized
+import kotlinx.coroutines.runBlocking
+import okhttp3.Authenticator
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
+
+class TokenAuthenticator (
+    val userPref: SharedPreferences,
+    val moshi: Moshi,
+    private val tokenInterceptor: TokenInterceptor,
+    private val chucker: ChuckerInterceptor,
+    private val globalState: GlobalState
+) : Authenticator {
+
+    @OptIn(InternalCoroutinesApi::class)
+    override fun authenticate(route: Route?, response: Response): Request? {
+        synchronized(this) {
+            return runBlocking {
+                var currentRefreshToken = userPref.getRefreshToken()
+                // first build a okhttp client
+                val client = OkHttpClient.Builder().apply {
+                    addInterceptor(tokenInterceptor)
+                    addInterceptor(chucker)
+                }.build()
+                // build own retrofit
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(GlobalUtils.BASE_URL)
+                    .client(client)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                    .create(ApiService::class.java)
+                // send refresh request and get the new accesstoken and refreshtoken into SP
+
+                try {
+                    var refreshResponse = refresh(retrofit, currentRefreshToken)
+                    userPref.putAccessToken(refreshResponse.data.accessToken)
+                    userPref.setRefreshToken(refreshResponse.data.refreshToken)
+                    // after all set re send the old request with new bearer token
+                    return@runBlocking response.request.newBuilder()
+                        .header("Authorization", "Bearer ${refreshResponse.data.accessToken}")
+                        .build()
+                } catch (e: Throwable) {
+                    globalState.sendLogoutEvent()
+                    return@runBlocking null
+                }
+            }
+        }
+    }
+
+    private suspend fun refresh(retrofit: ApiService, currentRefreshToken: String): RefreshResponse {
+        return retrofit.postRefresh(RefreshBody(currentRefreshToken))
+    }
+}

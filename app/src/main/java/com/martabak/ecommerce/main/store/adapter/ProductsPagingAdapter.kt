@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.martabak.core.network.data.Product
 import com.martabak.ecommerce.databinding.ProductGridItemBinding
 import com.martabak.ecommerce.databinding.ProductLinearItemBinding
-import com.martabak.ecommerce.network.data.Product
 
 class ProductsPagingAdapter(val onClick: (String) -> Unit) :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(ProductDiffCallback) {
@@ -31,11 +31,11 @@ class ProductsPagingAdapter(val onClick: (String) -> Unit) :
         if (gridMode) {
             val binding =
                 ProductGridItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return GridViewHolder(binding, onClick)
+            return GridViewHolder(binding, onClick, parent.context)
         } else {
             val binding =
                 ProductLinearItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return LinearViewHolder(binding, onClick)
+            return LinearViewHolder(binding, onClick, parent.context)
         }
     }
 }

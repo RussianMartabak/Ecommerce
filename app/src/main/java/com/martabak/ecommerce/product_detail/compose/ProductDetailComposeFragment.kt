@@ -37,10 +37,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.CheckoutFragmentArgs
-import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.product_detail.ProductDetailViewModel
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.BottomButton
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.ErrorScreen

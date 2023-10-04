@@ -3,9 +3,9 @@ package com.martabak.ecommerce.main.transaction.adapters
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.martabak.core.network.data.transaction.TransactionData
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.TransactionItemBinding
-import com.martabak.ecommerce.network.data.transaction.TransactionData
 import java.text.NumberFormat
 
 class TransactionViewHolder(

@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.martabak.ecommerce.GlobalState
+import com.martabak.core.network.ApiService
+import com.martabak.core.util.GlobalState
 import com.martabak.ecommerce.main.store.data.ProductQuery
-import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.StoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

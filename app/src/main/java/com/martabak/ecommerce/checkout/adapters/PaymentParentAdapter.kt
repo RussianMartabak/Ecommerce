@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.martabak.core.network.data.payment.PaymentData
 import com.martabak.ecommerce.databinding.PaymentItemParentBinding
-import com.martabak.ecommerce.network.data.payment.PaymentData
 
 class PaymentParentAdapter(var onClick: (String, String) -> Unit) : ListAdapter<PaymentData, PaymentParentViewHolder>(
     PaymentParentComparator

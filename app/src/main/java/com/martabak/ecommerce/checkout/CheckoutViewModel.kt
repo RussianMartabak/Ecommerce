@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.martabak.ecommerce.network.ApiService
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.fulfillment.FulfillmentBody
+import com.martabak.core.network.data.fulfillment.FulfillmentData
+import com.martabak.core.network.data.fulfillment.FulfillmentItem
+import com.martabak.core.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentData
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentItem
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.status.StatusParcel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

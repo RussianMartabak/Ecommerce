@@ -50,7 +50,10 @@ class StatusFragment : Fragment() {
             viewModel.rating = rating.toInt()
         }
         binding.confirmRatingButton.setOnClickListener {
-            viewModel.review = binding.ratingEditText.text.toString()
+            if (binding.ratingEditText.text.toString().isNotBlank()) {
+                viewModel.review = binding.ratingEditText.text.toString()
+            }
+
             viewModel.sendRating()
         }
 

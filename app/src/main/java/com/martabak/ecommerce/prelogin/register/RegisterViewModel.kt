@@ -10,8 +10,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.prelogin.RegisterResponse
 import com.martabak.ecommerce.repository.UserRepository
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
 import dagger.hilt.android.lifecycle.HiltViewModel

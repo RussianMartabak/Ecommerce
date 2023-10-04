@@ -1,13 +1,13 @@
 package com.martabak.ecommerce.viewModelTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.fulfillment.FulfillmentBody
+import com.martabak.core.network.data.fulfillment.FulfillmentData
+import com.martabak.core.network.data.fulfillment.FulfillmentItem
+import com.martabak.core.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.checkout.CheckoutViewModel
-import com.martabak.ecommerce.network.ApiService
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentBody
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentData
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentItem
-import com.martabak.ecommerce.network.data.fulfillment.FulfillmentResponse
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import com.martabak.ecommerce.util.MainDispatcherRule
 import kotlinx.coroutines.test.runTest

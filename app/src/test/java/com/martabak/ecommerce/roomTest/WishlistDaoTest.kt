@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.martabak.ecommerce.database.AppDatabase
-import com.martabak.ecommerce.database.WishlistDao
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.AppDatabase
+import com.martabak.core.database.WishlistDao
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import kotlinx.coroutines.test.runTest
 import org.junit.After

@@ -2,7 +2,7 @@ package com.martabak.ecommerce.main
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.martabak.ecommerce.database.NotifDao
+import com.martabak.core.database.NotifDao
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.repository.WishlistRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -11,7 +11,8 @@ import com.martabak.ecommerce.R
 @Composable
 fun WishlistButton(onWishlist: Boolean?, processWish: () -> Unit) {
     Box(Modifier.clickable { processWish() }) {
-        if (onWishlist!!) {
+        val wish = onWishlist?:false
+        if (wish){
             Image(painter = painterResource(id = R.drawable.fav_24), null)
         } else {
             Image(painter = painterResource(id = R.drawable.fav_border_24), null)

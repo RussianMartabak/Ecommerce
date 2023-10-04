@@ -3,7 +3,7 @@ package com.martabak.ecommerce.notif.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.martabak.ecommerce.database.NotifEntity
+import com.martabak.core.database.NotifEntity
 import com.martabak.ecommerce.databinding.NotificationItemBinding
 import com.martabak.ecommerce.notif.NotificationViewModel
 

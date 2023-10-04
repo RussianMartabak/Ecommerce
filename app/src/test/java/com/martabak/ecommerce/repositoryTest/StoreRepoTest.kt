@@ -1,11 +1,12 @@
 package com.martabak.ecommerce.repositoryTest
 
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.Data
-import com.martabak.ecommerce.network.data.Product
-import com.martabak.ecommerce.network.data.ProductsResponse
-import com.martabak.ecommerce.network.data.ResultData
-import com.martabak.ecommerce.network.data.SearchResponse
+
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.Data
+import com.martabak.core.network.data.Product
+import com.martabak.core.network.data.ProductsResponse
+import com.martabak.core.network.data.ResultData
+import com.martabak.core.network.data.SearchResponse
 import com.martabak.ecommerce.repository.StoreRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

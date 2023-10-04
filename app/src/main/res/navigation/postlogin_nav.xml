@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_mainFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_screenFragment"
+            app:destination="@id/screenFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -85,7 +88,7 @@
         tools:layout="@layout/fragment_checkout">
         <argument
             android:name="checkoutData"
-            app:argType="com.martabak.ecommerce.network.data.checkout.CheckoutList"
+            app:argType="com.martabak.core.network.data.checkout.CheckoutList"
             />
         <action
             android:id="@+id/action_checkoutFragment_to_paymentFragment"
@@ -154,5 +157,9 @@
         android:name="com.martabak.ecommerce.notif.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/screenFragment"
+        android:name="com.martabak.screen.screenFragment"
+        android:label="screenFragment" />
 
 </navigation>

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.cart.adapters.CartAdapter
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.databinding.FragmentCartBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat

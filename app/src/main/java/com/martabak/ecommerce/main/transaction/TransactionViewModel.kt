@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.transaction.TransactionData
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.transaction.TransactionData
 import com.martabak.ecommerce.status.StatusParcel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

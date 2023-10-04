@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.martabak.ecommerce.GlobalState
-import com.martabak.ecommerce.database.CartEntity
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.network.data.checkout.CheckoutList
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.util.GlobalState
+import com.martabak.core.database.CartEntity
+import com.martabak.core.database.WishlistEntity
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
-import com.martabak.ecommerce.network.data.checkout.CheckoutList
-import com.martabak.ecommerce.network.data.product_detail.Data
 import com.martabak.ecommerce.repository.CartRepository
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.repository.WishlistRepository

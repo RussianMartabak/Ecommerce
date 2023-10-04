@@ -1,7 +1,7 @@
 package com.martabak.ecommerce.repository
 
-import com.martabak.ecommerce.database.WishlistDao
-import com.martabak.ecommerce.database.WishlistEntity
+import com.martabak.core.database.WishlistDao
+import com.martabak.core.database.WishlistEntity
 import javax.inject.Inject
 
 class WishlistRepository @Inject constructor(val wishlistDao: WishlistDao) {

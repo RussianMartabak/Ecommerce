@@ -1,7 +1,7 @@
 package com.martabak.ecommerce.repository
 
-import com.martabak.ecommerce.database.CartDao
-import com.martabak.ecommerce.database.CartEntity
+import com.martabak.core.database.CartDao
+import com.martabak.core.database.CartEntity
 import javax.inject.Inject
 
 class CartRepository @Inject constructor(private val cartDao: CartDao) {

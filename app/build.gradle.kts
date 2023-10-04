@@ -120,6 +120,9 @@ android {
 dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx:23.2.1")
     implementation("androidx.test:core-ktx:1.5.0")
+    //implementation(project(":Screen"))
+    implementation(files("libs/Screen-debug.aar"))
+    implementation(project(":core"))
     val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)

@@ -1,8 +1,9 @@
 package com.martabak.ecommerce.product_detail.compose
 
-import com.martabak.ecommerce.network.data.product_detail.Data
-import com.martabak.ecommerce.network.data.product_detail.ProductVariant
-import com.martabak.ecommerce.network.data.product_detail.ReviewData
+import com.martabak.core.network.data.product_detail.Data
+import com.martabak.core.network.data.product_detail.ProductVariant
+import com.martabak.core.network.data.product_detail.ReviewData
+
 
 var sampleProductData = Data(
     productId = "17b4714d-527a-4be2-84e2-e4c37c2b3292",

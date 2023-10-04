@@ -21,6 +21,7 @@ class CheckoutViewHolder(private val binding: CheckoutItemBinding, private val v
             orderProductName.text = product.productName
             val stock: String = context.getString(R.string.stock)
             orderProductStock.text = "$stock ${product.productStock}"
+            if (product.productStock < 10) orderProductStock.setTextColor(context.getColor(R.color.red))
             val formattedPrice =
                 NumberFormat.getInstance().format(product.productPrice).replace(",", ".")
             orderProductPrice.text = "Rp$formattedPrice"

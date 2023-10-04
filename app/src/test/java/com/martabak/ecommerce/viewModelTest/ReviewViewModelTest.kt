@@ -1,7 +1,7 @@
 package com.martabak.ecommerce.viewModelTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.martabak.ecommerce.network.data.product_detail.ReviewData
+import com.martabak.core.network.data.product_detail.ReviewData
 import com.martabak.ecommerce.product_detail.ReviewViewModel
 import com.martabak.ecommerce.repository.ProductRepository
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue

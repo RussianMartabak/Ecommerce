@@ -81,4 +81,10 @@
     <string name="filter_review">Review</string>
     <string name="notification_title">Notification</string>
     <string name="stock">stock</string>
+    <string name="empty">Empty</string>
+    <string name="data_unavailable">Your requested data is unavailable</string>
+    <string name="internal_error">Internal Server Error</string>
+    <string name="connection_error">Your connection is unavailable</string>
+    <string name="sold">Sold</string>
+    <string name="item">items</string>
 </resources>

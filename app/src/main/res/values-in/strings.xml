@@ -81,4 +81,10 @@
     <string name="filter_review">Ulasan</string>
     <string name="notification_title">Notifikasi</string>
     <string name="stock">stok</string>
+    <string name="empty">Kosong</string>
+    <string name="data_unavailable">Data yang anda minta tidak tersedia</string>
+    <string name="internal_error">Kesalahan Server</string>
+    <string name="connection_error">Tidak Ada Koneksi</string>
+    <string name="sold">Terjual</string>
+    <string name="item">barang</string>
 </resources>

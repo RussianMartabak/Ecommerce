@@ -1,6 +1,8 @@
 package com.martabak.ecommerce.main.store
 
+
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
@@ -56,7 +59,9 @@ class SearchDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var query = ""
         binding.searchEditText.setText(searchKey)
-        binding.searchEditText.requestFocus()
+        if (binding.searchEditText.requestFocus()) {
+            dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        }
 
         val searchItemListAdapter = SearchListAdapter {
             setFragmentResult(

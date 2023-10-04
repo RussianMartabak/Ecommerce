@@ -1,14 +1,15 @@
 package com.martabak.ecommerce.main.store.adapter
 
+import android.content.Context
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.martabak.core.network.data.Product
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.ProductGridItemBinding
-import com.martabak.ecommerce.network.data.Product
 import java.text.NumberFormat
 
-class GridViewHolder(private var binding: ProductGridItemBinding, val onClick: (String) -> Unit) :
+class GridViewHolder(private var binding: ProductGridItemBinding, val onClick: (String) -> Unit, val context: Context) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(product: Product) {
@@ -18,7 +19,8 @@ class GridViewHolder(private var binding: ProductGridItemBinding, val onClick: (
         binding.productPriceGrid.text = "Rp$formattedPrice"
         binding.productSellerGrid.text = product.store
         val formattedRating = String.format("%.1f", product.productRating)
-        binding.productInfoGrid.text = "$formattedRating | Terjual ${product.sale}"
+        val soldString = context.resources.getString(R.string.sold)
+        binding.productInfoGrid.text = "$formattedRating | $soldString ${product.sale}"
 
         val imgUri = product.image.toUri().buildUpon().scheme("http").build()
         binding.productImageGrid.load(imgUri) {

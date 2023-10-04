@@ -1,16 +1,17 @@
 package com.martabak.ecommerce.networkTest
 
-import com.martabak.ecommerce.network.data.prelogin.DataRegister
-import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.prelogin.RefreshBody
-import com.martabak.ecommerce.network.data.prelogin.RefreshData
-import com.martabak.ecommerce.network.data.prelogin.RefreshResponse
-import com.martabak.ecommerce.network.data.prelogin.RegisterBody
-import com.martabak.ecommerce.network.data.prelogin.RegisterResponse
-import com.martabak.ecommerce.network.data.prelogin.dataLogin
-import com.martabak.ecommerce.network.data.prelogin.dataProfile
-import com.martabak.ecommerce.network.data.prelogin.loginResponse
-import com.martabak.ecommerce.network.data.prelogin.profileResponse
+
+import com.martabak.core.network.data.prelogin.DataRegister
+import com.martabak.core.network.data.prelogin.LoginBody
+import com.martabak.core.network.data.prelogin.RefreshBody
+import com.martabak.core.network.data.prelogin.RefreshData
+import com.martabak.core.network.data.prelogin.RefreshResponse
+import com.martabak.core.network.data.prelogin.RegisterBody
+import com.martabak.core.network.data.prelogin.RegisterResponse
+import com.martabak.core.network.data.prelogin.dataLogin
+import com.martabak.core.network.data.prelogin.dataProfile
+import com.martabak.core.network.data.prelogin.loginResponse
+import com.martabak.core.network.data.prelogin.profileResponse
 import com.martabak.ecommerce.networkTest.util.BasedNetworkTest
 import kotlinx.coroutines.runBlocking
 import okhttp3.MultipartBody

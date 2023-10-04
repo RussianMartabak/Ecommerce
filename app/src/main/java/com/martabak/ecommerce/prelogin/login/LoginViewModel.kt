@@ -11,9 +11,9 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.prelogin.LoginBody
-import com.martabak.ecommerce.network.data.prelogin.loginResponse
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.prelogin.LoginBody
+import com.martabak.core.network.data.prelogin.loginResponse
 import com.martabak.ecommerce.utils.GlobalUtils.isFirstTime
 import com.martabak.ecommerce.utils.GlobalUtils.isLoggedIn
 import com.martabak.ecommerce.utils.GlobalUtils.login

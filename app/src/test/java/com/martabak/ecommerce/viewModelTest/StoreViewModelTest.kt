@@ -1,8 +1,8 @@
 package com.martabak.ecommerce.viewModelTest
 
+import com.martabak.core.network.data.ResultData
 import com.martabak.ecommerce.main.store.StoreViewModel
 import com.martabak.ecommerce.main.store.data.ProductQuery
-import com.martabak.ecommerce.network.data.ResultData
 import com.martabak.ecommerce.repository.StoreRepository
 import com.martabak.ecommerce.util.Extensions.getOrAwaitValue
 import kotlinx.coroutines.test.runTest

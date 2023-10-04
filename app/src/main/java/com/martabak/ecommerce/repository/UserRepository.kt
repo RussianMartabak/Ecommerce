@@ -1,9 +1,9 @@
 package com.martabak.ecommerce.repository
 
 import android.content.SharedPreferences
-import com.martabak.ecommerce.network.ApiService
-import com.martabak.ecommerce.network.data.ResultData
-import com.martabak.ecommerce.network.data.prelogin.RegisterBody
+import com.martabak.core.network.ApiService
+import com.martabak.core.network.data.ResultData
+import com.martabak.core.network.data.prelogin.RegisterBody
 import com.martabak.ecommerce.utils.GlobalUtils.hasUsername
 import com.martabak.ecommerce.utils.GlobalUtils.login
 import com.martabak.ecommerce.utils.GlobalUtils.putAccessToken
