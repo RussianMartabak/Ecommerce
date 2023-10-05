@@ -219,11 +219,11 @@ class ProductDetailComposeFragment : Fragment() {
         }
     }
 
-    // Preview Thingy
+    // Preview Thingy passing mock or empty vars
     @Preview(showBackground = true)
     @Composable
     fun DetailScreenPreview() {
-        val previewData = null
+        val previewData = sampleProductData
         DetailScreen(
             { true }, previewData, {}, false, null,
             {}, {}, 29000, {}, false, {}, {}, {}

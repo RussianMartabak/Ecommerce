@@ -1,6 +1,7 @@
 package com.martabak.ecommerce.checkout.adapters
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.martabak.ecommerce.R
@@ -19,9 +20,17 @@ class CheckoutViewHolder(private val binding: CheckoutItemBinding, private val v
                 error(R.drawable.thumbnail)
             }
             orderProductName.text = product.productName
-            val stock: String = context.getString(R.string.stock)
+            var stock: String = context.getString(R.string.stock)
+
+            if (product.productStock < 10) {
+                orderProductStock.setTextColor(context.getColor(R.color.red))
+                stock = context.getString(R.string.remaining)
+
+            } else {
+                val default = binding.orderProductVariant.textColors.defaultColor
+                binding.orderProductStock.setTextColor(default)
+            }
             orderProductStock.text = "$stock ${product.productStock}"
-            if (product.productStock < 10) orderProductStock.setTextColor(context.getColor(R.color.red))
             val formattedPrice =
                 NumberFormat.getInstance().format(product.productPrice).replace(",", ".")
             orderProductPrice.text = "Rp$formattedPrice"

@@ -87,4 +87,5 @@
     <string name="connection_error">Tidak Ada Koneksi</string>
     <string name="sold">Terjual</string>
     <string name="item">barang</string>
+    <string name="remaining">sisa</string>
 </resources>

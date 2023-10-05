@@ -15,7 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -70,6 +72,8 @@ class StoreFragment : Fragment() {
         binding.gridShimmerLayout.isVisible = false
         binding.linearShimmerLayout.isVisible = false
         binding.errorLayout.isVisible = false
+        Log.d("zaky", "onViewCreated on Store is recalled again")
+
         val fragmentManager = childFragmentManager
         // FM listeners
         fragmentManager.setFragmentResultListener(
@@ -83,6 +87,8 @@ class StoreFragment : Fragment() {
             Log.d("zaky", "Fragment result is $result")
         }
         // listen for bottomsheet value
+        // filterfragment -> this -> viewmodel
+        // viewmodel is for storing the filters so that when bottomsheet launched the inital values is there
         fragmentManager.setFragmentResultListener(
             "filters",
             viewLifecycleOwner
@@ -113,26 +119,16 @@ class StoreFragment : Fragment() {
             (grandParentFrag as MainFragment).findNavController()
                 .navigate(R.id.action_mainFragment_to_productDetailComposeFragment)
         }
+        pagingAdapter?.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        val loadStateFooter = ProductsLoadStateAdapter()
+        loadStateFooter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.productRecycler.adapter =
-            pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())
+            pagingAdapter!!.withLoadStateFooter(loadStateFooter)
         binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
-        // listen to recycler load state
-        viewLifecycleOwner.lifecycleScope.launch {
-            pagingAdapter!!.loadStateFlow.collectLatest { loadStates ->
 
-                if (loadStates.refresh is LoadState.Loading) {
-                    showLoading()
-                } else if (loadStates.refresh is LoadState.Error) {
-                    val error = loadStates.refresh as LoadState.Error
-                    showError(error)
-                } else {
-                    binding.productRecycler.isVisible = true
-                    binding.errorLayout.isVisible = false
-                    binding.linearShimmerLayout.isVisible = false
-                    binding.gridShimmerLayout.isVisible = false
-                }
-            }
-        }
+        // listen to recycler load state
+        setLoadStateListener()
+
         binding.gridSelector.setOnClickListener {
             gridMode = !gridMode
             Log.d("zaky", "switching to gridMode $gridMode")
@@ -153,16 +149,8 @@ class StoreFragment : Fragment() {
             binding.swiper.isRefreshing = false
         }
 
-        // listen to list then add all to chips in schip group
-        viewModel.filterChips.observe(viewLifecycleOwner) { filterList ->
-            binding.filterChipGroup.removeAllViews()
-            filterList.forEach {
-                val newChip = Chip(requireActivity(), null, com.google.android.material.R.attr.chipStandaloneStyle)
-                val title = it
-                newChip.text = title
-                binding.filterChipGroup.addView(newChip)
-            }
-        }
+        // listen to list then add all to chips in chips group
+        setFilterListListener()
 
         binding.filterChip.setOnClickListener {
             showBottomSheet()
@@ -175,11 +163,44 @@ class StoreFragment : Fragment() {
         switchLayout()
     }
 
+    private fun setFilterListListener() {
+        viewModel.filterChips.observe(viewLifecycleOwner) { filterList ->
+            binding.filterChipGroup.removeAllViews()
+            filterList.forEach {
+                val newChip = Chip(requireActivity(), null, com.google.android.material.R.attr.chipStandaloneStyle)
+                val title = it
+                newChip.text = title
+                binding.filterChipGroup.addView(newChip)
+            }
+        }
+    }
+
+    private fun setLoadStateListener() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            pagingAdapter!!.loadStateFlow.collectLatest { loadStates ->
+
+                if (loadStates.refresh is LoadState.Loading) {
+                    showLoading()
+                } else if (loadStates.refresh is LoadState.Error) {
+                    val error = loadStates.refresh as LoadState.Error
+                    showError(error)
+                } else {
+                    binding.productRecycler.isVisible = true
+                    binding.errorLayout.isVisible = false
+                    binding.linearShimmerLayout.isVisible = false
+                    binding.gridShimmerLayout.isVisible = false
+                }
+            }
+        }
+    }
+
     private fun switchLayout() {
+        val footerAdapter = ProductsLoadStateAdapter()
+        footerAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         if (gridMode) {
             binding.gridSelector.setImageResource(R.drawable.grid_view)
             val gridManager = GridLayoutManager(requireActivity(), 2)
-            val footerAdapter = ProductsLoadStateAdapter()
+
             // change recycler to grid
             pagingAdapter!!.setGridMode(true)
             binding.productRecycler.layoutManager = gridManager
@@ -200,7 +221,7 @@ class StoreFragment : Fragment() {
             pagingAdapter!!.setGridMode(false)
             binding.productRecycler.layoutManager = GridLayoutManager(requireActivity(), 1)
             binding.productRecycler.adapter =
-                pagingAdapter!!.withLoadStateFooter(ProductsLoadStateAdapter())
+                pagingAdapter!!.withLoadStateFooter(footerAdapter)
         }
     }
 

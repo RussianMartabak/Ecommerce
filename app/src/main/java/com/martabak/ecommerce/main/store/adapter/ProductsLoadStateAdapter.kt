@@ -11,6 +11,7 @@ import com.martabak.ecommerce.databinding.PagerLoadingBinding
 class ProductsLoadStateAdapter() :
     LoadStateAdapter<ProductsLoadStateAdapter.LoadingStateViewHolder>() {
 
+
     class LoadingStateViewHolder(
         private var binding: PagerLoadingBinding
     ) : RecyclerView.ViewHolder(binding.root) {

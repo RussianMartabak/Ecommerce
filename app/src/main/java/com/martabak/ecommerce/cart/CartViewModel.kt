@@ -10,6 +10,8 @@ import com.martabak.core.network.data.checkout.CheckoutList
 import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
 import com.martabak.ecommerce.repository.CartRepository
+import com.martabak.ecommerce.repository.ProductRepository
+import com.martabak.ecommerce.repository.StoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     val cartRepository: CartRepository,
-    val analytics: FirebaseAnalytics
+    val analytics: FirebaseAnalytics,
+    val productRepo : ProductRepository
 ) : ViewModel() {
     var liveCartItemsList: LiveData<List<CartEntity>>? = cartRepository.updatedCartItems
 
@@ -38,6 +41,10 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             cartRepository.deleteItem(id)
         }
+    }
+
+    fun setSelectedProductId(id : String) {
+        productRepo.selectedProductID = id
     }
 
     fun deleteSelected() {

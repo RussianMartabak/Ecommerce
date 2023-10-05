@@ -87,4 +87,5 @@
     <string name="connection_error">Your connection is unavailable</string>
     <string name="sold">Sold</string>
     <string name="item">items</string>
+    <string name="remaining">remaining</string>
 </resources>

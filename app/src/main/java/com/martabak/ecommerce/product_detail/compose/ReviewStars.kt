@@ -1,5 +1,6 @@
 package com.martabak.ecommerce.product_detail.compose
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -14,8 +15,14 @@ import com.martabak.ecommerce.R
 fun ReviewStars(rating: Int) {
     Row {
         var index = 1
+        var inactiveColor = Color.LightGray
+        var activeColor = Color.Black
+        if (isSystemInDarkTheme()) {
+            inactiveColor = Color.DarkGray
+            activeColor = Color.LightGray
+        }
         repeat(5) {
-            val color = if (index > rating) Color.LightGray else Color.Black
+            val color = if (index > rating) inactiveColor else activeColor
             Icon(painterResource(id = R.drawable.star), null, Modifier.size(16.dp), color)
             index += 1
         }

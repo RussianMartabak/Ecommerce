@@ -149,7 +149,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
                 bundleOf(
                     "sortKey" to sort,
                     "brandKey" to brand,
-                    "lowestKet" to lowest,
+                    "lowestKey" to lowest,
                     "highestKey" to highest
                 )
             )

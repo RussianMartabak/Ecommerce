@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/cartItemImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/thumbnail"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/poppins_medium"
         android:text="TextView"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cartItemImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
         android:layout_marginTop="2dp"
         android:fontFamily="@font/poppins"
         android:text="TextView"
-        android:textSize="10dp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cartItemImage"
         app:layout_constraintTop_toBottomOf="@+id/cartItemName" />
@@ -60,7 +60,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:text="TextView"
-        android:textSize="10dp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cartItemImage"
         app:layout_constraintTop_toBottomOf="@+id/cartItemVariant" />
@@ -73,45 +73,47 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_medium"
         android:text="TextView"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cartItemImage"
         app:layout_constraintTop_toBottomOf="@+id/cartItemStock" />
-    
+
     <LinearLayout
         android:id="@+id/segmentedButton"
-        android:orientation="horizontal"
-        android:background="@drawable/segmented_button"
         android:layout_width="72dp"
         android:layout_height="20dp"
+        android:background="@drawable/segmented_button"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center">
+        app:layout_constraintEnd_toEndOf="parent">
+
         <TextView
             android:id="@+id/minusButton"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
             android:fontFamily="@font/poppins"
+            android:gravity="center"
             android:text="-"
-            android:gravity="center"/>
+            android:textSize="12dp" />
+
         <TextView
-            android:text="1"
             android:id="@+id/orderQtyText"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="12dp"
             android:fontFamily="@font/poppins"
-            />
+            android:gravity="center"
+            android:text="1"
+            android:textSize="12dp" />
+
         <TextView
             android:id="@+id/plusButton"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="+"
-            android:fontFamily="@font/poppins"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
 
     </LinearLayout>
 

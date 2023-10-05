@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.ecommerce.cart.adapters.CartAdapter
 import com.martabak.core.database.CartEntity
+import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentCartBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
@@ -57,7 +59,13 @@ class CartFragment : Fragment() {
         binding.deleteSelectedButton.isVisible = false
         binding.buyButton.isEnabled = false
         // start display le items
-        val cartAdapter = CartAdapter(viewModel)
+        //navigate to product detail
+        val cartAdapter = CartAdapter(viewModel) {
+            viewModel.setSelectedProductId(it)
+            findNavController().navigate(R.id.action_cartFragment_to_productDetailFragment)
+        }
+
+
         viewModel.liveCartItemsList?.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.normallayout.isVisible = false

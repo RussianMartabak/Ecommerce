@@ -34,16 +34,19 @@ fun ImagePager(imageList: List<String>) {
                 .align(Alignment.BottomCenter),
             horizontalArrangement = Arrangement.Center
         ) {
-            repeat(imageList.size) { iteration ->
-                val color = if (pagerState.currentPage == iteration) Color(0xFF6750A4) else Color(0xFFCAC4D0)
-                Box(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .size(8.dp)
-                )
+            if (imageList.size > 1) {
+                repeat(imageList.size) { iteration ->
+                    val color = if (pagerState.currentPage == iteration) Color(0xFF6750A4) else Color(0xFFCAC4D0)
+                    Box(
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .size(8.dp)
+                    )
+                }
             }
+
         }
     }
 }

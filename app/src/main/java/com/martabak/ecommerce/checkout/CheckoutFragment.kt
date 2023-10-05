@@ -28,6 +28,9 @@ import javax.inject.Inject
  * Use the [CheckoutFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+//how it works
+//get product parcel from other fragment
 @AndroidEntryPoint
 class CheckoutFragment : Fragment() {
     private var _binding: FragmentCheckoutBinding? = null
@@ -66,6 +69,7 @@ class CheckoutFragment : Fragment() {
         }
         binding.checkOutToolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
+            Log.d("zaky", "navigate up should have happened")
         }
 
         viewModel.payment.observe(viewLifecycleOwner) {
@@ -121,9 +125,7 @@ class CheckoutFragment : Fragment() {
         }
         binding.checkoutRecycler.adapter = adapter
         binding.checkoutRecycler.layoutManager = LinearLayoutManager(requireActivity())
-        binding.checkOutToolbar.setNavigationOnClickListener {
-            findNavController()
-        }
+
     }
 
     private fun initRecycler() {
