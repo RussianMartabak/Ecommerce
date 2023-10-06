@@ -14,15 +14,18 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.core.network.data.product_detail.Data
 import com.martabak.core.network.data.product_detail.ProductVariant
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentProductDetailBinding
 import com.martabak.ecommerce.product_detail.adapters.ProductDetailAdapter
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
+import javax.inject.Inject
 
 private const val ARG_PRODUCT_ID = "param1"
 
@@ -40,6 +43,9 @@ class ProductDetailFragment : Fragment() {
     private var productData: Data? = null
     private var variants: List<ProductVariant>? = null
     private val args: ProductDetailFragmentArgs by navArgs()
+
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +72,7 @@ class ProductDetailFragment : Fragment() {
         binding.normalLayout.isVisible = false
 
         binding.allReviewButton.setOnClickListener {
+
             findNavController().navigate(R.id.action_productDetailFragment_to_reviewFragment)
         }
 
@@ -76,6 +83,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.refreshButton.setOnClickListener {
+            analytics.logButton("refresh")
             viewModel.getProductData()
         }
 
@@ -106,6 +114,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.favButton.setOnClickListener {
+            analytics.logButton("wishlist")
             viewModel.processWishlist()
         }
 
@@ -118,6 +127,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.shareButton.setOnClickListener {
+            analytics.logButton("share")
             val id = viewModel.getProductID()
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -135,6 +145,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.addCartButton.setOnClickListener {
+            analytics.logButton("add to cart")
             viewModel.addToCart()
         }
 
@@ -143,6 +154,7 @@ class ProductDetailFragment : Fragment() {
         }
 
         binding.directBuyButton.setOnClickListener {
+            analytics.logButton("buy now")
             val paket = viewModel.parcelizeProduct()
             val aktion = ProductDetailFragmentDirections.startCheckoutFromProduct(paket)
             findNavController().navigate(aktion)

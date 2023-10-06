@@ -185,6 +185,11 @@ class StoreFragment : Fragment() {
                     val error = loadStates.refresh as LoadState.Error
                     showError(error)
                 } else {
+                    //when to display fully
+                    binding.gridSelector.isVisible = true
+                    binding.filterChip.isVisible = true
+                    binding.horizontalScrollView.isVisible = true
+                    binding.materialDivider5.isVisible = true
                     binding.productRecycler.isVisible = true
                     binding.errorLayout.isVisible = false
                     binding.linearShimmerLayout.isVisible = false
@@ -246,9 +251,12 @@ class StoreFragment : Fragment() {
         } else {
             binding.linearShimmerLayout.isVisible = true
         }
-
+        binding.gridSelector.isVisible = false
+        binding.filterChip.isVisible = false
+        binding.horizontalScrollView.isVisible = false
         binding.productRecycler.isVisible = false
         binding.errorLayout.isVisible = false
+        binding.materialDivider5.isVisible = false
     }
 
     private fun showError(errorState: LoadState.Error) {
@@ -256,6 +264,10 @@ class StoreFragment : Fragment() {
         binding.productRecycler.isVisible = false
         binding.linearShimmerLayout.isVisible = false
         binding.gridShimmerLayout.isVisible = false
+        binding.filterChip.isVisible = false
+        binding.horizontalScrollView.isVisible = false
+        binding.materialDivider5.isVisible = false
+        binding.gridSelector.isVisible = false
 
         if (errorState.error is HttpException) {
             val httpError = errorState.error as HttpException

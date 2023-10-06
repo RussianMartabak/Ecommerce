@@ -20,6 +20,7 @@ import com.martabak.ecommerce.cart.adapters.CartAdapter
 import com.martabak.core.database.CartEntity
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentCartBinding
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import javax.inject.Inject
@@ -36,6 +37,7 @@ class CartFragment : Fragment() {
 
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
+
 
     @Inject
     lateinit var analytics: FirebaseAnalytics
@@ -99,6 +101,7 @@ class CartFragment : Fragment() {
         binding.cartRecycler.layoutManager = LinearLayoutManager(requireActivity())
 
         binding.checkAllButton.setOnClickListener {
+            analytics.logButton("check all")
             if (binding.checkAllButton.isChecked) {
                 viewModel.checkAll()
             } else {
@@ -107,6 +110,7 @@ class CartFragment : Fragment() {
         }
 
         binding.buyButton.setOnClickListener {
+            analytics.logButton("buy now")
             val parcel = viewModel.parcelizeCartList()
             val action = CartFragmentDirections.startCheckoutFromCart(parcel)
             Log.d("zaky", "parcel content: $parcel")
@@ -114,6 +118,7 @@ class CartFragment : Fragment() {
         }
 
         binding.deleteSelectedButton.setOnClickListener {
+            analytics.logButton("delete selected")
             viewModel.deleteSelected()
         }
 

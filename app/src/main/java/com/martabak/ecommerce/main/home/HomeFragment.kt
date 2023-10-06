@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.ecommerce.MainActivity
 import com.martabak.ecommerce.databinding.FragmentHomeBinding
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import com.martabak.ecommerce.utils.GlobalUtils.nightMode
 import com.martabak.ecommerce.utils.GlobalUtils.setNightMode
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +27,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
+
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +44,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity() as MainActivity
         binding.logoutButton.setOnClickListener {
+            analytics.logButton("logout")
             viewModel.logout()
             (requireActivity() as MainActivity).logout()
         }

@@ -11,9 +11,12 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentRegisterBinding
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -22,6 +25,9 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: RegisterViewModel by viewModels()
+
+    @Inject
+    lateinit var analytics : FirebaseAnalytics
 
     private var validEmail = false
     private var validPass = false
@@ -88,11 +94,13 @@ class RegisterFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
+            analytics.logButton("login")
             view.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         binding.registerButton.setOnClickListener {
             viewModel.register()
+            analytics.logButton("register")
         }
     }
 

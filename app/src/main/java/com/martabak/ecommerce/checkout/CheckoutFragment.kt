@@ -19,6 +19,7 @@ import com.martabak.ecommerce.R
 import com.martabak.ecommerce.checkout.adapters.CheckoutAdapter
 import com.martabak.ecommerce.databinding.FragmentCheckoutBinding
 import com.martabak.ecommerce.network.data.checkout.CheckoutData
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import javax.inject.Inject
@@ -95,6 +96,7 @@ class CheckoutFragment : Fragment() {
         }
 
         binding.confirmBuyButton.setOnClickListener {
+            analytics.logButton("buy")
             viewModel.sendFulfillment()
         }
 

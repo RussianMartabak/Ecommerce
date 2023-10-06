@@ -25,7 +25,7 @@ class CartViewModelTest {
     @Before
     fun setup() {
         cartRepo = mock()
-        cartModel = CartViewModel(cartRepo, mock())
+        cartModel = CartViewModel(cartRepo, mock(), mock())
         cartModel.liveCartItemsList = MutableLiveData(
             listOf(
                 CartEntity(

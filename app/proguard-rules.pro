@@ -77,7 +77,7 @@
 -keep @com.squareup.moshi.JsonQualifier @interface *
 
 # for network packages
--keep class com.martabak.ecommerce.network.data.** { *; }
+-keep class com.martabak.core.network.data.** { *; }
 
 # Enum field names are used by the integrated EnumJsonAdapter.
 # values() is synthesized by the Kotlin compiler and is used by EnumJsonAdapter indirectly

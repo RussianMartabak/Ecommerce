@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.martabak.ecommerce.R
 import com.martabak.ecommerce.databinding.FragmentLoginBinding
+import com.martabak.ecommerce.utils.GlobalUtils.logButton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +29,9 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LoginViewModel by viewModels()
+
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,10 +55,12 @@ class LoginFragment : Fragment() {
         if (viewModel.isLoggedIn()) findNavController().navigate(R.id.action_prelogin_to_postlogin)
         binding.loginButton.isEnabled = false
         binding.registerButton.setOnClickListener {
+            analytics.logButton("register")
             view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         binding.loginButton.setOnClickListener {
+            analytics.logButton("login")
             viewModel.Login()
         }
 
