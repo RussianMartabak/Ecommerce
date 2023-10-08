@@ -74,6 +74,8 @@ object GlobalUtils {
             remove(LOGGED_IN)
             remove(ACCESS_TOKEN)
             remove(USERNAME)
+            remove(STORE_RECYCLER_POSITION)
+            remove(STORE_RECYCLER_OFFSET)
             apply()
         }
     }
@@ -113,12 +115,30 @@ object GlobalUtils {
         }
     }
 
+    fun SharedPreferences.saveScrollState(pos : Int, offset : Int) {
+        this.edit().apply{
+            putInt(STORE_RECYCLER_POSITION, pos)
+            putInt(STORE_RECYCLER_OFFSET, offset)
+            apply()
+        }
+    }
+
+    fun SharedPreferences.getPosition() : Int {
+        return this.getInt(STORE_RECYCLER_POSITION, 0)
+    }
+
+    fun SharedPreferences.getOffset() : Int {
+        return this.getInt(STORE_RECYCLER_OFFSET, 0)
+    }
+
     val DATABASE_NAME = "app_db"
     val FIRST_INSTALL = "first_install"
     val LOGGED_IN = "logged_in"
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.1.100:8000"
+    val BASE_URL = "http://192.168.1.10:8000"
     val NIGHT_MODE = "night_mode"
+    val STORE_RECYCLER_POSITION = "recycler_pos"
+    val STORE_RECYCLER_OFFSET = "recycler_offset"
 }

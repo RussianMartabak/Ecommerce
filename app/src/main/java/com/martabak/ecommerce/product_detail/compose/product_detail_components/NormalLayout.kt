@@ -42,6 +42,7 @@ fun NormalLayout(
     updatePrice: (ProductVariant) -> Unit,
     updatedPrice: Int?,
     toReview: () -> Unit,
+    updateVariant : (Int) -> Unit
 
     ) {
     val imageList = productDetail!!.image
@@ -107,7 +108,8 @@ fun NormalLayout(
         FilterChipGroup(
             selectedVariant = selectedVariant.value,
             updatePrice = updateChipState,
-            variantList = variantList
+            variantList = variantList,
+            updateVariant = updateVariant
         )
     }
     Spacer(Modifier.height(4.dp))

@@ -14,7 +14,8 @@ import com.martabak.core.network.data.product_detail.ProductVariant
 fun FilterChipGroup(
     selectedVariant: ProductVariant,
     updatePrice: (ProductVariant) -> Unit,
-    variantList: List<ProductVariant>
+    variantList: List<ProductVariant>,
+    updateVariant: (Int) -> Unit
 ) {
     variantList.forEach { variant ->
         // make le function to send price to viewmodel
@@ -22,6 +23,9 @@ fun FilterChipGroup(
             selected = selectedVariant == variant,
             onClick = {
                 updatePrice(variant)
+                val obj = variantList.first{it.variantName == selectedVariant.variantName}
+                val index = variantList.indexOf(obj)
+                updateVariant(index)
             },
             label = { Text(text = variant.variantName) },
             modifier = Modifier.padding(end = 8.dp)

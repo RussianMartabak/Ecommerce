@@ -1,7 +1,9 @@
 package com.martabak.ecommerce.product_detail.compose
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -33,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -48,6 +52,8 @@ import com.martabak.ecommerce.product_detail.compose.product_detail_components.N
 import com.martabak.ecommerce.product_detail.compose.product_detail_components.TopBar
 import com.martabak.ecommerce.ui.theme.EcommerceTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -62,7 +68,7 @@ class ProductDetailComposeFragment : Fragment() {
     private var variants: List<ProductVariant>? = null
     private var imageList: List<String> = listOf()
     private val args: ProductDetailComposeFragmentArgs by navArgs()
-
+    private var count = 0
     @Inject
     lateinit var analytics: FirebaseAnalytics
 
@@ -79,6 +85,11 @@ class ProductDetailComposeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        lifecycleScope.launch {
+            viewModel.eventFlow.collectLatest {
+                Log.d("zaky", "value caught from viewmodel $it")
+            }
+        }
         return ComposeView(requireContext()).apply {
             // Dispose of the Composition when the view's LifecycleOwner
             // is destroyed
@@ -125,6 +136,9 @@ class ProductDetailComposeFragment : Fragment() {
         val addCart = {
             viewModel.addToCart()
         }
+        val updateVariant = { index : Int ->
+            viewModel.selectedVariantIndex = index
+        }
         DetailScreen(
             navBack,
             productData,
@@ -138,11 +152,13 @@ class ProductDetailComposeFragment : Fragment() {
             nowLoading,
             refresh,
             addCart,
-            buyNow
+            buyNow,
+            updateVariant
         )
     }
 
     // Composable wihtout viewmode (consumed live by preview)
+    @SuppressLint("CoroutineCreationDuringComposition")
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     // For Real Usage Not Preview
     @Composable
@@ -159,9 +175,11 @@ class ProductDetailComposeFragment : Fragment() {
         nowLoading: Boolean,
         refreshFunction: () -> Unit,
         addCart: () -> Unit,
-        buyNow: () -> Unit
+        buyNow: () -> Unit,
+        updateVariant : (Int) -> Unit
     ) {
-        val snackbarHostState = remember { SnackbarHostState() }
+        val snackbarHostState = remember {SnackbarHostState()}
+        val coroutineScope = rememberCoroutineScope()
         Scaffold(
             topBar = { TopBar(navigateBack) },
             snackbarHost = {
@@ -171,6 +189,7 @@ class ProductDetailComposeFragment : Fragment() {
                 BottomButton(!nowLoading && productDetail != null, addCart, buyNow)
             }
         ) { paddingValues ->
+
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -179,7 +198,8 @@ class ProductDetailComposeFragment : Fragment() {
             ) {
                 // Snackbar DO NOT TOUCH
                 if (snackbarMessage != null) {
-                    LaunchedEffect(null) {
+                    Log.d("zaky", "value change caught in compose : $snackbarMessage")
+                    rememberCoroutineScope().launch {
                         snackbarHostState.showSnackbar(snackbarMessage)
                     }
                 }
@@ -199,7 +219,8 @@ class ProductDetailComposeFragment : Fragment() {
                         shareLink = shareLink,
                         updatePrice = updatePrice,
                         updatedPrice = updatedPrice,
-                        toReview = toReview
+                        toReview = toReview,
+                        updateVariant = updateVariant
                     )
                     // make product data as bundle
                     val bundle = Bundle()
@@ -226,7 +247,7 @@ class ProductDetailComposeFragment : Fragment() {
         val previewData = sampleProductData
         DetailScreen(
             { true }, previewData, {}, false, null,
-            {}, {}, 29000, {}, false, {}, {}, {}
+            {}, {}, 29000, {}, false, {}, {}, {}, {}
         )
     }
 

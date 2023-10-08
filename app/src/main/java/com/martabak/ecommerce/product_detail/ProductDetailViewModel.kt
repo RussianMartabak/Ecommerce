@@ -166,6 +166,7 @@ class ProductDetailViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            Log.d("zaky", "new item added should have been shown")
             try {
                 cartRepository.insertProductData(newEntity)
                 triggerSnackbar("Item added to cart")

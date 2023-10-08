@@ -58,9 +58,11 @@ class StatusFragment : Fragment() {
         }
 
         val backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_statusFragment_to_mainFragment)
+           goBack()
         }
     }
+
+
 
     private fun initTexts(parcel: StatusParcel) {
         binding.apply {
@@ -77,8 +79,17 @@ class StatusFragment : Fragment() {
     private fun initObservers() {
         viewModel.success.observe(viewLifecycleOwner) {
             if (it) {
-                findNavController().navigate(R.id.action_statusFragment_to_mainFragment)
+                goBack()
             }
         }
+    }
+
+    private fun goBack() {
+        if(args.fromTransaction) {
+            findNavController().navigateUp()
+        } else {
+            findNavController().navigate(R.id.action_statusFragment_to_mainFragment)
+        }
+
     }
 }

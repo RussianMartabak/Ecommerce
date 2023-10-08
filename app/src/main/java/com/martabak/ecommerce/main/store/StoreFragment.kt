@@ -1,21 +1,19 @@
 package com.martabak.ecommerce.main.store
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
@@ -26,7 +24,11 @@ import com.martabak.ecommerce.databinding.FragmentStoreBinding
 import com.martabak.ecommerce.main.MainFragment
 import com.martabak.ecommerce.main.store.adapter.ProductsLoadStateAdapter
 import com.martabak.ecommerce.main.store.adapter.ProductsPagingAdapter
+import com.martabak.ecommerce.utils.GlobalUtils.getOffset
+import com.martabak.ecommerce.utils.GlobalUtils.getPosition
+import com.martabak.ecommerce.utils.GlobalUtils.saveScrollState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -50,9 +52,13 @@ class StoreFragment : Fragment() {
     private var sort: String? = null
     private var gridMode = false
     private var pagingAdapter: ProductsPagingAdapter? = null
+    private var recycler : RecyclerView? = null
 
     @Inject
     lateinit var analytics: FirebaseAnalytics
+
+    @Inject
+    lateinit var userPref : SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +75,8 @@ class StoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val grandParentFrag =
             (this.requireParentFragment() as NavHostFragment).requireParentFragment()
+        recycler = binding.productRecycler
+
         binding.gridShimmerLayout.isVisible = false
         binding.linearShimmerLayout.isVisible = false
         binding.errorLayout.isVisible = false
@@ -104,7 +112,7 @@ class StoreFragment : Fragment() {
         binding.searchEditText.setOnClickListener {
             showSearchDialog(viewModel.query)
         }
-
+        //there is not yet an adapter stored in viewmodel push this instead to viewmodel
 
 
         pagingAdapter = ProductsPagingAdapter { id ->
@@ -119,7 +127,6 @@ class StoreFragment : Fragment() {
             (grandParentFrag as MainFragment).findNavController()
                 .navigate(R.id.action_mainFragment_to_productDetailComposeFragment)
         }
-        pagingAdapter?.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         val loadStateFooter = ProductsLoadStateAdapter()
         loadStateFooter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.productRecycler.adapter =
@@ -161,6 +168,24 @@ class StoreFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         switchLayout()
+        val position = userPref.getPosition()
+        val offset = userPref.getOffset()
+        recycler?.scrollToPosition(position)
+        lifecycleScope.launch {
+            delay(200)
+            recycler?.scrollBy(0, - offset)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        var firstChild = recycler?.getChildAt(0)
+        var firstVisiblePosition = firstChild?.let{recycler?.getChildAdapterPosition(it)}
+        var offset = firstChild?.top
+        if (offset != null && firstVisiblePosition != null) {
+            userPref.saveScrollState(firstVisiblePosition, offset)
+        }
+
     }
 
     private fun setFilterListListener() {
@@ -286,6 +311,7 @@ class StoreFragment : Fragment() {
                 binding.refreshButton.setOnClickListener {
                     pagingAdapter!!.refresh()
                 }
+                binding.refreshButton.text = "Refresh"
                 binding.errorTitle.text = httpError.code().toString()
                 binding.errorDetail.text = requireActivity().getString(R.string.internal_error)
             }
@@ -294,6 +320,7 @@ class StoreFragment : Fragment() {
 
                 pagingAdapter!!.refresh()
             }
+            binding.refreshButton.text = "Refresh"
             binding.errorTitle.text = "Connection"
             binding.errorDetail.text = requireActivity().getString(R.string.connection_error)
         }

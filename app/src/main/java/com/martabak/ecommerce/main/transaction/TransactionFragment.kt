@@ -47,7 +47,7 @@ class TransactionFragment : Fragment() {
         binding.errorLayout.isVisible = false
         val adapter = TransactionAdapter {
             val parcel = viewModel.getStatusParcel(it)
-            val aktion = MainFragmentDirections.startStatusFromTransaction(parcel)
+            val aktion = MainFragmentDirections.startStatusFromTransaction(parcel, true)
             val mainFragment = requireParentFragment().parentFragment as MainFragment
             mainFragment.findNavController().navigate(aktion)
         }
