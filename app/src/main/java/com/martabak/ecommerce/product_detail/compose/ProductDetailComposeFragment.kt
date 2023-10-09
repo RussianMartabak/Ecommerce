@@ -39,6 +39,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.martabak.core.network.data.product_detail.Data
@@ -85,12 +86,7 @@ class ProductDetailComposeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        lifecycleScope.launch {
-            viewModel.eventFlow.collectLatest {
-                Log.d("zaky", "value caught from viewmodel $it")
-            }
-        }
-        return ComposeView(requireContext()).apply {
+        val view = ComposeView(requireContext()).apply {
             // Dispose of the Composition when the view's LifecycleOwner
             // is destroyed
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -103,6 +99,11 @@ class ProductDetailComposeFragment : Fragment() {
                 }
             }
         }
+        viewModel.eventLivedata.observe(viewLifecycleOwner) {
+            Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
+        }
+
+        return view
     }
 
     // Composable used to pass datas from viewmodel for use in production
@@ -112,7 +113,7 @@ class ProductDetailComposeFragment : Fragment() {
         val productData by viewModel.productData.observeAsState()
         val processWish = { viewModel.processWishlist() }
         val productOnWishlist by viewModel.productOnWishlist.observeAsState()
-        val snackbarMessage by viewModel.eventFlow.collectAsState(null)
+        val snackbarMessage by viewModel.eventLivedata.observeAsState()
         val shareLink = {
             val id = viewModel.getProductID()
             val sendIntent = Intent().apply {
@@ -197,12 +198,7 @@ class ProductDetailComposeFragment : Fragment() {
                     .verticalScroll(rememberScrollState())
             ) {
                 // Snackbar DO NOT TOUCH
-                if (snackbarMessage != null) {
-                    Log.d("zaky", "value change caught in compose : $snackbarMessage")
-                    rememberCoroutineScope().launch {
-                        snackbarHostState.showSnackbar(snackbarMessage)
-                    }
-                }
+
                 if (nowLoading) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

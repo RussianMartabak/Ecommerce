@@ -138,10 +138,11 @@ class ProductDetailFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.eventFlow.collectLatest {
+        viewModel.eventLivedata.observe(viewLifecycleOwner) {
+            if (it.isNotBlank()) {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
             }
+
         }
 
         binding.addCartButton.setOnClickListener {

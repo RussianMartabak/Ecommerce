@@ -49,9 +49,11 @@ class ProductDetailViewModel @Inject constructor(
         _currentPrice.value = basePrice + variantPrice
     }
 
+
+
     // for notifying if action is completed
-    private val eventChannel = Channel<String>()
-    val eventFlow = eventChannel.receiveAsFlow()
+    private var eventChannel = MutableLiveData<String>()
+    val eventLivedata : LiveData<String> = eventChannel
 
     private var _connectionSuccess: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var connectionSuccess: LiveData<Boolean> = _connectionSuccess
@@ -94,9 +96,9 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun triggerSnackbar(s: String) {
-        viewModelScope.launch {
-            eventChannel.send(s)
-        }
+        Log.d("zaky", "Sent via channel : $s")
+        eventChannel.value = s
+
     }
 
     fun processWishlist() {
@@ -111,9 +113,11 @@ class ProductDetailViewModel @Inject constructor(
                     triggerSnackbar("Item removed from wishlist")
                 } else {
                     // add
+
                     wishlistRepository.insertItem(makeWish())
-                    _productOnWishlist.value = true
                     triggerSnackbar("Item added to wishlist")
+                    _productOnWishlist.value = true
+
                     // log event here
                     analytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST) {
                         param(
