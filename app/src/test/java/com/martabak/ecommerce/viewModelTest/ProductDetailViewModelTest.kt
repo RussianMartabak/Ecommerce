@@ -91,7 +91,7 @@ class ProductDetailViewModelTest {
         whenever(wishRepo.itemExistOnWishlist("1")).thenReturn(true)
         productModel.getProductData()
         productModel.processWishlist()
-        assertEquals("Item removed from wishlist", productModel.eventFlow.first())
+        assertEquals("Item removed from wishlist", productModel.eventLivedata.getOrAwaitValue())
     }
 
     @Test
@@ -101,7 +101,7 @@ class ProductDetailViewModelTest {
         whenever(wishRepo.itemExistOnWishlist("1")).thenReturn(false)
         productModel.getProductData()
         productModel.processWishlist()
-        assertEquals("Item added to wishlist", productModel.eventFlow.first())
+        assertEquals("Item added to wishlist", productModel.eventLivedata.getOrAwaitValue())
     }
 
     @Test
