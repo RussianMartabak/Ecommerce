@@ -112,6 +112,6 @@ object GlobalUtils {
     val ACCESS_TOKEN = "access_token"
     val USERNAME = "username"
     val REFRESH_TOKEN = "refresh_token"
-    val BASE_URL = "http://192.168.1.100:8000"
+    val BASE_URL = "http://192.168.153.125:5000"
     val NIGHT_MODE = "night_mode"
 }
