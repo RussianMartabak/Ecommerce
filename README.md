@@ -10,3 +10,4 @@ A fullstack android application where user can see, buy and review products
 - Room Database  
 - Firebase (cloud messaging, crashlytics, analytics)  
 - Unit Testing  
+- Modularization (dividing application into modules)
